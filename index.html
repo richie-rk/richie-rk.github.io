@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B0E1C">
+<title>Richy Koshy · Python Engineer · GenAI &amp; Automation</title>
+<meta name="description" content="Python engineer with 4.5 years across REST API integration, RPA, and production GenAI/RAG systems. Shipped an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations for a US mortgage originator.">
+<meta property="og:title" content="Richy Koshy · Python Engineer">
+<meta property="og:description" content="Enterprise RAG on Azure, Encompass API SDK, and 13 production automations. Based in Navi Mumbai, India.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://richie-rk.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Richy Koshy · Python Engineer">
+<meta name="twitter:description" content="Enterprise RAG on Azure, Encompass API SDK, and 13 production automations.">
+<meta name="twitter:image" content="https://richie-rk.github.io/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Richy Koshy",
+  "jobTitle": "Python Engineer | GenAI & Automation",
+  "email": "mailto:richycode.dev@gmail.com",
+  "url": "https://richie-rk.github.io/",
+  "address": {"@type": "PostalAddress", "addressLocality": "Navi Mumbai", "addressCountry": "IN"},
+  "alumniOf": {"@type": "CollegeOrUniversity", "name": "University of Mumbai"},
+  "worksFor": {"@type": "Organization", "name": "Antz AI Solutions"},
+  "knowsAbout": ["Python", "FastAPI", "Retrieval-Augmented Generation", "Azure OpenAI", "Azure AI Search", "RPA", "REST API integration"],
+  "sameAs": ["https://github.com/richie-rk", "https://linkedin.com/in/richy-koshy"]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E1C'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%235FD4B0' text-anchor='middle'%3Erk%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0E1C;
+  --panel:#141A2E;
+  --panel-2:#10152A;
+  --line:#232B47;
+  --line-2:#2F3A5E;
+  --line-3:#42517F;
+  --text:#E9EBF5;
+  --muted:#9AA3C0;
+  --faint:#6A7391;
+  --accent:#5FD4B0;
+  --accent-soft:rgba(95,212,176,.14);
+  --link:#83E3C6;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --radius:14px;
+  --radius-sm:9px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:#04241A}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#04241A;padding:.5rem 1rem;z-index:99;border-radius:0 0 8px 0;font-family:var(--mono);font-size:.85rem}
+.skip:focus{left:0}
+.wrap{width:min(1080px,92vw);margin-inline:auto}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,14,28,.82);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.92rem;color:var(--text);letter-spacing:.02em}
+.brand:hover{text-decoration:none}
+.brand-mark{
+  display:grid;place-items:center;width:30px;height:30px;border-radius:8px;
+  background:var(--panel);border:1px solid var(--line-2);
+  color:var(--accent);font-weight:500;font-size:.8rem;
+}
+.nav-links{display:flex;align-items:center;gap:1.4rem;font-family:var(--mono);font-size:.82rem}
+.nav-links a:not(.btn){color:var(--muted);padding-bottom:2px;border-bottom:1px solid transparent}
+.nav-links a:not(.btn):hover{color:var(--text);text-decoration:none}
+.nav-links a.active{color:var(--accent);border-bottom-color:var(--accent)}
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.84rem;font-weight:500;
+  padding:.6rem 1.05rem;border-radius:10px;border:1px solid transparent;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+  cursor:pointer;white-space:nowrap;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#04241A}
+.btn-primary:hover{box-shadow:0 6px 22px -6px rgba(95,212,176,.40)}
+.btn-ghost{border-color:var(--line-2);color:var(--text);background:transparent}
+.btn-ghost:hover{border-color:var(--line-3)}
+
+/* ---------- section scaffolding ---------- */
+section{padding-block:6.2rem}
+.kicker{
+  font-family:var(--mono);font-size:.85rem;letter-spacing:.07em;
+  color:var(--muted);margin-bottom:1.2rem;
+}
+.kicker::before{content:"# ";color:var(--accent)}
+h2{
+  font-family:var(--display);font-size:clamp(1.8rem,3.3vw,2.45rem);
+  font-weight:700;letter-spacing:-.015em;line-height:1.15;margin-bottom:.9rem;
+}
+.section-lede{color:var(--muted);max-width:58ch;margin-bottom:2.8rem}
+
+/* ---------- hero ---------- */
+.status-pill{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:var(--mono);font-size:.76rem;color:var(--text);
+  border:1px solid var(--line-2);border-radius:99px;
+  background:var(--panel-2);padding:.42rem .95rem;margin-bottom:1.5rem;
+}
+.status-pill::before{
+  content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 0 rgba(95,212,176,.5);animation:pulse 2.2s ease-out infinite;
+}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(95,212,176,0)}100%{box-shadow:0 0 0 0 rgba(95,212,176,0)}}
+.status-pill b{color:var(--accent);font-weight:500}
+.hero{position:relative;padding-block:7.6rem 4.6rem;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(720px 380px at 14% 0%,rgba(95,212,176,.09),transparent 70%),radial-gradient(circle,rgba(154,163,192,.09) 1px,transparent 1px);
+  background-size:auto,26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 78%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 78%);
+}
+.hero .wrap{position:relative}
+.hero h1{
+  font-family:var(--display);
+  font-size:clamp(2.6rem,6vw,4.35rem);
+  font-weight:800;line-height:1.06;letter-spacing:-.02em;
+  max-width:19ch;margin-bottom:1.4rem;
+}
+.hl{
+  text-decoration:underline;
+  text-decoration-color:var(--accent);
+  text-decoration-thickness:.11em;
+  text-underline-offset:.16em;
+}
+.lede{color:var(--muted);max-width:60ch;font-size:1.1rem;margin-bottom:2.1rem}
+.lede strong{color:var(--text);font-weight:500}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:2.3rem}
+.factline{
+  font-family:var(--mono);font-size:.8rem;color:var(--faint);
+  display:flex;flex-wrap:wrap;gap:.35rem .6rem;align-items:center;
+}
+.factline .dot{color:var(--line-3)}
+.factline b{color:var(--muted);font-weight:500}
+
+/* ---------- testimonial ---------- */
+.testimonial{
+  border:1px solid var(--line);border-left:3px solid var(--accent);
+  background:linear-gradient(90deg,var(--accent-soft),transparent 32%);
+  border-radius:var(--radius-sm);
+  padding:1.4rem 1.6rem;margin-top:.6rem;
+}
+.testimonial blockquote{
+  font-family:var(--display);font-weight:500;font-size:1.22rem;letter-spacing:-.01em;
+}
+.testimonial figcaption{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:.7rem}
+.testimonial figcaption span{color:var(--faint)}
+
+/* ---------- project cards ---------- */
+.project{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:2rem 2.1rem;margin-bottom:1.4rem;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.project:hover{border-color:var(--line-3);transform:translateY(-2px)}
+.project-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;margin-bottom:.4rem}
+.project h3{font-family:var(--display);font-weight:700;font-size:1.42rem;letter-spacing:-.01em}
+.project-role{font-family:var(--mono);font-size:.78rem;color:var(--faint)}
+.project > p{color:var(--muted);max-width:70ch;margin-bottom:1rem}
+.project ul{list-style:none;margin:0 0 1.2rem;display:grid;gap:.5rem;max-width:72ch}
+.project li{color:var(--muted);padding-left:1.25rem;position:relative}
+.project li::before{content:"·";position:absolute;left:.3rem;color:var(--accent);font-weight:700}
+.project li b{color:var(--text);font-weight:500}
+.outcome{
+  font-family:var(--mono);font-size:.82rem;color:var(--text);
+  background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:.75rem 1rem;margin-bottom:1.2rem;max-width:fit-content;
+}
+.outcome::before{content:">> ";color:var(--accent)}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.tag{
+  font-family:var(--mono);font-size:.72rem;color:var(--muted);
+  border:1px solid var(--line-2);border-radius:99px;padding:.22rem .65rem;
+}
+.mini-quote{
+  border-left:2px solid var(--line-3);padding-left:1rem;margin:0 0 1.2rem;
+  color:var(--muted);font-style:italic;max-width:64ch;
+}
+.mini-quote span{display:block;font-style:normal;font-family:var(--mono);font-size:.75rem;color:var(--faint);margin-top:.4rem}
+
+/* domain chip grid inside automations card */
+.domains{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.55rem;margin-bottom:1.2rem;max-width:820px}
+.domain{
+  font-family:var(--mono);font-size:.76rem;color:var(--muted);
+  border:1px solid var(--line);background:var(--panel-2);
+  border-radius:var(--radius-sm);padding:.55rem .75rem;
+}
+
+/* ---------- architecture diagram ---------- */
+.diagram{
+  margin:1.6rem 0 1.4rem;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--panel-2);
+}
+.diagram-scroll{overflow-x:auto;padding:1.2rem}
+.diagram svg{display:block;min-width:840px;width:100%;height:auto}
+.diagram text{font-family:var(--mono)}
+.diagram figcaption{
+  border-top:1px solid var(--line);padding:.8rem 1.2rem;
+  font-family:var(--mono);font-size:.76rem;color:var(--faint);
+}
+.flow{stroke-dasharray:3 9;animation:flow 1.5s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-12}}
+
+/* ---------- open source ---------- */
+.repo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1rem}
+.repo{
+  display:flex;flex-direction:column;gap:.55rem;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.4rem 1.5rem;color:var(--text);
+  transition:border-color .2s ease,transform .2s ease;
+}
+.repo:hover{border-color:var(--line-3);transform:translateY(-2px);text-decoration:none}
+.repo-name{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.95rem;font-weight:500}
+.repo-name .ext{margin-left:auto;color:var(--faint);transition:color .2s ease}
+.repo:hover .ext{color:var(--accent)}
+.repo p{color:var(--muted);font-size:.92rem;flex-grow:1}
+.repo-meta{display:flex;align-items:center;gap:1rem;font-family:var(--mono);font-size:.75rem;color:var(--faint)}
+.lang-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.4rem;vertical-align:-1px}
+.py{background:#3572A5}.ts{background:#3178C6}
+
+/* ---------- experience ---------- */
+.timeline{border-left:1px solid var(--line-2);margin-left:.4rem;padding-left:1.8rem;display:grid;gap:2.2rem}
+.entry{position:relative}
+.entry::before{
+  content:"";position:absolute;left:calc(-1.8rem - 5.5px);top:.42rem;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--line-3);
+}
+.entry.current::before{background:var(--accent);border-color:var(--accent)}
+.entry-when{font-family:var(--mono);font-size:.76rem;color:var(--faint);margin-bottom:.2rem}
+.entry h3{font-family:var(--display);font-weight:700;font-size:1.18rem;letter-spacing:-.01em}
+.entry .org{color:var(--muted);font-size:.95rem;margin-bottom:.4rem}
+.entry p{color:var(--muted);font-size:.95rem;max-width:66ch}
+
+/* ---------- skills ---------- */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.skill-group{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem 1.5rem}
+.skill-group h3{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--accent);margin-bottom:.9rem;letter-spacing:.03em}
+.skill-group ul{list-style:none;display:flex;flex-wrap:wrap;gap:.45rem}
+.skill-group li{
+  font-family:var(--mono);font-size:.76rem;color:var(--muted);
+  border:1px solid var(--line-2);border-radius:99px;padding:.24rem .68rem;
+}
+
+/* ---------- contact ---------- */
+.contact{padding-bottom:7rem}
+.contact-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:2.6rem 2.4rem;text-align:left;
+}
+.email-row{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin:1.4rem 0 1.6rem}
+.email-link{font-family:var(--mono);font-size:clamp(1.05rem,2.6vw,1.5rem);color:var(--text);font-weight:500}
+.email-link:hover{color:var(--accent);text-decoration:none}
+.copy-btn{
+  font-family:var(--mono);font-size:.74rem;color:var(--muted);
+  background:var(--panel-2);border:1px solid var(--line-2);border-radius:8px;
+  padding:.4rem .8rem;cursor:pointer;transition:border-color .15s ease,color .15s ease;
+}
+.copy-btn:hover{border-color:var(--accent);color:var(--text)}
+.contact-meta{font-family:var(--mono);font-size:.8rem;color:var(--faint);display:flex;flex-wrap:wrap;gap:.35rem .6rem}
+.contact-links{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+
+/* ---------- letter request ---------- */
+.letter{margin-top:1.8rem;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--panel-2)}
+.letter summary{
+  cursor:pointer;list-style:none;padding:.85rem 1.1rem;
+  font-family:var(--mono);font-size:.84rem;color:var(--text);
+  display:flex;align-items:center;gap:.6rem;
+}
+.letter summary::-webkit-details-marker{display:none}
+.letter summary::before{content:"+";color:var(--accent);font-weight:700}
+.letter[open] summary::before{content:"\2212"}
+.letter summary:hover{color:var(--accent)}
+.letter-body{padding:0 1.1rem 1.1rem}
+.letter-body p{font-size:.9rem;color:var(--muted);margin-bottom:.8rem}
+.letter pre{
+  font-family:var(--mono);font-size:.78rem;line-height:1.7;color:var(--muted);
+  background:var(--bg);border:1px solid var(--line);border-radius:8px;
+  padding:1rem 1.1rem;white-space:pre-wrap;margin-bottom:.8rem;
+}
+.letter pre b{color:var(--text);font-weight:500}
+.letter-actions{display:flex;flex-wrap:wrap;gap:.6rem}
+
+/* ---------- back to top ---------- */
+.to-top{
+  position:fixed;right:1.4rem;bottom:1.4rem;z-index:60;
+  width:44px;height:44px;border-radius:12px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line-2);color:var(--muted);
+  font-size:1.1rem;display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .25s ease,transform .25s ease,visibility .25s,border-color .15s ease,color .15s ease;
+}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem;font-family:var(--mono);font-size:.75rem;color:var(--faint)}
+
+/* ---------- reveal on scroll ---------- */
+body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+body.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive & motion ---------- */
+@media (max-width:760px){
+  .nav-links a:not(.btn){display:none}
+  section{padding-block:4.4rem}
+  .project{padding:1.5rem 1.3rem}
+  .contact-card{padding:1.8rem 1.4rem}
+}
+/* ---------- print ---------- */
+@media print{
+  :root{--bg:#fff;--panel:#fff;--panel-2:#fff;--line:#ccc;--line-2:#bbb;--line-3:#999;--text:#111;--muted:#444;--faint:#666;--accent:#0a7c5f;--accent-soft:rgba(10,124,95,.08);--link:#0a7c5f}
+  body{font-size:11pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .nav,.to-top,.skip,.hero-actions,.contact-links,.letter,.copy-btn,#copyEmail{display:none!important}
+  section{padding-block:1.6rem}
+  .hero{padding-block:1rem}
+  .hero::before{display:none}
+  body.js .reveal{opacity:1!important;transform:none!important}
+  .project,.repo,.skill-group,.contact-card{break-inside:avoid;box-shadow:none}
+  .btn-primary{background:none;color:#111;border:1px solid #999}
+  a{color:#0a7c5f}
+  .diagram-scroll{overflow:visible}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  body.js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><span class="brand-mark">rk</span>richy-koshy</a>
+    <nav class="nav-links" aria-label="Site">
+      <a href="#work">work</a>
+      <a href="#open-source">open-source</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+      <a class="btn btn-primary" href="Richy_Koshy_CV.pdf" download>Download CV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="status-pill"><b>open</b> to Python / GenAI roles · immediate joiner</p>
+    <p class="kicker">richy koshy · python engineer · genai &amp; automation</p>
+    <h1>I build <span class="hl">RAG systems</span> and <span class="hl">automations</span> that hold up in production.</h1>
+    <p class="lede">4.5 years across REST API integration, RPA, and GenAI. Most recently for a <strong>US mortgage originator</strong>: an enterprise RAG platform on Azure, a custom <strong>Encompass REST API SDK</strong>, and <strong>13 production automations</strong> covering regulatory compliance and investor operations. Earlier background in industrial automation (PLC/SCADA).</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#work">See the work</a>
+      <a class="btn btn-ghost" href="https://github.com/richie-rk" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="mailto:richycode.dev@gmail.com">Email</a>
+    </div>
+    <p class="factline">
+      <b>Navi Mumbai, India</b><span class="dot">·</span>
+      <b>4.5 yrs</b> experience<span class="dot">·</span>
+      <b>13</b> automations in production<span class="dot">·</span>
+      <b>3</b> Azure services owned<span class="dot">·</span>
+      <b>9</b> investors automated
+    </p>
+    <figure class="testimonial reveal">
+      <blockquote>&ldquo;Conscientious ownership, earnest curiosity, and diligent follow-through.&rdquo;</blockquote>
+      <figcaption>Corban Wells, VP of Technology Product Management, PRMI <span>· </span><a href="#letter" class="letter-open">request the full letter</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work">
+  <div class="wrap">
+    <p class="kicker reveal">selected-work</p>
+    <h2 class="reveal">Shipped for Primary Residential Mortgage, Inc.</h2>
+    <p class="section-lede reveal">End-to-end ownership at Antz AI for PRMI, a US mortgage originator: requirements, architecture, build, UAT, and production support.</p>
+
+    <!-- MAX AI -->
+    <article class="project reveal">
+      <div class="project-head">
+        <h3>MAX AI · Enterprise RAG platform</h3>
+        <span class="project-role">python backend · 3 azure services</span>
+      </div>
+      <p>The organization&rsquo;s primary knowledge retrieval tool. I own the Python backend across three Azure services: a FastAPI chat service with NDJSON streaming, a Durable Functions document-ingestion pipeline, and Function App utility APIs.</p>
+
+      <figure class="diagram">
+        <div class="diagram-scroll">
+        <svg viewBox="0 0 940 430" role="img" aria-label="MAX AI architecture: users authenticate through Azure AD to a FastAPI chat service, which retrieves from Azure AI Search and generates with Azure OpenAI; a Durable Functions pipeline ingests documents into the search index; SQL Server maps tenants to indexes.">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#6A7391"/>
+            </marker>
+          </defs>
+
+          <!-- connectors -->
+          <path d="M170 78 H244" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+          <path d="M170 78 H244" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+          <text x="207" y="66" font-size="10.5" fill="#9AA3C0" text-anchor="middle">Azure AD</text>
+
+          <path d="M460 78 H694" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+          <path d="M460 78 H694" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+          <text x="577" y="66" font-size="10.5" fill="#9AA3C0" text-anchor="middle">prompt + retrieved context</text>
+
+          <path d="M420 120 C420 152 460 160 492 178" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+          <path d="M420 120 C420 152 460 160 492 178" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+          <text x="470" y="150" font-size="10.5" fill="#9AA3C0">hybrid retrieve</text>
+
+          <path d="M335 188 V124" fill="none" stroke="#42517F" stroke-width="1.3" stroke-dasharray="4 5" marker-end="url(#arr)"/>
+          <text x="347" y="160" font-size="10.5" fill="#9AA3C0">project access</text>
+
+          <path d="M170 354 H244" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+          <path d="M170 354 H244" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+
+          <path d="M480 346 C548 336 566 300 588 266" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+          <path d="M480 346 C548 336 566 300 588 266" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+          <text x="588" y="318" font-size="10.5" fill="#9AA3C0">chunk + embed</text>
+
+          <!-- org users -->
+          <rect x="20" y="46" width="150" height="64" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="95" y="74" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Org users</text>
+          <text x="95" y="92" font-size="10.5" fill="#9AA3C0" text-anchor="middle">across the company</text>
+
+          <!-- chat service -->
+          <rect x="250" y="36" width="210" height="84" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="355" y="64" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">FastAPI chat service</text>
+          <text x="355" y="82" font-size="10.5" fill="#9AA3C0" text-anchor="middle">NDJSON streaming</text>
+          <text x="355" y="98" font-size="10.5" fill="#9AA3C0" text-anchor="middle">Azure App Services</text>
+
+          <!-- azure openai -->
+          <rect x="700" y="36" width="210" height="84" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="805" y="68" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Azure OpenAI</text>
+          <text x="805" y="88" font-size="10.5" fill="#9AA3C0" text-anchor="middle">GPT-4o · ada-002 embeddings</text>
+
+          <!-- azure ai search -->
+          <rect x="480" y="178" width="230" height="84" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="595" y="206" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Azure AI Search</text>
+          <text x="595" y="224" font-size="10.5" fill="#9AA3C0" text-anchor="middle">hybrid vector + semantic ranking</text>
+          <text x="595" y="240" font-size="10.5" fill="#9AA3C0" text-anchor="middle">HyDE query expansion</text>
+
+          <!-- sql server -->
+          <rect x="250" y="188" width="170" height="64" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="335" y="214" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">SQL Server</text>
+          <text x="335" y="232" font-size="10.5" fill="#9AA3C0" text-anchor="middle">multi-tenant access map</text>
+
+          <!-- documents -->
+          <rect x="20" y="322" width="150" height="64" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="95" y="350" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Documents</text>
+          <text x="95" y="368" font-size="10.5" fill="#9AA3C0" text-anchor="middle">org knowledge base</text>
+
+          <!-- ingestion -->
+          <rect x="250" y="312" width="230" height="84" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+          <text x="365" y="340" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Durable Functions</text>
+          <text x="365" y="358" font-size="10.5" fill="#9AA3C0" text-anchor="middle">ingestion pipeline</text>
+          <text x="365" y="374" font-size="10.5" fill="#9AA3C0" text-anchor="middle">Docker · ACR · Function App</text>
+        </svg>
+        </div>
+        <figcaption>MAX AI, as shipped: the query path streams grounded answers over NDJSON; the ingestion path chunks, embeds, and indexes documents. Python backend across all three owned services.</figcaption>
+      </figure>
+
+      <ul>
+        <li><b>Retrieval:</b> Azure AI Search with hybrid vector + semantic ranking and HyDE query expansion over ada-002 embeddings.</li>
+        <li><b>Access control:</b> Azure AD auth with multi-tenant project-to-index mapping held in SQL Server.</li>
+        <li><b>Ops:</b> containerized the ingestion Function App (Docker, pushed to Azure Container Registry, pulled by the Function App) to handle native dependencies.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Azure OpenAI</span><span class="tag">Azure AI Search</span><span class="tag">Durable Functions</span><span class="tag">Docker</span><span class="tag">SQL Server</span>
+      </div>
+    </article>
+
+    <!-- Encompass SDK -->
+    <article class="project reveal">
+      <div class="project-head">
+        <h3>Encompass REST API SDK</h3>
+        <span class="project-role">design + build · internal python sdk</span>
+      </div>
+      <p>A custom Python SDK wrapping the Encompass Cloud APIs (the loan origination system at the heart of PRMI&rsquo;s operations), used as the foundation for the automation portfolio below.</p>
+      <ul>
+        <li><b>OAuth2 auth</b> with token caching.</li>
+        <li><b>Concurrent pipeline queries</b> with pagination.</li>
+        <li><b>Safe loan updates:</b> locks loans and skips active user-edit sessions so automations never overwrite in-progress work.</li>
+        <li><b>eFolder document and attachment CRUD</b>, disclosure tracking, and borrower pair retrieval.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">REST</span><span class="tag">OAuth2</span><span class="tag">Encompass API</span><span class="tag">asyncio</span>
+      </div>
+    </article>
+
+    <!-- Final Docs -->
+    <article class="project reveal">
+      <div class="project-head">
+        <h3>Final Docs refactor</h3>
+        <span class="project-role">architecture · config-driven dispatch</span>
+      </div>
+      <p>Final Docs governs how PRMI assembles and delivers post-closing packages to its investor banks, where delays put funding lines and regulatory standing at risk. Onboarding each new investor took 2-4 weeks of bespoke coding and QA, so growing the investor network was capped by engineering capacity, not by business appetite.</p>
+      <ul>
+        <li><b>Creative solution:</b> treat an investor as data, not code. I rebuilt the monolith into config-driven dynamic dispatch: investor-specific logic lives in per-investor YAML definitions mapped to specialized handler functions, so onboarding became a configuration change instead of code surgery.</li>
+        <li><b>Business value:</b> 4 new investors integrated in a single month, work that previously consumed a full quarter of engineering capacity. Investor expansion now moves at deal speed rather than dev speed, and the architecture was adopted as the template for two other automation initiatives.</li>
+      </ul>
+      <div class="outcome">onboarding cut from 2-4 weeks to days · a YAML change, not a code release</div>
+      <blockquote class="mini-quote">&ldquo;PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.&rdquo;<span>Corban Wells, VP Technology Product Management, PRMI</span></blockquote>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">YAML config</span><span class="tag">Strategy pattern</span><span class="tag">Pandas</span>
+      </div>
+    </article>
+
+    <!-- 13 automations -->
+    <article class="project reveal">
+      <div class="project-head">
+        <h3>13 production RPA automations</h3>
+        <span class="project-role">power automate + python · compliance &amp; investor ops</span>
+      </div>
+      <p>A portfolio of automations running in production across regulatory compliance and investor operations:</p>
+      <div class="domains">
+        <span class="domain">ECOA adverse action</span>
+        <span class="domain">Final docs tracking</span>
+        <span class="domain">MERS sync</span>
+        <span class="domain">TRID disclosure</span>
+        <span class="domain">HMDA reporting</span>
+        <span class="domain">HFA exceptions</span>
+        <span class="domain">Blend API credit management</span>
+        <span class="domain">Warehouse collateral tracking</span>
+        <span class="domain">Suspense resolution · 9 investors</span>
+      </div>
+      <ul>
+        <li><b>OCR pipeline:</b> 3 vendor-specific pipelines (Tesseract + Azure Form Recognizer) extracting credit scores and denial factors from PDF credit reports.</li>
+        <li><b>Delivery:</b> led BRD and PRD gathering, flow diagrams, first-call sign-offs, UAT coordination, and documentation for every automation shipped.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">Power Automate</span><span class="tag">Tesseract</span><span class="tag">Azure Form Recognizer</span><span class="tag">SQL Server</span>
+      </div>
+    </article>
+
+    <!-- HydroQ -->
+    <article class="project reveal">
+      <div class="project-head">
+        <h3>HydroQ API</h3>
+        <span class="project-role">client: techspan engineering · iot remote monitoring</span>
+      </div>
+      <p>REST API for TechSpan Engineering&rsquo;s remote water-quality monitoring system: FastAPI + SQLAlchemy + Pydantic, with a generic CRUD layer querying across PostgreSQL and MSSQL. Replaced 2-4 hours of manual onboarding setup with API-driven workflows, backed by rigorous test coverage across all endpoints.</p>
+      <div class="tags">
+        <span class="tag">FastAPI</span><span class="tag">SQLAlchemy</span><span class="tag">Pydantic</span><span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">pytest</span>
+      </div>
+    </article>
+  </div>
+</section>
+<!-- ================= OPEN SOURCE ================= -->
+<section id="open-source">
+  <div class="wrap">
+    <p class="kicker reveal">open-source</p>
+    <h2 class="reveal">Public work on GitHub</h2>
+    <p class="section-lede reveal">Original repos with full READMEs, built to learn in the open. RAG references, retrieval experiments, and one physics calculator.</p>
+    <div class="repo-grid">
+      <a class="repo reveal" href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">
+        <span class="repo-name">rag-app-azure<span class="ext">&#8599;</span></span>
+        <p>Full-stack enterprise RAG reference on Azure: hybrid search (vector + semantic + BM25), NDJSON streaming, MSAL SSO, Fluent UI 9, document ingestion pipeline, and project isolation.</p>
+        <span class="repo-meta"><span><span class="lang-dot ts"></span>TypeScript + Python</span><span>&#9733; 16</span></span>
+      </a>
+      <a class="repo reveal" href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">
+        <span class="repo-name">EncompassRest-RAG-Assistant<span class="ext">&#8599;</span></span>
+        <p>RAG system for querying ICE Mortgage Encompass API documentation in natural language: hybrid FAISS + BM25 retrieval with multiple LLM backends.</p>
+        <span class="repo-meta"><span><span class="lang-dot py"></span>Python</span></span>
+      </a>
+      <a class="repo reveal" href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">
+        <span class="repo-name">PyTeslaCoil<span class="ext">&#8599;</span></span>
+        <p>Pure Python port of the JavaTC Tesla coil calculator: solenoid physics, 73 unit tests, and a NiceGUI interface.</p>
+        <span class="repo-meta"><span><span class="lang-dot py"></span>Python</span><span>73 tests</span></span>
+      </a>
+      <a class="repo reveal" href="https://github.com/richie-rk/Bible-VerseFinder-AI" target="_blank" rel="noopener">
+        <span class="repo-name">Bible-VerseFinder-AI<span class="ext">&#8599;</span></span>
+        <p>AI-powered Bible verse search engine with LLM summarization and full chapter reading.</p>
+        <span class="repo-meta"><span><span class="lang-dot ts"></span>TypeScript</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="wrap">
+    <p class="kicker reveal">skills</p>
+    <h2 class="reveal">Stack I ship with</h2>
+    <p class="section-lede reveal">Everything listed here has been used in production work, not just tutorials.</p>
+    <div class="skill-grid">
+      <div class="skill-group reveal">
+        <h3># python &amp; frameworks</h3>
+        <ul><li>Python</li><li>FastAPI</li><li>asyncio</li><li>SQLAlchemy</li><li>Pydantic</li><li>pytest</li><li>Pandas</li></ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3># azure</h3>
+        <ul><li>Azure OpenAI</li><li>AI Search</li><li>Durable Functions</li><li>App Services</li><li>Container Registry</li><li>Blob / Table Storage</li></ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3># data &amp; integration</h3>
+        <ul><li>SQL Server</li><li>pyodbc</li><li>Encompass REST API</li><li>Blend API</li><li>Tesseract OCR</li><li>Azure Form Recognizer</li></ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3># automation &amp; tooling</h3>
+        <ul><li>Power Automate</li><li>Docker</li><li>Git</li><li>REST API design</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <p class="kicker">contact</p>
+      <h2>Let&rsquo;s talk.</h2>
+      <p class="section-lede" style="margin-bottom:0">Open to Python and GenAI engineering roles. The fastest way to reach me:</p>
+      <div class="email-row">
+        <a class="email-link" href="mailto:richycode.dev@gmail.com">richycode.dev@gmail.com</a>
+        <button class="copy-btn" id="copyEmail" type="button">copy</button>
+      </div>
+      <p class="contact-meta">
+        <b>Navi Mumbai, India</b><span>·</span>IST (UTC+5:30)<span>·</span>immediate joiner
+      </p>
+      <div class="contact-links">
+        <a class="btn btn-ghost" href="https://github.com/richie-rk" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-primary" href="Richy_Koshy_CV.pdf" download>Download CV</a>
+      </div>
+      <details class="letter" id="letter">
+        <summary>Request my recommendation letter</summary>
+        <div class="letter-body">
+          <p>Send me the note below (fill in the blanks) and I&rsquo;ll reply with the full letter from Corban Wells, VP of Technology Product Management, PRMI.</p>
+          <pre id="letterTemplate"><b>To:</b> richycode.dev@gmail.com
+<b>Subject:</b> Recommendation letter request
+
+Hi Richy,
+
+I'd like a copy of the recommendation letter from Corban Wells (VP of Technology Product Management, PRMI).
+
+Name:
+Company:
+Role we're discussing:
+Anything specific it should speak to:
+
+Thanks,</pre>
+          <div class="letter-actions">
+            <a class="copy-btn" style="text-decoration:none;display:inline-block" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=richycode.dev%40gmail.com&amp;su=Recommendation%20letter%20request&amp;body=Hi%20Richy%2C%0A%0AI%27d%20like%20a%20copy%20of%20the%20recommendation%20letter%20from%20Corban%20Wells%20(VP%20of%20Technology%20Product%20Management%2C%20PRMI).%0A%0AName%3A%20%0ACompany%3A%20%0ARole%20we%27re%20discussing%3A%20%0AAnything%20specific%20it%20should%20speak%20to%3A%20%0A%0AThanks%2C" target="_blank" rel="noopener">open in Gmail</a>
+            <a class="copy-btn" style="text-decoration:none;display:inline-block" href="https://outlook.live.com/mail/0/deeplink/compose?to=richycode.dev%40gmail.com&amp;subject=Recommendation%20letter%20request&amp;body=Hi%20Richy%2C%0A%0AI%27d%20like%20a%20copy%20of%20the%20recommendation%20letter%20from%20Corban%20Wells%20(VP%20of%20Technology%20Product%20Management%2C%20PRMI).%0A%0AName%3A%20%0ACompany%3A%20%0ARole%20we%27re%20discussing%3A%20%0AAnything%20specific%20it%20should%20speak%20to%3A%20%0A%0AThanks%2C" target="_blank" rel="noopener">open in Outlook</a>
+            <a class="copy-btn" style="text-decoration:none;display:inline-block" href="mailto:richycode.dev@gmail.com?subject=Recommendation%20letter%20request&amp;body=Hi%20Richy%2C%0A%0AI%27d%20like%20a%20copy%20of%20the%20recommendation%20letter%20from%20Corban%20Wells%20(VP%20of%20Technology%20Product%20Management%2C%20PRMI).%0A%0AName%3A%20%0ACompany%3A%20%0ARole%20we%27re%20discussing%3A%20%0AAnything%20specific%20it%20should%20speak%20to%3A%20%0A%0AThanks%2C">email app</a>
+            <button class="copy-btn" id="copyLetter" type="button">copy template</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; <span id="year"></span> Richy Koshy</span>
+    <span>Built by hand · hosted on GitHub Pages · no trackers</span>
+  </div>
+</footer>
+
+<script>
+document.body.classList.add('js');
+
+// Reveal on scroll
+var revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function (el) { io.observe(el); });
+} else {
+  revealEls.forEach(function (el) { el.classList.add('in'); });
+}
+
+// Copy email
+var copyBtn = document.getElementById('copyEmail');
+if (copyBtn) {
+  copyBtn.addEventListener('click', function () {
+    var email = 'richycode.dev@gmail.com';
+    function done() {
+      copyBtn.textContent = 'copied';
+      setTimeout(function () { copyBtn.textContent = 'copy'; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = email; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) {}
+      document.body.removeChild(ta);
+    }
+  });
+}
+
+// Recommendation letter panel
+var letter = document.getElementById('letter');
+document.querySelectorAll('.letter-open').forEach(function (a) {
+  a.addEventListener('click', function () { if (letter) letter.open = true; });
+});
+var copyLetter = document.getElementById('copyLetter');
+if (copyLetter) {
+  copyLetter.addEventListener('click', function () {
+    var txt = "Subject: Recommendation letter request\n\nHi Richy,\n\nI'd like a copy of the recommendation letter from Corban Wells (VP of Technology Product Management, PRMI).\n\nName:\nCompany:\nRole we're discussing:\nAnything specific it should speak to:\n\nThanks,";
+    function done() {
+      copyLetter.textContent = 'copied';
+      setTimeout(function () { copyLetter.textContent = 'copy template'; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) {}
+      document.body.removeChild(ta);
+    }
+  });
+}
+
+// Active nav highlighting (scrollspy)
+var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+var spySections = [];
+navLinks.forEach(function (a) {
+  var sec = document.querySelector(a.getAttribute('href'));
+  if (sec) spySections.push({ link: a, sec: sec });
+});
+function spy() {
+  var pos = window.scrollY + 120, current = null;
+  spySections.forEach(function (s) { if (s.sec.offsetTop <= pos) current = s; });
+  if (current && window.innerHeight + window.scrollY >= document.body.offsetHeight - 40) {
+    current = spySections[spySections.length - 1];
+  }
+  spySections.forEach(function (s) { s.link.classList.toggle('active', s === current); });
+}
+window.addEventListener('scroll', spy, { passive: true });
+spy();
+
+// Back to top
+var toTop = document.getElementById('toTop');
+window.addEventListener('scroll', function () {
+  toTop.classList.toggle('show', window.scrollY > 700);
+}, { passive: true });
+toTop.addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
