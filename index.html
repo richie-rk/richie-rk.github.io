@@ -119,20 +119,19 @@ h2{
 }
 .section-lede{color:var(--muted);max-width:58ch;margin-bottom:2.8rem}
 
+/* ---------- ambient corner glow ---------- */
+.glow{
+  position:fixed;right:-240px;bottom:-240px;z-index:-1;
+  width:680px;height:680px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(95,212,176,.16) 0%,rgba(95,212,176,.055) 42%,transparent 68%);
+  transform:translate3d(0, calc(var(--scroll,0) * -170px), 0) scale(calc(1 + var(--scroll,0) * .28));
+  transition:transform .3s ease-out;
+}
+@media (max-width:760px){.glow{width:440px;height:440px;right:-170px;bottom:-170px}}
+@media (prefers-reduced-motion:reduce){.glow{transform:none;transition:none}}
+
 /* ---------- hero ---------- */
-.status-pill{
-  display:inline-flex;align-items:center;gap:.55rem;
-  font-family:var(--mono);font-size:.76rem;color:var(--text);
-  border:1px solid var(--line-2);border-radius:99px;
-  background:var(--panel-2);padding:.42rem .95rem;margin-bottom:1.5rem;
-}
-.status-pill::before{
-  content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 0 0 rgba(95,212,176,.5);animation:pulse 2.2s ease-out infinite;
-}
-@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(95,212,176,0)}100%{box-shadow:0 0 0 0 rgba(95,212,176,0)}}
-.status-pill b{color:var(--accent);font-weight:500}
-.hero{position:relative;padding-block:7.6rem 4.6rem;overflow:hidden}
+.hero{position:relative;padding-block:6.6rem 4.6rem;overflow:hidden}
 .hero::before{
   content:"";position:absolute;inset:0;pointer-events:none;
   background-image:radial-gradient(720px 380px at 14% 0%,rgba(95,212,176,.09),transparent 70%),radial-gradient(circle,rgba(154,163,192,.09) 1px,transparent 1px);
@@ -342,7 +341,7 @@ body.js .reveal.in{opacity:1;transform:none}
 @media print{
   :root{--bg:#fff;--panel:#fff;--panel-2:#fff;--line:#ccc;--line-2:#bbb;--line-3:#999;--text:#111;--muted:#444;--faint:#666;--accent:#0a7c5f;--accent-soft:rgba(10,124,95,.08);--link:#0a7c5f}
   body{font-size:11pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .nav,.to-top,.skip,.hero-actions,.contact-links,.letter,.copy-btn,#copyEmail{display:none!important}
+  .nav,.to-top,.skip,.hero-actions,.contact-links,.letter,.copy-btn,#copyEmail,.glow{display:none!important}
   section{padding-block:1.6rem}
   .hero{padding-block:1rem}
   .hero::before{display:none}
@@ -362,6 +361,7 @@ body.js .reveal.in{opacity:1;transform:none}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="glow" aria-hidden="true"></div>
 <header class="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="#top"><span class="brand-mark">rk</span>richy-koshy</a>
@@ -380,7 +380,6 @@ body.js .reveal.in{opacity:1;transform:none}
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
   <div class="wrap">
-    <p class="status-pill"><b>open</b> to Python / GenAI roles · immediate joiner</p>
     <p class="kicker">richy koshy · python engineer · genai &amp; automation</p>
     <h1>I build <span class="hl">RAG systems</span> and <span class="hl">automations</span> that hold up in production.</h1>
     <p class="lede">4.5 years across REST API integration, RPA, and GenAI. Most recently for a <strong>US mortgage originator</strong>: an enterprise RAG platform on Azure, a custom <strong>Encompass REST API SDK</strong>, and <strong>13 production automations</strong> covering regulatory compliance and investor operations. Earlier background in industrial automation (PLC/SCADA).</p>
@@ -782,6 +781,23 @@ window.addEventListener('scroll', function () {
 toTop.addEventListener('click', function () {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// Ambient glow scroll response
+var glowEl = document.querySelector('.glow');
+if (glowEl) {
+  var glowTick = false;
+  var glowUpdate = function () {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    glowEl.style.setProperty('--scroll', p.toFixed(4));
+    glowTick = false;
+  };
+  window.addEventListener('scroll', function () {
+    if (!glowTick) { requestAnimationFrame(glowUpdate); glowTick = true; }
+  }, { passive: true });
+  window.addEventListener('resize', glowUpdate, { passive: true });
+  glowUpdate();
+}
 
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
