@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B0E1C">
+<meta name="color-scheme" content="dark">
+<title>MAX AI · Enterprise RAG on Azure · Case study · Richy Koshy</title>
+<meta name="description" content="Case study: MAX AI, an enterprise RAG platform on Azure. A Durable Functions ingestion pipeline, hybrid retrieval with HyDE on Azure AI Search, and a FastAPI chat service streaming grounded, cited answers as NDJSON.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E1C'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%235FD4B0' text-anchor='middle'%3Erk%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0B0E1C;
+  --panel:#141A2E;
+  --panel-2:#10152A;
+  --line:#232B47;
+  --line-2:#2F3A5E;
+  --line-3:#42517F;
+  --text:#E9EBF5;
+  --muted:#9AA3C0;
+  --faint:#6A7391;
+  --accent:#5FD4B0;
+  --accent-soft:rgba(95,212,176,.14);
+  --link:#83E3C6;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --radius:14px;
+  --radius-sm:9px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:#04241A}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#04241A;padding:.5rem 1rem;z-index:99;border-radius:0 0 8px 0;font-family:var(--mono);font-size:.85rem}
+.skip:focus{left:0}
+.wrap{width:min(1080px,92vw);margin-inline:auto}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,14,28,.82);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
+.nav-social{flex:1;display:flex;justify-content:center;align-items:center;gap:1.15rem}
+.nav-icon{display:flex;color:var(--muted);transition:color .18s ease}
+.nav-icon:hover{color:var(--accent);text-decoration:none}
+.nav-icon svg{display:block;width:21px;height:21px;fill:currentColor}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.92rem;color:var(--text);letter-spacing:.02em}
+.brand:hover{text-decoration:none}
+.brand-mark{
+  display:grid;place-items:center;width:30px;height:30px;border-radius:8px;
+  background:var(--panel);border:1px solid var(--line-2);
+  color:var(--accent);font-weight:500;font-size:.8rem;
+}
+.nav-links{display:flex;align-items:center;gap:1.4rem;font-family:var(--mono);font-size:.82rem}
+.nav-links a:not(.btn){color:var(--muted);padding-bottom:2px;border-bottom:1px solid transparent}
+.nav-links a:not(.btn):hover{color:var(--text);text-decoration:none}
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.84rem;font-weight:500;
+  padding:.6rem 1.05rem;border-radius:10px;border:1px solid transparent;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+  cursor:pointer;white-space:nowrap;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:#04241A}
+.btn-primary:hover{box-shadow:0 6px 22px -6px rgba(95,212,176,.40)}
+
+/* ---------- ambient corner glow ---------- */
+.glow{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(720px 380px at 86% 100%,rgba(95,212,176,.09),transparent 70%);
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-block:5.4rem 3.4rem;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(720px 380px at 14% 0%,rgba(95,212,176,.09),transparent 70%),radial-gradient(circle,rgba(154,163,192,.09) 1px,transparent 1px);
+  background-size:auto,26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 78%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 78%);
+}
+.hero .wrap{position:relative}
+.kicker{
+  font-family:var(--mono);font-size:.85rem;letter-spacing:.07em;
+  color:var(--muted);margin-bottom:1.2rem;
+}
+.kicker::before{content:"# ";color:var(--accent)}
+.hero h1{
+  font-family:var(--display);
+  font-size:clamp(2rem,4.6vw,3.3rem);
+  font-weight:800;line-height:1.1;letter-spacing:-.02em;
+  max-width:24ch;margin-bottom:1.3rem;
+}
+.hl{
+  text-decoration:underline;
+  text-decoration-color:var(--accent);
+  text-decoration-thickness:.11em;
+  text-underline-offset:.16em;
+}
+.lede{color:var(--muted);max-width:66ch;font-size:1.08rem;margin-bottom:1.9rem}
+.lede strong{color:var(--text);font-weight:500}
+.factline{
+  font-family:var(--mono);font-size:.8rem;color:var(--faint);
+  display:flex;flex-wrap:wrap;gap:.35rem .6rem;align-items:center;
+}
+.factline .dot{color:var(--line-3)}
+.factline b{color:var(--muted);font-weight:500}
+
+/* ---------- article scaffolding ---------- */
+section{padding-block:3.4rem}
+h2{
+  font-family:var(--display);font-size:clamp(1.5rem,2.8vw,2.05rem);
+  font-weight:700;letter-spacing:-.015em;line-height:1.15;margin-bottom:.9rem;
+}
+.prose p{color:var(--muted);max-width:72ch;margin-bottom:1.05rem}
+.prose p strong{color:var(--text);font-weight:500}
+.prose ul{list-style:none;margin:0 0 1.2rem;display:grid;gap:.55rem;max-width:72ch}
+.prose li{color:var(--muted);padding-left:1.25rem;position:relative}
+.prose li::before{content:"·";position:absolute;left:.3rem;color:var(--accent);font-weight:700}
+.prose li b{color:var(--text);font-weight:500}
+code{
+  font-family:var(--mono);font-size:.85em;color:var(--text);
+  background:var(--panel-2);border:1px solid var(--line);border-radius:6px;
+  padding:.08em .4em;white-space:nowrap;
+}
+.aside{
+  border:1px solid var(--line);border-left:3px solid var(--accent);
+  background:linear-gradient(90deg,var(--accent-soft),transparent 40%);
+  border-radius:var(--radius-sm);
+  padding:1.05rem 1.3rem;margin:1.3rem 0;max-width:72ch;color:var(--muted);
+}
+.aside b{color:var(--text);font-weight:500}
+.outcome{
+  font-family:var(--mono);font-size:.82rem;color:var(--text);
+  background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:.75rem 1rem;margin:1.3rem 0;max-width:fit-content;
+}
+.outcome::before{content:">> ";color:var(--accent)}
+.mini-quote{
+  border-left:2px solid var(--line-3);padding-left:1rem;margin:0 0 1.2rem;
+  color:var(--muted);font-style:italic;max-width:64ch;
+}
+.mini-quote span{display:block;font-style:normal;font-family:var(--mono);font-size:.75rem;color:var(--faint);margin-top:.4rem}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem}
+.tag{
+  font-family:var(--mono);font-size:.72rem;color:var(--muted);
+  border:1px solid var(--line-2);border-radius:99px;padding:.22rem .65rem;
+}
+
+/* decision list */
+.steps{counter-reset:step;display:grid;gap:.85rem;max-width:72ch;margin:1.2rem 0}
+.step{
+  counter-increment:step;position:relative;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);
+  padding:1rem 1.2rem 1rem 3.4rem;color:var(--muted);
+}
+.step::before{
+  content:counter(step,decimal-leading-zero);
+  position:absolute;left:1.05rem;top:1.02rem;
+  font-family:var(--mono);font-size:.85rem;color:var(--accent);
+}
+.step b{color:var(--text);font-weight:500}
+
+/* ---------- architecture diagram ---------- */
+.diagram{
+  margin:1.6rem 0 1.4rem;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--panel-2);
+}
+.diagram-scroll{overflow-x:auto;padding:1.2rem}
+.diagram svg{display:block;min-width:840px;width:100%;height:auto}
+.diagram text{font-family:var(--mono)}
+.diagram figcaption{
+  border-top:1px solid var(--line);padding:.8rem 1.2rem;
+  font-family:var(--mono);font-size:.76rem;color:var(--faint);
+}
+.flow{stroke-dasharray:3 9;animation:flow 1.5s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-12}}
+
+/* footer + to-top */
+.backline{padding:1rem 0 3.2rem;font-family:var(--mono);font-size:.85rem}
+.to-top{
+  position:fixed;right:1.4rem;bottom:1.4rem;z-index:60;
+  width:44px;height:44px;border-radius:12px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line-2);color:var(--muted);
+  font-size:1.1rem;display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .25s ease,transform .25s ease,visibility .25s,border-color .15s ease,color .15s ease;
+}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);color:var(--accent)}
+footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem;font-family:var(--mono);font-size:.75rem;color:var(--faint)}
+
+/* reveal */
+body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+body.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:760px){
+  .nav-links a:not(.btn){display:none}
+  section{padding-block:2.6rem}
+}
+@media print{
+  .nav,.to-top,.skip,.glow,.backline{display:none!important}
+  section{padding-block:1.4rem}
+  .hero{padding-block:1rem}
+  .hero::before{display:none}
+  body.js .reveal{opacity:1!important;transform:none!important}
+  .step,.aside{break-inside:avoid}
+  .btn-primary{background:none;color:#111;border:1px solid #999}
+  a{color:#0a7c5f}
+  .diagram-scroll{overflow:visible}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  body.js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="glow" aria-hidden="true"></div>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">rk</span>richy-koshy</a>
+    <div class="nav-social">
+      <a class="nav-icon" href="https://github.com/richie-rk" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in new tab)" title="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <a class="nav-icon" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile (opens in new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+    </div>
+    <nav class="nav-links" aria-label="Site">
+      <a href="index.html#work">&#8592; all work</a>
+      <a href="index.html#contact">contact</a>
+      <a class="btn btn-primary" href="Richy_Koshy_CV.pdf" download>Download CV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker">case-study · max-ai · enterprise rag</p>
+    <h1>MAX AI: <span class="hl">grounded answers</span> from the company&rsquo;s own documents, with citations.</h1>
+    <p class="lede">PRMI&rsquo;s primary knowledge retrieval tool. Mortgage staff ask natural-language questions against guidelines, training and marketing material, and get answers grounded strictly in that corpus, cited back to the source page. I owned the <strong>Python backend across all three services</strong>: the streaming chat API, the document-ingestion pipeline, and the utility Function App. A colleague owned the React console.</p>
+    <p class="factline">
+      <b>3</b> Azure services<span class="dot">·</span>
+      <b>NDJSON</b> token streaming<span class="dot">·</span>
+      <b>1</b> search index per project<span class="dot">·</span>
+      chunks <b>1000/100</b><span class="dot">·</span>
+      ada-002 <b>1536-d</b><span class="dot">·</span>
+      GPT-4o at <b>temp 0</b>
+    </p>
+  </div>
+</section>
+
+<!-- ================= PROBLEM ================= -->
+<section id="problem">
+  <div class="wrap prose">
+    <p class="kicker reveal">01 · the problem</p>
+    <h2 class="reveal">Why retrieval, not a bigger prompt or a fine-tune</h2>
+    <p class="reveal">A language model&rsquo;s knowledge is frozen in its weights: a mortgage guideline revised last Tuesday cannot be in them. It has no provenance: an answer is a blend of billions of gradient updates with no pointer back to a source. And when it does not know, it fabricates fluently. For a regulated lender, each of those three is disqualifying on its own. Answers must be <strong>current</strong>, <strong>cited</strong>, and able to <strong>refuse</strong>.</p>
+    <p class="reveal">Fine-tuning solves none of this economically. Re-indexing one changed PDF takes seconds; a fine-tune takes hours and a redeploy. Weights cannot point a compliance officer at a source line. Retrieval can be filtered per user at query time; weights cannot be un-learned per user. So the design moves facts out of the model and into a search index, and converts one open-ended generation problem into two smaller, separately debuggable ones: <strong>retrieval</strong> (did the right chunk surface?) and <strong>reading comprehension</strong> (did the model use it faithfully?). When an answer is wrong, you can tell which half failed. That separability drives everything below.</p>
+  </div>
+</section>
+
+<!-- ================= SHAPE ================= -->
+<section id="architecture">
+  <div class="wrap prose">
+    <p class="kicker reveal">02 · the shape of the system</p>
+    <h2 class="reveal">Two halves, opposite performance profiles, one shared contract</h2>
+    <p class="reveal">Ingestion is throughput-bound: CPU-heavy, tolerant of hours of latency, and it must survive restarts. Chat is latency-bound: almost pure network I/O, stateless, and judged on time to first token. Coupling them into one process would force one set of trade-offs onto both, so they ship as separate deployables: a Durable Functions app with unlimited timeout for the write path, and an always-warm FastAPI service for the read path. A third Function App carries the utility surface: auth, projects, users, session history, feedback.</p>
+
+    <figure class="diagram reveal">
+      <div class="diagram-scroll">
+      <svg viewBox="0 0 940 640" role="img" aria-label="MAX AI architecture: a Durable Functions write path extracts, chunks, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search and HyDE, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON.">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#6A7391"/>
+          </marker>
+        </defs>
+
+        <!-- lane labels -->
+        <text x="20" y="26" font-size="10.5" fill="#6A7391" letter-spacing="2">WRITE PATH · BATCH · DURABLE FUNCTIONS</text>
+        <text x="20" y="420" font-size="10.5" fill="#6A7391" letter-spacing="2">READ PATH · INTERACTIVE · FASTAPI</text>
+
+        <!-- write row connectors -->
+        <path d="M170 78 H215" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M170 78 H215" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <path d="M390 78 H435" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M390 78 H435" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="412" y="66" font-size="10.5" fill="#9AA3C0" text-anchor="middle">start_new</text>
+        <path d="M610 78 H655" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M610 78 H655" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="632" y="66" font-size="10.5" fill="#9AA3C0" text-anchor="middle">yield</text>
+
+        <!-- activity to pipeline strip -->
+        <path d="M785 112 V150" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M785 112 V150" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+
+        <!-- strip to audit (dashed) -->
+        <path d="M240 184 H196" fill="none" stroke="#42517F" stroke-width="1.3" stroke-dasharray="4 5" marker-end="url(#arr)"/>
+        <text x="218" y="172" font-size="10.5" fill="#9AA3C0" text-anchor="middle">audit</text>
+
+        <!-- strip to index -->
+        <path d="M575 214 V266" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M575 214 V266" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="662" y="244" font-size="10.5" fill="#9AA3C0" text-anchor="middle">chunks + vectors ×1000</text>
+
+        <!-- read row connectors -->
+        <path d="M170 472 H215" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M170 472 H215" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="192" y="460" font-size="10.5" fill="#9AA3C0" text-anchor="middle">question</text>
+        <path d="M390 472 H435" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M390 472 H435" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <path d="M610 472 H655" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M610 472 H655" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="632" y="460" font-size="10.5" fill="#9AA3C0" text-anchor="middle">top-k</text>
+
+        <!-- retrieve to index, both directions -->
+        <path d="M510 438 V362" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <text x="498" y="404" font-size="10.5" fill="#9AA3C0" text-anchor="end">HyDE query</text>
+        <path d="M545 362 V438" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M545 362 V438" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="558" y="404" font-size="10.5" fill="#9AA3C0">chunks</text>
+
+        <!-- LLM down to stream strip -->
+        <path d="M785 506 V546" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M785 506 V546" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+        <text x="800" y="530" font-size="10.5" fill="#9AA3C0">tokens</text>
+
+        <!-- stream strip back to UI -->
+        <path d="M240 578 C150 578 95 560 95 510" fill="none" stroke="#42517F" stroke-width="1.4" marker-end="url(#arr)"/>
+        <path d="M240 578 C150 578 95 560 95 510" class="flow" fill="none" stroke="#5FD4B0" stroke-width="1.6" opacity=".85"/>
+
+        <!-- WRITE boxes -->
+        <rect x="20" y="46" width="150" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="95" y="74" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Blob container</text>
+        <text x="95" y="92" font-size="10.5" fill="#9AA3C0" text-anchor="middle">pdf · docx · pptx · mp4</text>
+
+        <rect x="215" y="46" width="175" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="302" y="74" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">HTTP starter</text>
+        <text x="302" y="92" font-size="10.5" fill="#9AA3C0" text-anchor="middle">validates · returns 202</text>
+
+        <rect x="435" y="46" width="175" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="522" y="74" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Orchestrator</text>
+        <text x="522" y="92" font-size="10.5" fill="#9AA3C0" text-anchor="middle">replayed generator</text>
+
+        <rect x="655" y="46" width="260" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="785" y="74" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Activity</text>
+        <text x="785" y="92" font-size="10.5" fill="#9AA3C0" text-anchor="middle">all real work · no timeout</text>
+
+        <!-- audit box -->
+        <rect x="20" y="152" width="176" height="62" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="108" y="178" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">SQL audit table</text>
+        <text x="108" y="196" font-size="10.5" fill="#9AA3C0" text-anchor="middle">checkpoint · per file</text>
+
+        <!-- pipeline strip -->
+        <rect x="240" y="152" width="675" height="62" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="577" y="178" font-size="11" fill="#E9EBF5" font-weight="500" text-anchor="middle">PER-FILE PIPELINE</text>
+        <text x="577" y="197" font-size="10.5" fill="#9AA3C0" text-anchor="middle">skip if indexed &#10003; &#8594; extract &#8594; chunk 1000/100 &#8594; embed 1536-d &#8594; upsert ×1000</text>
+
+        <!-- INDEX -->
+        <rect x="240" y="268" width="500" height="92" rx="10" fill="#141A2E" stroke="#3E7A66" stroke-width="1.3"/>
+        <text x="490" y="298" font-size="13.5" fill="#E9EBF5" font-weight="500" text-anchor="middle">Azure AI Search · one index per project</text>
+        <text x="490" y="318" font-size="10.5" fill="#9AA3C0" text-anchor="middle">BM25 keywords + HNSW vectors (1536-d · cosine)</text>
+        <text x="490" y="336" font-size="10.5" fill="#9AA3C0" text-anchor="middle">semantic reranker on top</text>
+        <text x="765" y="318" font-size="10.5" fill="#6A7391">&#8592; the only shared contract</text>
+
+        <!-- READ boxes -->
+        <rect x="20" y="440" width="150" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="95" y="468" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">React console</text>
+        <text x="95" y="486" font-size="10.5" fill="#9AA3C0" text-anchor="middle">reads the stream live</text>
+
+        <rect x="215" y="440" width="175" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="302" y="468" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">POST /chat</text>
+        <text x="302" y="486" font-size="10.5" fill="#9AA3C0" text-anchor="middle">validate · pick model</text>
+
+        <rect x="435" y="440" width="175" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="522" y="468" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Hybrid retrieve</text>
+        <text x="522" y="486" font-size="10.5" fill="#9AA3C0" text-anchor="middle">rerank · top-k</text>
+
+        <rect x="655" y="440" width="260" height="66" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="785" y="468" font-size="13" fill="#E9EBF5" font-weight="500" text-anchor="middle">Azure OpenAI · GPT-4o</text>
+        <text x="785" y="486" font-size="10.5" fill="#9AA3C0" text-anchor="middle">grounded prompt · temp 0 · stream</text>
+
+        <!-- stream strip -->
+        <rect x="240" y="548" width="675" height="62" rx="10" fill="#141A2E" stroke="#2F3A5E" stroke-width="1.2"/>
+        <text x="577" y="574" font-size="11" fill="#E9EBF5" font-weight="500" text-anchor="middle">NDJSON STREAM · one JSON object per line</text>
+        <text x="577" y="593" font-size="10.5" fill="#9AA3C0" text-anchor="middle">frame 0: citations + metadata &#8594; token frames &#8594; final frame: follow-up questions</text>
+      </svg>
+      </div>
+      <figcaption>Write path on top, read path on the bottom. The search index in the middle is the only thing the two halves share.</figcaption>
+    </figure>
+
+    <div class="aside reveal"><b>Provenance, stated plainly:</b> the platform grew out of Microsoft&rsquo;s open-source RAG reference architecture. The bespoke engineering on top is the HyDE retrieval path, the per-project prompt and index registry, the audit-driven incremental re-index, the multimodal loaders, and the NDJSON streaming protocol with in-band follow-up questions.</div>
+  </div>
+</section>
+
+<!-- ================= WRITE PATH ================= -->
+<section id="write-path">
+  <div class="wrap prose">
+    <p class="kicker reveal">03 · the write path</p>
+    <h2 class="reveal">How a PDF becomes searchable chunks with page-level citations</h2>
+    <p class="reveal"><b>The durable trio.</b> A single HTTP function cannot index a corpus: the work outlives any HTTP timeout, and at scale a crash mid-run is a certainty, not a possibility. Durable Functions splits accept, coordinate, and work. An async HTTP starter validates the request and returns <code>202 Accepted</code> with a status-polling URL in milliseconds, the asynchronous request-reply pattern. The orchestrator is a replayed Python generator that describes the workflow and nothing else. The activity does all the real work, with the function timeout removed entirely.</p>
+    <ul class="reveal">
+      <li><b>The per-file pipeline:</b> download and detect encoding, dispatch by file type to the right loader, split into 1,000-character chunks with 100-character overlap that hunt for a clean sentence boundary and keep page provenance, embed with ada-002 into 1,536-dimension vectors, and upsert in batches of 1,000, the API limit.</li>
+      <li><b>Scanned documents:</b> Azure Document Intelligence extracts text with tables reconstructed as HTML, rows and column spans preserved. For mortgage rate matrices, losing the grid loses the meaning.</li>
+      <li><b>Idempotent by construction:</b> every file writes a success or failure row to an audit table, and each run starts by reading the successes back and skipping them. The audit table is the checkpoint; a crashed run is resumed by re-invoking the endpoint.</li>
+      <li><b>Per-file failure isolation:</b> the unit of failure is one document, not the batch. One bad PDF cannot abort a five-thousand-file run, and the exception text is persisted so triage means a query, not grepping logs.</li>
+      <li><b>The corpus is not just text:</b> every PDF page is rasterized to a PNG so the UI can show the exact cited page. Training videos are frame-sampled with OpenCV, then near-duplicates are dropped by perceptual hashing, so a 40-minute recording yields a handful of distinct slides instead of 72,000 frames. Audio runs through the Azure Speech batch API behind a polling loop.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= READ PATH ================= -->
+<section id="read-path">
+  <div class="wrap prose">
+    <p class="kicker reveal">04 · the read path</p>
+    <h2 class="reveal">Retrieve, ground, stream</h2>
+    <p class="reveal"><b>Retrieval is hybrid, in three layers.</b> BM25 over a lemmatizing English analyzer catches exact identifiers that embeddings blur: program names, form numbers. An HNSW vector index (1,536-d, cosine) catches paraphrase that keywords miss entirely. A semantic reranker then re-scores the top candidates with a cross-encoder: too expensive for the whole index, affordable for fifty. Recall is stage one&rsquo;s job; precision is stage two&rsquo;s.</p>
+    <p class="reveal"><b>HyDE is the most interesting trick in the system.</b> Queries and documents sit in different regions of embedding space, not because they differ in meaning but because they differ in register and length: eight words of telegraphic shorthand versus a thousand characters of formal prose. So instead of embedding the question, an LLM drafts a plausible answer and <em>that</em> gets embedded. The draft is wrong on facts but right on form, so its vector lands in the document neighborhood and retrieves the real chunks the fake one imitates. The fabricated text is thrown away; only its position in space is used. It costs one extra completion per question, which is why it is enabled per index rather than globally.</p>
+    <p class="reveal"><b>Grounding is a data-formatting decision as much as a prompting one.</b> Each retrieved chunk is prefixed with its own file and page label inside the context window, which is the only reason the model can emit citations like <code>[guide.pdf#page=12]</code>. The system prompt constrains answers to the provided sources and mandates refusal when they do not contain the answer. Generation runs at temperature 0 with a hard token ceiling: for a compliance-facing tool, determinism and a bounded cost per call beat variety.</p>
+    <p class="reveal"><b>Streaming is NDJSON:</b> one complete JSON object per line over ordinary chunked HTTP. A single JSON array cannot be parsed until its closing bracket arrives; SSE imposes framing and reconnection semantics this app does not need; WebSockets add a stateful channel for what is a one-shot exchange. NDJSON gives incremental parseability with zero protocol overhead. Frame 0 carries the citations and model metadata <em>before the first token</em>, so the UI paints the sources panel while generation is still in flight. Token frames follow, and the final frame carries suggested follow-up questions, extracted from the stream by a small state machine so its delimiters never leak into the visible answer.</p>
+  </div>
+</section>
+
+<!-- ================= DECISIONS ================= -->
+<section id="decisions">
+  <div class="wrap prose">
+    <p class="kicker reveal">05 · decisions that carried the design</p>
+    <h2 class="reveal">Seven choices, each with a reason</h2>
+    <div class="steps reveal">
+      <div class="step"><b>Two deployables, opposite profiles.</b> Batch CPU work and sub-second token streaming do not belong in one process; each half gets the runtime its trade-offs demand.</div>
+      <div class="step"><b>A container because of OCR.</b> Local PDF partitioning and table extraction in the activity function use the unstructured library, which needs two system installs: poppler to rasterize pages and Tesseract to read them. A standard Function App cannot carry system packages, so the ingestion ships as a Docker image served from Azure Container Registry.</div>
+      <div class="step"><b>One search index per project.</b> Multi-tenancy by physical isolation, with a project-to-index map in SQL. Simple to reason about, and nothing to filter at query time.</div>
+      <div class="step"><b>NDJSON with metadata-first framing.</b> Citations arrive before the first token. Perceived latency is the UX metric, and the sources panel is on screen while the model is still writing.</div>
+      <div class="step"><b>Audit-table checkpointing.</b> State lives in SQL, not process memory, so resume equals re-invoke and progress is inspectable with a query.</div>
+      <div class="step"><b>HyDE per index, not globally.</b> A real recall win that costs one completion of latency per question, so it is a per-corpus decision instead of a default.</div>
+      <div class="step"><b>Temperature 0 and a token ceiling.</b> Compliance answers should be reproducible, and every call has a bounded worst-case cost.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEXT ================= -->
+<section id="next">
+  <div class="wrap prose">
+    <p class="kicker reveal">06 · what I would build next</p>
+    <h2 class="reveal">The honest roadmap</h2>
+    <ul class="reveal">
+      <li><b>Fan-out/fan-in ingestion:</b> list blobs in the orchestrator and schedule one activity per file with per-file retry, turning a serial hours-long run into parallel work.</li>
+      <li><b>A retrieval evaluation harness:</b> a labelled question set with recall@k tracking, so chunk size, top-k and HNSW parameters get tuned against measurement instead of anecdote.</li>
+      <li><b>Structured outputs for the follow-up channel:</b> replace in-band text delimiters with a tool call, so the transport stops depending on the model&rsquo;s punctuation.</li>
+    </ul>
+    <div class="outcome reveal">shipped as PRMI&rsquo;s primary knowledge retrieval tool · grounded, cited answers over the organization&rsquo;s own corpus</div>
+    <div class="tags reveal">
+      <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Azure OpenAI</span><span class="tag">Azure AI Search</span><span class="tag">Durable Functions</span><span class="tag">LangChain</span><span class="tag">tiktoken</span><span class="tag">SQL Server</span><span class="tag">Docker · ACR</span>
+    </div>
+    <p class="backline"><a href="index.html#work">&#8592; back to all work</a> · <a href="final-docs.html">next case study: Final Docs &#8594;</a></p>
+  </div>
+</section>
+
+</main>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; <span id="year"></span> Richy Koshy</span>
+    <span>Built by hand · hosted on GitHub Pages · no trackers</span>
+  </div>
+</footer>
+
+<script>
+document.body.classList.add('js');
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Reveal on scroll
+var revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(function (el) { io.observe(el); });
+} else {
+  revealEls.forEach(function (el) { el.classList.add('in'); });
+}
+
+// Back to top
+var toTop = document.getElementById('toTop');
+window.addEventListener('scroll', function () {
+  toTop.classList.toggle('show', window.scrollY > 700);
+}, { passive: true });
+toTop.addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+</script>
+</body>
+</html>
