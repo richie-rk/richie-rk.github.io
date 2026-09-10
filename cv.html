@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B0E1C">
+<meta name="color-scheme" content="dark">
+<title>CV · Richy Koshy</title>
+<meta name="description" content="Richy Koshy - Python engineer. 5+ years building production GenAI, backend, and automation systems for a US mortgage originator: an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0E1C'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%235FD4B0' text-anchor='middle'%3Erk%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0B0E1C; --panel:#141A2E; --panel-2:#10152A;
+  --line:#232B47; --line-2:#2F3A5E;
+  --text:#E9EBF5; --muted:#9AA3C0; --faint:#6A7391;
+  --accent:#5FD4B0; --accent-soft:rgba(95,212,176,.14); --link:#83E3C6;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --radius:14px; --radius-sm:9px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:var(--body); font-size:16px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:#04241A}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#04241A;padding:.5rem 1rem;z-index:99;border-radius:0 0 8px 0;font-family:var(--mono);font-size:.85rem}
+.skip:focus{left:0}
+
+/* background glows, mirrored like the portfolio */
+body::before,body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
+body::before{background:radial-gradient(720px 380px at 14% 0%,rgba(95,212,176,.09),transparent 70%)}
+body::after{background:radial-gradient(720px 380px at 86% 100%,rgba(95,212,176,.09),transparent 70%)}
+
+.wrap{width:min(760px,92vw);margin-inline:auto}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,14,28,.82);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 0}
+.back{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.82rem;color:var(--muted);
+}
+.back:hover{color:var(--accent);text-decoration:none}
+.back svg{width:15px;height:15px}
+.tbsocial{flex:1;display:flex;justify-content:center;align-items:center;gap:1.15rem}
+.nav-icon{display:flex;color:var(--muted);transition:color .18s ease}
+.nav-icon:hover{color:var(--accent);text-decoration:none}
+.nav-icon svg{display:block;width:21px;height:21px;fill:currentColor}
+@media(max-width:560px){.backtxt{display:none}}
+.dl{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.8rem;font-weight:500;
+  color:#04241A;background:var(--accent);
+  padding:.5rem .9rem;border-radius:8px;
+}
+.dl:hover{background:var(--link);text-decoration:none}
+.dl svg{width:15px;height:15px}
+
+/* ---------- header ---------- */
+header.cv{padding:3rem 0 1.4rem}
+header.cv h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,7vw,3rem);line-height:1.02;letter-spacing:-.02em}
+.tagline{font-family:var(--mono);font-size:.9rem;color:var(--accent);margin-top:.7rem}
+.contact{display:flex;flex-wrap:wrap;gap:.6rem 1.9rem;margin-top:1.2rem;font-family:var(--mono);font-size:.96rem;color:var(--muted)}
+.contact a{color:var(--muted)}
+.contact a:hover{color:var(--accent)}
+.summary{margin-top:1.5rem;font-size:1.02rem;color:#D5D9EC;line-height:1.6}
+.summary b{color:var(--text);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:1.9rem 0;border-top:1px solid var(--line)}
+.kick{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.03em;margin-bottom:1.3rem}
+.kick .n{color:var(--faint)}
+
+.role{font-family:var(--display);font-weight:700;font-size:1.22rem;line-height:1.2;letter-spacing:-.01em}
+.role .co{color:var(--muted);font-weight:500;font-size:.95rem}
+.rolemeta{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:.45rem 0 .9rem}
+.job{margin-bottom:2rem}
+.job:last-child{margin-bottom:0}
+
+ul.pts{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+ul.pts>li{position:relative;padding-left:1.15rem}
+ul.pts>li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.subs{list-style:none;margin:.6rem 0 0 .2rem;display:flex;flex-direction:column;gap:.45rem}
+.subs li{position:relative;padding-left:1.05rem;font-size:.93rem;color:#C7CCE4;line-height:1.5}
+.subs li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:1px;background:var(--faint)}
+li b{color:var(--text);font-weight:600}
+.hl{color:var(--accent);font-weight:600}
+
+/* flagship rows: clickable title + right-aligned deep-dive button */
+.flagrow{display:flex;align-items:flex-start;justify-content:space-between;gap:1.1rem}
+.flagbody{flex:1 1 auto}
+.proj{color:var(--link);font-weight:700;border-bottom:1px solid rgba(131,227,198,.4)}
+.proj:hover{border-bottom-color:var(--accent);text-decoration:none;color:var(--accent)}
+.flagbtn{
+  flex:none;display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.78rem;font-weight:500;
+  color:var(--accent);border:1px solid var(--accent);
+  padding:.42rem .85rem;border-radius:8px;white-space:nowrap;margin-top:.15rem;
+}
+.flagbtn:hover{background:var(--accent-soft);text-decoration:none}
+.flagbtn span{font-size:1em;line-height:1}
+@media(max-width:600px){
+  .flagrow{flex-direction:column;gap:.6rem}
+  .flagbtn{margin-top:0}
+}
+
+/* quote */
+.quote{
+  margin:1.2rem 0;padding:.9rem 1.1rem;
+  border-left:3px solid var(--accent);
+  background:var(--accent-soft);border-radius:0 10px 10px 0;
+  font-size:.98rem;color:#DCE0F0;font-style:italic;
+}
+.quote span{display:block;margin-top:.5rem;font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+
+/* two-up grids for skills / edu */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+@media(max-width:560px){.grid{grid-template-columns:1fr;gap:1.1rem}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:1.1rem 1.2rem}
+.card h3{font-family:var(--mono);font-size:.76rem;color:var(--accent);font-weight:500;margin-bottom:.7rem;letter-spacing:.02em}
+.skillrow{margin-bottom:.6rem;font-size:.9rem;line-height:1.5}
+.skillrow:last-child{margin-bottom:0}
+.skillrow b{display:block;font-family:var(--mono);font-size:.72rem;color:var(--faint);font-weight:500;margin-bottom:.1rem}
+.eduline{font-size:.92rem;margin-bottom:.2rem}
+.eduline .co{color:var(--muted);font-size:.85rem}
+.linklist{display:flex;flex-direction:column;gap:.55rem}
+.linklist a{display:flex;align-items:center;gap:.55rem;font-size:.9rem;color:var(--link)}
+.linklist a svg{width:16px;height:16px;flex:none;color:var(--muted)}
+.linklist a:hover svg{color:var(--accent)}
+
+/* footer back */
+.footback{padding:2.2rem 0 3rem;border-top:1px solid var(--line);text-align:center}
+.footback a{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.85rem;color:var(--muted);
+}
+.footback a:hover{color:var(--accent);text-decoration:none}
+.footback svg{width:15px;height:15px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span class="backtxt">Back to portfolio</span>
+    </a>
+    <div class="tbsocial">
+      <a class="nav-icon" href="https://github.com/richie-rk" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in new tab)" title="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <a class="nav-icon" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile (opens in new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+    </div>
+    <a class="dl" href="Richy_Koshy_CV.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </a>
+  </div>
+</div>
+
+<main id="main" class="wrap">
+
+<header class="cv">
+  <h1>Richy Koshy</h1>
+  <div class="tagline"># python engineer &middot; genai, backend &amp; automation</div>
+  <div class="contact">
+    <span>Navi Mumbai, India</span>
+    <a href="mailto:richycode.dev@gmail.com">richycode.dev@gmail.com</a>
+    <a href="https://github.com/richie-rk" target="_blank" rel="noopener">github.com/richie-rk</a>
+    <a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener">linkedin.com/in/richy-koshy</a>
+  </div>
+  <p class="summary"><b>5+ years of Python development</b>, plus <b>a year of industrial automation</b>. Shipped production GenAI, backend, and automation systems for a US mortgage originator: an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations across compliance and investor operations.</p>
+</header>
+
+<section>
+  <div class="kick"><span class="n">01</span> &middot; work experience</div>
+
+  <div class="job">
+    <div class="role">Software Developer <span class="co">&middot; Primary Residential Mortgage, Inc.</span></div>
+    <div class="rolemeta">US mortgage originator (PRMI) &middot; sole engineer owning requirements, architecture, build, UAT, and production</div>
+    <ul class="pts">
+      <li>
+        <div class="flagrow">
+          <p class="flagbody"><a class="proj" href="max-ai.html">MAX AI, enterprise RAG platform</a>. Owned the full Python backend across three Azure services; now PRMI's primary knowledge-retrieval tool <span class="hl">organization-wide</span>.</p>
+          <a class="flagbtn" href="max-ai.html" aria-label="MAX AI deep dive">deep dive <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <ul class="subs">
+          <li><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE query expansion; Azure OpenAI GPT-4o with ada-002 embeddings; one index per project, with multi-tenant access mapping in SQL Server behind Azure AD auth.</li>
+          <li><b>Ingestion:</b> Durable Functions fan-out pipeline, idempotent via audit-table checkpointing with per-file failure isolation; local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry; Azure Document Intelligence for scans.</li>
+          <li><b>Chat:</b> FastAPI service streaming NDJSON with metadata-first framing, so citations render before the first token.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="flagrow">
+          <p class="flagbody"><a class="proj" href="final-docs.html">Final Docs refactor</a>. Rebuilt a monolithic automation into config-driven dynamic dispatch (YAML &rarr; handlers), treating each investor as data, not code: <span class="hl">4 new investors onboarded in 1 month</span> vs. a full quarter before; onboarding cut from <span class="hl">2-4 weeks to days</span>; adopted as the template for 2 other initiatives.</p>
+          <a class="flagbtn" href="final-docs.html" aria-label="Final Docs deep dive">deep dive <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </li>
+      <li>
+        <div class="flagrow">
+          <p class="flagbody"><a class="proj" href="final-docs.html">Reconciliation engine</a>. Strategy pattern with one YAML config per investor; pandas merge on composite keys reconciles internal records against investor files; unmatched records get a fail-safe Encompass lookup, and true exceptions land in an operations review queue, so nothing is silently dropped.</p>
+          <a class="flagbtn" href="final-docs.html" aria-label="Reconciliation engine deep dive">deep dive <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="quote">&ldquo;PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.&rdquo;<span>Corban Wells, VP Technology Product Management, PRMI</span></div>
+    <ul class="pts">
+      <li><b>Encompass REST API SDK.</b> Internal Python package consumed by all 13 automations: OAuth2 token caching, concurrent paginated pipeline reads (ThreadPoolExecutor), transactional loan writes with a lock &rarr; write &rarr; read-back &rarr; unlock pattern that prevents lost updates on shared loans, eFolder document CRUD, disclosure tracking, and 429 retry with backoff.</li>
+      <li><span class="hl">13 production RPA automations</span> (Power Automate + Python) across ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend credit management, warehouse collateral, and suspense resolution across 9 investors; plus 3 OCR pipelines (Tesseract + Azure Form Recognizer) extracting credit data from PDF reports.</li>
+      <li><b>Delivery ownership.</b> Led BRD/PRD gathering, flow diagrams, first-call sign-offs, UAT coordination, and documentation for every delivered automation.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="role">Software Developer <span class="co">&middot; Antz AI Solutions</span></div>
+    <div class="rolemeta">client: TechSpan Engineering (IoT)</div>
+    <ul class="pts">
+      <li><b>HydroQ API.</b> FastAPI + SQLAlchemy REST API for remote water-quality monitoring with a generic CRUD layer over PostgreSQL and MSSQL; replaced <span class="hl">2-4 hours of manual onboarding per site</span> with API-driven workflows; full endpoint test coverage.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="role">Industrial Automation Engineer <span class="co">&middot; Goodyear South Asia Tyres</span></div>
+    <div class="rolemeta">tyre manufacturing &middot; PLC, drives, and controls</div>
+    <ul class="pts">
+      <li>Programmed and maintained PLCs and variable-frequency drives across tyre-curing and material-handling lines.</li>
+      <li>Led breakdown troubleshooting on production-critical electrical systems, minimizing line downtime.</li>
+      <li>Commissioned CTMS &amp; BMS systems alongside Rockwell and Honeywell engineers.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="kick"><span class="n">02</span> &middot; skills &amp; tools</div>
+  <div class="grid">
+    <div class="card">
+      <h3>genai / rag</h3>
+      <div class="skillrow"><b>platforms</b>Azure OpenAI, Azure AI Search, LangChain</div>
+      <div class="skillrow"><b>techniques</b>Hybrid retrieval, HyDE, semantic ranking, RAG evaluation</div>
+    </div>
+    <div class="card">
+      <h3>backend</h3>
+      <div class="skillrow"><b>python</b>FastAPI, SQLAlchemy, Pydantic, asyncio, pytest</div>
+      <div class="skillrow"><b>apis</b>REST design, OAuth2, NDJSON streaming, microservices</div>
+    </div>
+    <div class="card">
+      <h3>cloud &amp; infra</h3>
+      <div class="skillrow"><b>azure</b>Functions, Durable Functions, Container Registry, Key Vault, Document Intelligence</div>
+      <div class="skillrow"><b>tooling</b>Docker, Git, SQL Server, PostgreSQL</div>
+    </div>
+    <div class="card">
+      <h3>automation &amp; domain</h3>
+      <div class="skillrow"><b>rpa</b>Power Automate, Encompass API, OCR (Tesseract)</div>
+      <div class="skillrow"><b>domain</b>US mortgage: ECOA, TRID, HMDA, MERS, investor ops</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick"><span class="n">03</span> &middot; github &amp; education</div>
+  <div class="grid">
+    <div class="card">
+      <h3>selected repositories</h3>
+      <div class="linklist">
+        <a href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 22.3 24 17.8 24 12.5 24 5.9 18.6.5 12 .5z"/></svg>
+          rag-app-azure &middot; full-stack Azure RAG
+        </a>
+        <a href="https://github.com/richie-rk/Encompass-Rag-Assistant" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 22.3 24 17.8 24 12.5 24 5.9 18.6.5 12 .5z"/></svg>
+          Encompass-Rag-Assistant &middot; hybrid FAISS + BM25
+        </a>
+        <a href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 22.3 24 17.8 24 12.5 24 5.9 18.6.5 12 .5z"/></svg>
+          PyTeslaCoil &middot; physics calculator, 73 tests
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <h3>education</h3>
+      <div class="eduline">BE Electrical Engineering</div>
+      <div class="eduline"><span class="co">University of Mumbai</span></div>
+      <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--line)">
+        <div class="skillrow"><b>reference</b>Corban Wells, VP Technology Product Management, PRMI. Letter available on request.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="footback">
+  <a href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to portfolio
+  </a>
+</div>
+
+</body>
+</html>
