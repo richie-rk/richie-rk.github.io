@@ -672,10 +672,11 @@
     gap: var(--space-3);
   }
 
-  /* Theme toggle: it reports "Dark theme" pressed or not pressed, and the moon
-     is filled when dark is on. The inline <head> script adds .js before first
-     paint, so the header never shifts when the button appears. Where light-dark()
-     is unsupported the site stays dark and the button stays hidden. */
+  /* Theme toggle: it reports "Dark theme" pressed or not pressed. It shows a sun
+     while dark is on and a moon while light is on (the theme a click switches to).
+     The inline <head> script adds .js before first paint, so the header never
+     shifts when the button appears. Where light-dark() is unsupported the site
+     stays dark and the button stays hidden. */
   .theme-toggle { display: none; }
   @supports (color: light-dark(#000, #fff)) {
     .js .theme-toggle { display: inline-grid; }
@@ -697,9 +698,19 @@
     fill: none;
     stroke: currentColor;
     stroke-width: var(--icon-stroke);
+    stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .theme-toggle[aria-pressed="true"] svg { fill: currentColor; }
+  /* The icon follows the theme that is actually showing (a saved choice, or
+     otherwise the OS), not aria-pressed. site.js sets aria-pressed only after it
+     loads, and waiting for it would flash the wrong icon on first paint. */
+  .theme-toggle__sun { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle__sun { display: block; }
+    :root:not([data-theme="light"]) .theme-toggle__moon { display: none; }
+  }
+  :root[data-theme="dark"] .theme-toggle__sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle__moon { display: none; }
 
   /* Code */
   :not(pre) > code {
