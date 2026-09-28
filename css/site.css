@@ -623,18 +623,6 @@
   .email-copy[data-state="copied"]::after { content: "Copied"; }
   .email-copy[data-state="failed"]::after { content: "Copy failed"; }
 
-  /* Device-aware email options: touch devices get the email app, pointer devices
-     get webmail. Each shows the other as a quiet fallback link. */
-  .email-options__touch { display: none; }
-  @media (hover: none) and (pointer: coarse) {
-    .email-options__touch { display: block; }
-    .email-options__desktop { display: none; }
-  }
-  .email-options__alt {
-    margin-block-start: var(--space-3);
-    font-size: var(--step--1);
-    color: var(--text-muted);
-  }
 
   /* Social links: monochrome marks with labels. The teal hover glow matches
      the header icons (an exception Richy asked for). */
