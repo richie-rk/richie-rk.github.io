@@ -1,0 +1,1300 @@
+/* Richy Koshy portfolio: the one shared stylesheet. Governed by DESIGN_RULES.md. */
+@layer tokens, base, layout, components, utilities;
+
+/* ------------------------------------------------------------------------
+   Fonts. Plex Sans is one variable file covering 400 and 600. The files are
+   Google's Latin subset, so the diagram arrows (U+2190/2192) and the check
+   mark fall back per glyph.
+   ------------------------------------------------------------------------ */
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/plex-sans.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/plex-sans-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallbacks, so the swap to Plex doesn't shift the layout.
+   Widths were measured against Arial and Courier New, weighted by the character
+   frequencies of this site's own copy. Liberation and Arimo/Cousine share
+   Arial's and Courier New's metrics, so the same overrides apply. */
+@font-face {
+  font-family: "Plex Sans Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo");
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 100.78%;
+  ascent-override: 101.7%;
+  descent-override: 27.29%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Sans Fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT"), local("Liberation Sans Italic"), local("Arimo Italic");
+  font-weight: 400;
+  font-style: italic;
+  size-adjust: 100.78%;
+  ascent-override: 101.7%;
+  descent-override: 27.29%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Sans Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Arimo Bold");
+  font-weight: 600;
+  font-style: normal;
+  size-adjust: 96.97%;
+  ascent-override: 105.71%;
+  descent-override: 28.36%;
+  line-gap-override: 0%;
+}
+/* Android has neither Arial nor Liberation, so Roboto gets its own tuned family. */
+@font-face {
+  font-family: "Plex Sans Fallback Android";
+  src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular");
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 101.38%;
+  ascent-override: 101.1%;
+  descent-override: 27.13%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Sans Fallback Android";
+  src: local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 600;
+  font-style: normal;
+  size-adjust: 103.14%;
+  ascent-override: 99.38%;
+  descent-override: 26.66%;
+  line-gap-override: 0%;
+}
+/* Every mono candidate advances 0.6em like Plex Mono, so one set of overrides fits them all. */
+@font-face {
+  font-family: "Plex Mono Fallback";
+  src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("Cousine"), local("Droid Sans Mono"), local("DroidSansMono"), local("Roboto Mono");
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 100%;
+  ascent-override: 102.52%;
+  descent-override: 27.5%;
+  line-gap-override: 0%;
+}
+
+/* Signature moment: cross-document view transitions. The opt-in lives inside
+   no-preference, so reduced-motion users and unsupported browsers (Firefox)
+   get a normal page load. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+/* ======================================================================== */
+@layer tokens {
+  :root {
+    /* Colour. Dark is Richy's existing palette. It is also the fallback where
+       light-dark() is unsupported; the theme toggle hides itself there. */
+    color-scheme: dark;
+    --bg: #0B0E1C;
+    --surface: #141A2E;
+    --text: #E9EBF5;
+    --text-muted: #9AA3C0;          /* 7.66:1 on bg, 6.88:1 on surface */
+    --border: #232B47;              /* decorative hairlines only (1.38:1) */
+    --border-strong: #6A7391;       /* UI borders; fails as small text, so never used for text */
+    --accent: #5FD4B0;
+    --accent-hover: #83E3C6;
+    --accent-contrast: #04241A;     /* 9.06:1 on accent */
+    --surface-raised: #232B47;      /* raised controls; existing line colour, text 11.9:1 */
+    --surface-raised-hover: #2F3A5E;
+    --link: #83E3C6;
+    --focus: #5FD4B0;
+    --shadow-colour: rgb(4 6 14 / 0.55);
+
+    /* Type */
+    --font-sans: "IBM Plex Sans", "Plex Sans Fallback", "Plex Sans Fallback Android", sans-serif;
+    --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, monospace;
+    --weight-regular: 400;
+    --weight-strong: 600;
+    /* Modular scale, fluid from 320px to 1440px: ratio 1.25 at 320px (base 17px), 1.333 at 1440px (base 18px). */
+    --step--1: 0.875rem;
+    --step-0: clamp(1.0625rem, 1.0446rem + 0.0893vw, 1.125rem);
+    --step-1: clamp(1.3281rem, 1.2791rem + 0.245vw, 1.5rem);
+    --step-2: clamp(1.6602rem, 1.5633rem + 0.4841vw, 2rem);
+    --step-3: clamp(2.0752rem, 1.9068rem + 0.8421vw, 2.6667rem);
+    --step-4: clamp(2.594rem, 2.3203rem + 1.3686vw, 3.5556rem);
+    --leading-body: 1.6;
+    --leading-prose: 1.65;
+    --leading-snug: 1.25;
+    --leading-heading: 1.2;
+    --leading-tight: 1.1;
+    --tracking-display: -0.01em;
+    --measure: 66ch;
+
+    /* Spacing: the only scale. */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+    --space-10: 8rem;
+
+    /* Layout and sizing. The ch measures resolve in the element's own font. */
+    --container: 72rem;
+    --gutter: var(--space-4);
+    --section-space: var(--space-7);
+    --header-size: 3.5rem;
+    --target: 2.75rem;              /* 44px touch target */
+    --hero-width: 48rem;            /* 8 of 12 columns; the right third stays empty on purpose */
+    --measure-claim: 20ch;
+    --measure-standfirst: 60ch;
+    --measure-outcome: 40ch;
+    --measure-case-claim: 24ch;
+    --column-min: 14rem;
+    --scan-width: 52rem;
+    --diagram-min: 52.5rem;         /* the 940-unit diagrams stay legible; narrower screens scroll */
+
+    /* Shape: two radii, one elevation */
+    --radius-sm: 0.25rem;           /* buttons, inline code, skip link */
+    --radius-md: 0.5rem;            /* code blocks, figures, letter scans */
+    --radius-pill: 999px;           /* raised email buttons: the third and last radius */
+    --border-width: 1px;
+    --rule-width: 2px;
+    --focus-width: 2px;
+    --focus-offset: 3px;
+    --underline-offset: 0.2em;
+    --underline-offset-current: 0.35em;
+    --keyword-underline: 0.11em;
+    --keyword-underline-offset: 0.16em;
+    /* The signature title rule. It is em-based, so the home and deep-dive
+       snapshots scale together during the view transition. */
+    --title-rule: 0.0625em;
+    --title-rule-gap: 0.125em;
+    --icon-size: 1.25rem;
+    --glow-size: 0.375rem;
+    --icon-stroke: 1.75;
+    --z-header: 50;
+    --z-skip-link: 100;
+    /* The site's single elevation level, shared by the letter scans and the raised buttons. */
+    --shadow-raised: 0 1px 2px var(--shadow-colour), 0 8px 24px var(--shadow-colour);
+    --inline-icon: 0.85em;
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.2, 0, 0, 1);
+    --duration-morph: 300ms;
+    --duration-fade-out: 150ms;
+    --duration-fade-in: 250ms;
+  }
+
+  /* One declaration per token covers both themes. color-scheme picks the
+     branch: the OS by default, or the saved toggle choice via data-theme. */
+  @supports (color: light-dark(#000, #fff)) {
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#F5F6FA, #0B0E1C);
+      --surface: light-dark(#FFFFFF, #141A2E);
+      --text: light-dark(#0B0E1C, #E9EBF5);
+      --text-muted: light-dark(#42517F, #9AA3C0);     /* light: 7.16:1 on bg, 7.73:1 on surface */
+      --border: light-dark(#DCE0F0, #232B47);
+      --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
+      --accent: light-dark(#0A7C5F, #5FD4B0);         /* mint fails on light (1.69:1); #0A7C5F is 4.79:1 */
+      --accent-hover: light-dark(#086A51, #83E3C6);
+      --accent-contrast: light-dark(#FFFFFF, #04241A);
+      --surface-raised: light-dark(#FFFFFF, #232B47);
+      --surface-raised-hover: light-dark(#E9EBF5, #2F3A5E);
+      --link: light-dark(#0A7C5F, #83E3C6);
+      --focus: light-dark(#0A7C5F, #5FD4B0);
+      --shadow-colour: light-dark(rgb(11 14 28 / 0.08), rgb(4 6 14 / 0.55));
+    }
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] { color-scheme: dark; }
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --gutter: var(--space-5);
+      --section-space: var(--space-8);
+    }
+  }
+  @media (min-width: 64rem) {
+    :root {
+      --gutter: var(--space-6);
+      --section-space: var(--space-9);
+    }
+  }
+}
+
+/* ======================================================================== */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* The sticky header must never cover a focused or linked-to element. */
+    /* --header-offset is the measured height, set by js/site.js when it runs. */
+    scroll-padding-block-start: calc(var(--header-offset, var(--header-size)) + var(--space-4));
+  }
+
+  body {
+    min-block-size: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--step-0);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-body);
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-heading);
+    text-wrap: balance;
+  }
+  h1 { font-size: var(--step-3); letter-spacing: var(--tracking-display); }
+  h2 { font-size: var(--step-2); }
+  h3 { font-size: var(--step-1); line-height: var(--leading-snug); }
+  h4 { font-size: var(--step-0); }
+
+  p, li, dd, dt, figcaption, blockquote { text-wrap: pretty; }
+  strong, b { font-weight: var(--weight-strong); }
+
+  a {
+    color: var(--link);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-width);
+    text-underline-offset: var(--underline-offset);
+  }
+  a:hover { text-decoration-thickness: var(--rule-width); }
+
+  :focus-visible {
+    outline: var(--focus-width) solid var(--focus);
+    outline-offset: var(--focus-offset);
+  }
+
+  ul, ol { padding-inline-start: var(--space-5); }
+  li::marker { color: var(--text-muted); }
+
+  img, svg, picture, video { display: block; max-inline-size: 100%; }
+  img { block-size: auto; }
+
+  code, kbd, samp, pre { font-family: var(--font-mono); font-size: 1em; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+
+  hr { border: 0; border-block-start: var(--border-width) solid var(--border); }
+  table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* View-transition timing. The header stays still while the page cross-fades beneath it. */
+  ::view-transition-old(root) {
+    animation-duration: var(--duration-fade-out);
+    animation-timing-function: ease-out;
+  }
+  ::view-transition-new(root) {
+    animation-duration: var(--duration-fade-in);
+    animation-timing-function: ease-out;
+  }
+  ::view-transition-group(site-header) { animation: none; z-index: 1; }
+  ::view-transition-old(site-header) { display: none; }
+  ::view-transition-new(site-header) { animation: none; }
+  ::view-transition-group(*) {
+    animation-duration: var(--duration-morph);
+    animation-timing-function: var(--ease-out);
+  }
+}
+
+/* ======================================================================== */
+@layer layout {
+  .container {
+    inline-size: 100%;
+    max-inline-size: calc(var(--container) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section { padding-block: var(--section-space); }
+  /* Adjacent sections share one gap rather than doubling their padding. */
+  .section + .section { padding-block-start: 0; }
+
+  .prose {
+    max-inline-size: var(--measure);
+    line-height: var(--leading-prose);
+  }
+  .prose > * + * { margin-block-start: var(--space-4); }
+  .prose > * + :is(h2, h3) { margin-block-start: var(--space-7); }
+  .prose > :is(h2, h3) + * { margin-block-start: var(--space-3); }
+
+  .flow > * + * { margin-block-start: var(--flow-space, var(--space-4)); }
+
+  /* Skip link: the first focusable element, off-screen until focused. */
+  .skip-link {
+    position: absolute;
+    inset-block-start: var(--space-2);
+    inset-inline-start: var(--space-2);
+    z-index: var(--z-skip-link);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-weight: var(--weight-strong);
+    text-decoration: none;
+    transform: translateY(calc(-100% - var(--space-4)));
+  }
+  .skip-link:focus { transform: none; }
+
+  /* Header: sticky, solid, identical on every page, so it stays still during view transitions. */
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-header);
+    background: var(--bg);
+    border-block-end: var(--border-width) solid var(--border);
+    view-transition-name: site-header;
+  }
+  /* Below 20rem (narrow screens or a large default font size) the header can
+     wrap onto two rows. It scrolls away there rather than covering focused
+     content, which also holds with JS off. */
+  @media (max-width: 19.99rem) {
+    .site-header { position: relative; }
+  }
+  /* Mobile-first: at 320px the brand, three links and the toggle only fit in one
+     row with compact links. From 360px up they get full size. */
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-2);
+    min-block-size: var(--header-size);
+  }
+  .site-header__brand {
+    margin-inline-end: auto;
+    color: var(--text);
+    font-weight: var(--weight-strong);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target);
+  }
+  .site-header__brand:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--rule-width);
+    text-underline-offset: var(--underline-offset-current);
+  }
+  .site-nav__list {
+    display: flex;
+    gap: var(--space-1);
+    padding: 0;
+    list-style: none;
+  }
+  .site-nav__list a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--target);
+    min-inline-size: var(--space-6);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .site-nav__list a:hover { color: var(--text); }
+
+  /* GitHub and LinkedIn marks: monochrome, with a teal glow on hover. The glow
+     is an exception to DESIGN_RULES §11 that Richy asked for. It appears from
+     30rem up; on narrower phones the header has no room, and both links stay
+     in the footer and the contact section. */
+  .site-header__social {
+    display: none;
+    gap: var(--space-1);
+    padding: 0;
+    list-style: none;
+  }
+  .site-header__social a {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--target);
+    block-size: var(--target);
+    color: var(--text-muted);
+  }
+  .site-header__social svg {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    fill: currentColor;
+  }
+  .site-header__social a:hover { color: var(--text); }
+  .site-header__social a:hover svg { filter: drop-shadow(0 0 var(--glow-size) var(--accent)); }
+  @media (min-width: 30rem) {
+    .site-header__social { display: flex; }
+  }
+  .site-nav__list a[aria-current] {
+    color: var(--text);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--rule-width);
+    text-underline-offset: var(--underline-offset-current);
+  }
+
+  /* Footer: carries the contact links on every page. */
+  .site-footer {
+    padding-block: var(--space-7);
+    border-block-start: var(--border-width) solid var(--border);
+    color: var(--text-muted);
+  }
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target);
+  }
+  .site-footer__meta {
+    font-size: var(--step--1);
+    max-inline-size: var(--measure);
+  }
+
+  /* From 360px the links go full size, but the gaps stay compact until 48rem:
+     at 360px the one-row header has less than 1px to spare, and it must still
+     fit while the metric-matched fallback font is showing. */
+  @media (min-width: 22.5rem) {
+    .site-nav__list a { font-size: inherit; padding-inline: var(--space-1); }
+  }
+  @media (min-width: 48rem) {
+    .site-header__inner { column-gap: var(--space-5); }
+    .site-nav__list { gap: var(--space-4); }
+  }
+}
+
+/* ======================================================================== */
+@layer components {
+  /* Buttons: primary (solid accent), secondary (outline), tertiary (a plain link).
+     Hover changes colour instantly; nothing moves. */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--target);
+    padding: var(--space-2) var(--space-5);
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-sm);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-snug);
+    text-decoration: none;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .button--primary {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+  .button--primary:hover { background: var(--accent-hover); }
+  /* A surface-fill hover would be about 1.1:1 against --bg, which is invisible,
+     so the outline switches to full text colour instead. */
+  .button--secondary {
+    border-color: var(--border-strong);
+    background: transparent;
+    color: var(--text);
+  }
+  .button--secondary:hover { border-color: var(--text); }
+
+  /* The mint underline on "RAG systems" and "automations" in the home hero
+     heading only. This is an exception to DESIGN_RULES §11 that Richy asked
+     for. It is thick and set low under text-coloured words, so it can't be
+     mistaken for a link (links are mint text with a 1px underline). */
+  .hero__keyword {
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: var(--keyword-underline);
+    text-underline-offset: var(--keyword-underline-offset);
+  }
+
+  /* Raised: rounded, borderless and lifted, for the email actions. It presses
+     down on click. Only transform moves, and the change is instant. */
+  .button--raised {
+    gap: var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--surface-raised);
+    color: var(--text);
+    box-shadow: var(--shadow-raised);
+  }
+  .button--raised:hover { background: var(--surface-raised-hover); }
+  .button--raised:active {
+    transform: translateY(var(--border-width));
+    box-shadow: none;
+  }
+
+  /* Copy icons: a stroke icon that swaps to a check once copied. */
+  .copy-icon {
+    inline-size: var(--inline-icon);
+    block-size: var(--inline-icon);
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .copy-icon--done,
+  [data-state="copied"] .copy-icon { display: none; }
+  [data-state="copied"] .copy-icon--done { display: inline; }
+
+  /* Email addresses copy on click once JS turns them into buttons. Without JS
+     they are mailto links, so the copy icon is hidden there. */
+  .email-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--link);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  .email-copy__text {
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-width);
+    text-underline-offset: var(--underline-offset);
+    overflow-wrap: anywhere;
+  }
+  .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
+  .email-copy .copy-icon { display: none; }
+  .js .email-copy .copy-icon:not(.copy-icon--done) { display: inline; }
+  .js .email-copy[data-state="copied"] .copy-icon { display: none; }
+  .js .email-copy[data-state="copied"] .copy-icon--done { display: inline; }
+  /* The state label sits above the address, out of the text flow, so it never
+     reflows the line or shifts what follows. */
+  .email-copy { position: relative; }
+  .email-copy[data-state]::after {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 0;
+    font-size: var(--step--1);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-snug);
+    white-space: nowrap;
+    color: var(--text-muted);
+  }
+  .email-copy[data-state="copied"]::after { content: "Copied"; }
+  .email-copy[data-state="failed"]::after { content: "Copy failed"; }
+
+  /* Device-aware email options: touch devices get the email app, pointer devices
+     get webmail. Each shows the other as a quiet fallback link. */
+  .email-options__touch { display: none; }
+  @media (hover: none) and (pointer: coarse) {
+    .email-options__touch { display: block; }
+    .email-options__desktop { display: none; }
+  }
+  .email-options__alt {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  /* Social links: monochrome marks with labels. The teal hover glow matches
+     the header icons (an exception Richy asked for). */
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target);
+    color: var(--text);
+    font-weight: var(--weight-strong);
+    text-decoration: none;
+  }
+  .social-links svg {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    flex: none;
+    fill: currentColor;
+    color: var(--text-muted);
+  }
+  .social-links a:hover svg {
+    color: var(--text);
+    filter: drop-shadow(0 0 var(--glow-size) var(--accent));
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* Theme toggle: it reports "Dark theme" pressed or not pressed, and the moon
+     is filled when dark is on. The inline <head> script adds .js before first
+     paint, so the header never shifts when the button appears. Where light-dark()
+     is unsupported the site stays dark and the button stays hidden. */
+  .theme-toggle { display: none; }
+  @supports (color: light-dark(#000, #fff)) {
+    .js .theme-toggle { display: inline-grid; }
+  }
+  .theme-toggle {
+    place-items: center;
+    inline-size: var(--target);
+    block-size: var(--target);
+    padding: 0;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+  }
+  .theme-toggle:hover { border-color: var(--text); }
+  .theme-toggle svg {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke);
+    stroke-linejoin: round;
+  }
+  .theme-toggle[aria-pressed="true"] svg { fill: currentColor; }
+
+  /* Code */
+  :not(pre) > code {
+    padding-inline: var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    overflow-wrap: anywhere;
+  }
+  /* No ch cap here: ch would resolve in the 14px mono and make code blocks
+     narrower than the prose. The .prose parent already sets the measure. */
+  pre {
+    padding: var(--space-4) var(--space-5);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    font-size: var(--step--1);
+    line-height: var(--leading-body);
+    color: var(--text-muted);
+    overflow-x: auto;
+    tab-size: 2;
+  }
+  .code__key, .code__value { color: var(--text); }
+  .code__comment { color: var(--text-muted); }
+
+  /* Copy buttons appear only once js/site.js can wire them. */
+  .copy-button { display: none; }
+  .js .copy-button { display: inline-flex; }
+
+  /* Single-column grids start at minmax(0, 1fr): an auto track would grow to the
+     widest unbreakable content and push the page sideways at 320px. */
+  :where(.projects, .project__body, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+         .decisions > div, .letter-scans, .cv-grid, .site-footer__inner) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Rows of related links: contact, next deep dive, CV contact line. */
+  .inline-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+  .inline-links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target);
+  }
+
+  /* Spec list: short key/value facts (role, stack, contact details, letter metadata). */
+  /* The list appears in slots from a narrow aside to the full column, so it
+     switches layout on its own width, not the viewport's. */
+  .spec {
+    display: grid;
+    gap: var(--space-3);
+    container-type: inline-size;
+  }
+  .spec > div { display: grid; gap: var(--space-1); }
+  .spec dt { font-size: var(--step--1); color: var(--text-muted); }
+  .spec dd { color: var(--text); font-variant-numeric: tabular-nums; }
+  /* DESIGN_RULES §4: stack labels are small, muted and text-only. */
+  .spec__stack dd { font-size: var(--step--1); color: var(--text-muted); }
+  @container (min-width: 30rem) {
+    .spec > div {
+      grid-template-columns: var(--space-10) minmax(0, 1fr);
+      column-gap: var(--space-4);
+      align-items: baseline;
+    }
+  }
+
+  /* Quotes and asides: a neutral rule at the start, no tint, no decorative marks. */
+  .quote,
+  .note {
+    padding-inline-start: var(--space-5);
+    border-inline-start: var(--rule-width) solid var(--border-strong);
+  }
+  .quote { max-inline-size: var(--measure); }
+  .quote blockquote {
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+  .quote--pull blockquote { font-style: italic; }
+  .quote blockquote p { text-wrap: balance; }
+  .quote__link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target);
+  }
+  .quote figcaption {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .note { color: var(--text-muted); }
+  .note :is(b, strong) { color: var(--text); }
+
+  /* Figures: one panel style for diagrams. Wide content scrolls inside its own region. */
+  .figure {
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  .figure__scroll { overflow-x: auto; padding: var(--space-4); }
+  .figure figcaption {
+    padding: var(--space-3) var(--space-4);
+    border-block-start: var(--border-width) solid var(--border);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  /* Architecture diagrams: colours come from the theme tokens, so both themes work. */
+  .diagram {
+    inline-size: 100%;
+    min-inline-size: var(--diagram-min);
+    block-size: auto;
+    font-family: var(--font-sans);
+  }
+  .diagram__node { fill: var(--bg); stroke: var(--border-strong); }
+  .diagram__node--key { stroke: var(--text); stroke-width: var(--rule-width); }
+  .diagram__node--external { stroke-dasharray: 5 5; }
+  .diagram__edge { fill: none; stroke: var(--border-strong); }
+  .diagram__edge--dashed { stroke-dasharray: 4 5; }
+  .diagram__arrow { fill: var(--border-strong); }
+  .diagram__title { fill: var(--text); font-weight: var(--weight-strong); }
+  .diagram__label,
+  .diagram__note { fill: var(--text-muted); }
+  .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
+  .diagram__code { font-family: var(--font-mono); }
+
+  /* ---------- Home: hero ---------- */
+  .hero { padding-block-start: var(--space-7); }
+  .hero__title { max-inline-size: var(--hero-width); }
+  /* The name is already in the header, so the hero opens with the role instead;
+     the h1 still carries the name for screen readers and search. */
+  /* On screen the name is in the header, so in the hero it is for screen readers
+     and search only. On paper the header is hidden, so the hero shows it. */
+  @media screen {
+    .hero__name {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  @media print {
+    .hero__name { display: block; font-size: var(--step-3); }
+    .hero__name-sep { display: none; }
+  }
+  /* A real inline full stop, so the heading reads "…automation. I build…".
+     It's transparent because the role line is a label. */
+  .hero__stop { color: transparent; }
+  .hero__role {
+    display: block;
+    font-size: var(--step-1);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-snug);
+    letter-spacing: normal;
+    color: var(--text-muted);
+  }
+  .hero__claim {
+    display: block;
+    max-inline-size: var(--measure-claim);
+    margin-block-start: var(--space-2);
+    font-size: var(--step-4);
+    line-height: var(--leading-tight);
+  }
+  .hero__proof {
+    max-inline-size: var(--measure-standfirst);
+    margin-block-start: var(--space-5);
+    color: var(--text-muted);
+  }
+  .hero__proof strong { color: var(--text); }
+  .hero .button-row { margin-block-start: var(--space-6); }
+
+  /* ---------- Home: sections ---------- */
+  .section__lede {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-3);
+    color: var(--text-muted);
+  }
+
+  /* ---------- Home: featured work ----------
+     Three tiers, told apart by title size, the title rule and layout rather than
+     boxes: the lead (MAX AI), the featured entry (Final Docs), then a quiet ledger. */
+  .projects {
+    display: grid;
+    gap: var(--space-8);
+    margin-block-start: var(--space-7);
+  }
+  .project__title { font-size: var(--step-1); }
+  .project--lead .project__title { font-size: var(--step-3); }
+  .project--featured .project__title { font-size: var(--step-2); }
+  /* Project names are links, so they take the link colour. The accent title
+     rule below them acts as their underline, which makes them read as clickable
+     without a hover. */
+  .project__link {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .project__link:hover { color: var(--text); }
+
+  /* The signature element: the accent rule under a project name. The same rule
+     sits under the deep-dive h1 name, and it travels with the name in the
+     view transition. */
+  .project__name,
+  .case-study__name {
+    display: inline-block;
+    white-space: nowrap;
+    padding-block-end: var(--title-rule-gap);
+    border-block-end: var(--title-rule) solid var(--accent);
+    letter-spacing: var(--tracking-display);
+  }
+  .project__name--max-ai,
+  .case-study__name--max-ai { view-transition-name: project-max-ai; }
+  .project__name--final-docs,
+  .case-study__name--final-docs { view-transition-name: project-final-docs; }
+
+  .project__descriptor {
+    display: block;
+    margin-block-start: var(--space-2);
+    font-size: var(--step-1);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-snug);
+    letter-spacing: normal;
+    color: var(--text-muted);
+  }
+  .project__outcome {
+    max-inline-size: var(--measure-outcome);
+    margin-block-start: var(--space-4);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+  .project__body {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-5);
+    color: var(--text-muted);
+  }
+  .project__body > * > * + * { margin-block-start: var(--space-4); }
+  .project__body :is(b, strong) { color: var(--text); }
+  .project__main,
+  .project__summary,
+  .project__points { max-inline-size: var(--measure); }
+  .project__points {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .project__points > li + li { margin-block-start: 0; }
+  .project__figure {
+    display: none;
+    margin-block-start: var(--space-6);
+  }
+  .project__actions { margin-block-start: var(--space-6); }
+
+  @media (min-width: 64rem) {
+    .projects { gap: var(--space-9); }
+    .project__body {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+    .project--lead .project__summary { grid-column: 1 / 7; }
+    .project--lead .project__points { grid-column: 7 / -1; }
+    .project--featured .project__main { grid-column: 1 / 8; }
+    .project--featured .project__aside { grid-column: 9 / -1; }
+    /* The home diagram only shows where it fits without scrolling; the deep dive always has it. */
+    .project__figure { display: block; }
+  }
+
+  /* Ledger: hairline-separated rows for the quieter tier, open source, and so on. */
+  .ledger > * {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+    border-block-start: var(--border-width) solid var(--border);
+    color: var(--text-muted);
+  }
+  .ledger :is(b, strong) { color: var(--text); }
+  .ledger__title {
+    font-size: var(--step-1);
+    color: var(--text);
+  }
+  .ledger__meta {
+    margin-block-start: var(--space-1);
+    font-size: var(--step--1);
+  }
+  .ledger__body { display: grid; gap: var(--space-4); }
+  .ledger__body > * { max-inline-size: var(--measure); }
+  .ledger__body ul { display: grid; gap: var(--space-2); }
+  @media (min-width: 64rem) {
+    .ledger > * {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+    .ledger__head { grid-column: 1 / 5; }
+    .ledger__body { grid-column: 5 / -1; }
+  }
+
+  .domain-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--column-min), 1fr));
+    gap: var(--space-2) var(--space-6);
+  }
+  .repo__name {
+    font-family: var(--font-mono);
+    font-size: var(--step-0);
+  }
+  .section__lede + .ledger { margin-block-start: var(--space-6); }
+
+  /* Skills: one grouped list, named technologies only. */
+  .skills {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-6);
+  }
+  .skills dt { font-weight: var(--weight-strong); }
+  .skills dd {
+    margin-block-start: var(--space-1);
+    color: var(--text-muted);
+  }
+  @media (min-width: 48rem) {
+    .skills {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+  }
+  @media (min-width: 64rem) {
+    .skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  /* ---------- Home: contact ---------- */
+  /* One size down on phones, so the address stays on one line at 320px. */
+  .contact__email {
+    margin-block-start: var(--space-5);
+    font-size: var(--step-1);
+    font-weight: var(--weight-strong);
+  }
+  @media (min-width: 30rem) {
+    .contact__email { font-size: var(--step-2); }
+  }
+  .contact .email-options { margin-block-start: var(--space-4); }
+  .contact .spec,
+  .contact__discord,
+  .contact__letter { margin-block-start: var(--space-6); }
+  .contact .social-links { margin-block-start: var(--space-3); }
+  .contact__discord,
+  .contact__letter { max-inline-size: var(--measure); color: var(--text-muted); }
+  .contact__letter b { color: var(--text); }
+
+  /* ---------- Deep dives ---------- */
+  /* The container query lets wide figures break out to the full column set. */
+  .case-study {
+    container-type: inline-size;
+    padding-block-end: var(--section-space);
+  }
+  .case-study__head { padding-block-start: var(--space-7); }
+  .case-study__title { font-size: var(--step-3); }
+  .case-study__claim {
+    display: block;
+    max-inline-size: var(--measure-case-claim);
+    margin-block-start: var(--space-4);
+    font-size: var(--step-2);
+    font-weight: var(--weight-regular);
+    letter-spacing: normal;
+  }
+  .case-study__standfirst {
+    max-inline-size: var(--measure-standfirst);
+    margin-block-start: var(--space-5);
+  }
+  .case-study__overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--column-min), 1fr));
+    gap: var(--space-5) var(--space-6);
+    margin-block-start: var(--space-6);
+    padding-block: var(--space-5);
+    border-block: var(--border-width) solid var(--border);
+  }
+  .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
+  .case-study__overview dd { margin-block-start: var(--space-1); }
+  .toc { margin-block-start: var(--space-6); }
+  .toc__title { font-size: var(--step--1); color: var(--text-muted); }
+  .toc li { text-wrap: balance; }
+  /* One column: the entries are full headings, and max-content columns would push the page sideways. */
+  .toc ul {
+    display: grid;
+    gap: var(--space-1);
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-2);
+  }
+  .case-study__section { margin-block-start: var(--space-7); }
+  .case-study__end {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-8);
+    padding-block-start: var(--space-6);
+    border-block-start: var(--border-width) solid var(--border);
+  }
+  .decisions > div {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-block-start: var(--border-width) solid var(--border);
+  }
+  .decisions dt { font-weight: var(--weight-strong); }
+  .decisions dd { color: var(--text-muted); }
+
+  @media (min-width: 48rem) {
+    .case-study__standfirst { font-size: var(--step-1); line-height: var(--leading-body); }
+    .case-study__section { margin-block-start: var(--space-8); }
+    .decisions > div {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      column-gap: var(--space-5);
+    }
+  }
+  @media (min-width: 64rem) {
+    .case-study__head { padding-block-start: var(--space-9); }
+    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
+  }
+
+  /* ---------- CV ---------- */
+  .cv__head > :not(.cv__contact),
+  .cv__section { max-inline-size: var(--measure); }
+  .cv__tagline {
+    margin-block-start: var(--space-2);
+    font-size: var(--step-1);
+    color: var(--text-muted);
+  }
+  .cv__contact { margin-block-start: var(--space-4); }
+  .cv__summary { margin-block-start: var(--space-4); }
+  .cv__head .button { margin-block-start: var(--space-5); }
+  .cv__section { margin-block-start: var(--space-8); }
+  .cv__section > h2 + * { margin-block-start: var(--space-5); }
+  .cv-role + .cv-role { margin-block-start: var(--space-7); }
+  .cv-role__org { font-weight: var(--weight-strong); }
+  .cv-role__meta { font-size: var(--step--1); color: var(--text-muted); }
+  .cv-role > ul {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
+  }
+  .cv-role ul ul {
+    display: grid;
+    gap: var(--space-2);
+    margin-block-start: var(--space-2);
+    color: var(--text-muted);
+  }
+  .cv-role ul ul b { color: var(--text); }
+  .cv-role .quote { margin-block-start: var(--space-5); }
+  .cv-grid { display: grid; gap: var(--space-6); }
+  .cv-grid h3 { font-size: var(--step-0); }
+  .cv-grid h3 + * { margin-block-start: var(--space-3); }
+  @media (min-width: 40rem) {
+    .cv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* ---------- Testimonial letter ---------- */
+  .letter-page__head { max-inline-size: var(--measure); }
+  .letter-page__head > * + * { margin-block-start: var(--space-4); }
+  .letter-scans {
+    display: grid;
+    gap: var(--space-7);
+    margin-block-start: var(--space-7);
+  }
+  .letter-scan { max-inline-size: var(--scan-width); }
+  .letter-scan img {
+    inline-size: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-raised);
+  }
+  .letter-scan figcaption {
+    margin-block-start: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .letter-request {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-8);
+  }
+  .letter-request > * + * { margin-block-start: var(--space-4); }
+  .letter-template {
+    font-family: var(--font-sans);
+    font-size: var(--step-0);
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+}
+
+/* ======================================================================== */
+@layer utilities {
+  .visually-hidden {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+  .text-muted { color: var(--text-muted); }
+  .nowrap { white-space: nowrap; }
+}
+
+/* ========================================================================
+   Print. The CV is print-first (DESIGN_RULES §10); other pages get clean basics.
+   Spacing and type tokens switch to points, so components need no print
+   variants of their own.
+   ======================================================================== */
+@media print {
+  @page { size: A4; margin: 15mm; }
+}
+@layer tokens {
+  @media print {
+    :root,
+    :root[data-theme] {
+      color-scheme: light;
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #0B0E1C;
+      --text-muted: #42517F;
+      --border: #6A7391;
+      --border-strong: #6A7391;
+      --link: #0B0E1C;
+      --accent: #0B0E1C;
+      --gutter: 0;
+      --target: 0;                /* touch targets don't apply on paper */
+      --step--1: 9pt;
+      --step-0: 10pt;
+      --step-1: 11pt;
+      --step-2: 12pt;
+      --step-3: 20pt;
+      --step-4: 20pt;
+      --leading-body: 1.5;
+      --leading-prose: 1.5;
+      --space-1: 1pt;
+      --space-2: 3pt;
+      --space-3: 4pt;
+      --space-4: 6pt;
+      --space-5: 8pt;
+      --space-6: 8pt;
+      --space-7: 10pt;
+      --space-8: 12pt;
+      --space-9: 16pt;
+    }
+  }
+}
+@layer utilities {
+  @media print {
+    .site-header,
+    .site-footer,
+    .skip-link,
+    .theme-toggle,
+    .copy-icon,
+    .button,
+    .email-options,
+    .toc { display: none !important; }
+    a,
+    .email-copy { color: inherit; text-decoration: none; }
+    .email-copy__text { text-decoration: none; }
+    .cv__head,
+    .cv__head > *,
+    .cv__section { max-inline-size: none; }
+      /* Flatten grids so an entry never splits awkwardly across pages. */
+    .cv-role > ul,
+    .cv-grid { display: block; }
+    .cv-role > ul > li + li,
+    .cv-grid > * + * { margin-block-start: var(--space-4); }
+    .cv-role__head,
+    .cv-role li,
+    .cv__section > ul > li,
+    .cv__section > div:not(.cv-grid),
+    .cv-grid .spec > div,
+    .quote { break-inside: avoid; }
+    h2,
+    h3 { break-after: avoid; }
+    /* The diagrams' screen minimum width would make Chrome shrink the whole page to fit. */
+    .diagram { min-inline-size: 0; }
+    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
+    .figure { break-inside: avoid; }
+    pre { white-space: pre-wrap; overflow: visible; }
+    /* Inline, so the printed URL keeps its leading space. */
+    .quote__link { display: inline; }
+    /* External URLs print after their link text. Links whose text already is the URL opt out. */
+    .cv a[href^="http"]:not([data-no-print-url], [data-print-url])::after { content: " (" attr(href) ")"; }
+    .cv a[data-print-url]::after { content: " (" attr(data-print-url) ")"; }
+    .figure__scroll { overflow: visible; }
+  }
+}
+@layer base {
+  @media print {
+    /* The pt spacing scale makes the list indent narrower than the bullet marker. */
+    ul, ol { padding-inline-start: 1.25em; }
+  }
+}
