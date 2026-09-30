@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Richy Koshy CV: Python engineer for GenAI and automation</title>
+<meta name="robots" content="noindex">
+<!--
+  Source for Richy_Koshy_CV.pdf: the visual, human-reader CV in the portfolio's light theme.
+  This folder starts with an underscore, so GitHub Pages never publishes it.
+  Regenerate from the repo root (no server needed; the flag lets the file load the local fonts):
+    chrome --headless=new --allow-file-access-from-files --no-pdf-header-footer --print-to-pdf=Richy_Koshy_CV.pdf file:///<repo>/_cv/cv-pdf.html
+  Then check it is 2 A4 pages. Content rules: no dates, no phone number, no "immediate joiner"; PRMI work sits under PRMI.
+-->
+<style>
+@font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans.woff2") format("woff2"); font-weight: 100 700; font-style: normal; }
+@font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: "IBM Plex Mono"; src: url("../fonts/plex-mono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+
+/* The portfolio's light-theme tokens (css/site.css). */
+:root {
+  --bg: #F5F6FA;
+  --surface: #FFFFFF;
+  --text: #0B0E1C;
+  --text-muted: #42517F;
+  --border: #DCE0F0;
+  --border-strong: #6A7391;
+  --accent: #0A7C5F;
+  --mint: #5FD4B0;
+
+  --font-sans: "IBM Plex Sans", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  --page-pad: 12mm;
+  --gap: 7mm;
+  --radius: 2.5mm;
+  --rule: 0.6mm;
+}
+
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  background: var(--bg);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: 8.7pt;
+  line-height: 1.42;
+  color: var(--text);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+b, strong { font-weight: 600; }
+
+/* The page frame. A top accent strip ties the PDF to the portfolio. */
+.sheet {
+  padding: var(--page-pad);
+  padding-block-start: calc(var(--page-pad) + 1.5mm);
+  border-block-start: 1.5mm solid var(--accent);
+}
+
+/* ---------- Header ---------- */
+.head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4mm var(--gap);
+  align-items: end;
+  padding-block-end: 5mm;
+  border-block-end: 0.25mm solid var(--border);
+}
+.name {
+  display: inline-block;
+  font-size: 27pt;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  padding-block-end: 1.2mm;
+  border-block-end: var(--rule) solid var(--accent);   /* the portfolio's signature title rule */
+}
+.role { margin-block-start: 2.5mm; font-size: 11.5pt; color: var(--text-muted); }
+.claim {
+  margin-block-start: 1.5mm;
+  font-size: 12.5pt;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.kw {
+  text-decoration-line: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 0.11em;
+  text-underline-offset: 0.16em;
+}
+.contact {
+  list-style: none;
+  display: grid;
+  gap: 1.3mm;
+  font-size: 8.4pt;
+  text-align: end;
+}
+.contact li { display: flex; align-items: center; justify-content: flex-end; gap: 1.8mm; }
+.contact svg { width: 3.4mm; height: 3.4mm; flex: none; fill: var(--text-muted); }
+.contact svg.stroke { fill: none; stroke: var(--text-muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.summary {
+  margin-block-start: 4.5mm;
+  font-size: 9.6pt;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.summary b { color: var(--text); }
+
+/* ---------- Two columns ---------- */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60mm;
+  gap: var(--gap);
+  margin-block-start: 5.5mm;
+  align-items: start;
+}
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+  font-size: 10.5pt;
+  font-weight: 600;
+  margin-block-end: 3mm;
+  break-after: avoid;
+}
+h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
+
+/* ---------- Experience ---------- */
+.job + .job { margin-block-start: 5mm; }
+.job__head { break-inside: avoid; break-after: avoid; }
+.job__title { font-size: 11pt; font-weight: 600; line-height: 1.25; }
+.job__org { font-size: 9.6pt; font-weight: 600; color: var(--accent); }
+.job__meta { margin-block-start: 0.8mm; font-size: 8.2pt; color: var(--text-muted); }
+.items { list-style: none; margin-block-start: 2.6mm; display: grid; gap: 2.1mm; }
+.item {
+  position: relative;
+  padding-inline-start: 3.6mm;
+  break-inside: avoid;
+}
+.item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 1.65mm;
+  width: 1.3mm;
+  height: 1.3mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.item b { color: var(--text); }
+.item__lead { font-weight: 600; }
+.item p { color: #1C2240; }
+.flow { font-family: var(--font-mono); font-size: 8pt; color: var(--text-muted); }
+
+.quote {
+  margin-block-start: 2mm;
+  padding: 2.2mm 3.2mm;
+  border-inline-start: var(--rule) solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  break-inside: avoid;
+}
+.quote p { font-style: italic; font-size: 9.2pt; color: var(--text); }
+.quote span { display: block; margin-block-start: 0.8mm; font-size: 7.8pt; color: var(--text-muted); }
+
+/* ---------- Sidebar ---------- */
+.side {
+  display: grid;
+  gap: 5mm;
+  padding: 4.5mm;
+  border: 0.25mm solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.side h2 { font-size: 10pt; margin-block-end: 2.2mm; }
+.group + .group { margin-block-start: 2.6mm; }
+.group__name { font-size: 8.4pt; font-weight: 600; }
+.group__list { margin-block-start: 0.6mm; font-size: 8pt; line-height: 1.45; color: var(--text-muted); }
+.side p { font-size: 8.3pt; }
+.side .muted { color: var(--text-muted); }
+.side ul { list-style: none; display: grid; gap: 1.6mm; }
+.award b { display: block; }
+.award span { font-size: 8pt; color: var(--text-muted); }
+.links a { display: flex; flex-direction: column; }
+.links a b { color: var(--accent); }
+.links a span { font-family: var(--font-mono); font-size: 7.4pt; color: var(--text-muted); }
+.side section { break-inside: avoid; }
+
+/* ---------- Page 2 ---------- */
+.page2 {
+  break-before: page;
+  display: flex;
+  flex-direction: column;
+  min-height: 296mm;   /* one A4 page less a hair, so the footer can sit at the bottom without spilling */
+  padding: calc(var(--page-pad) + 1.5mm) var(--page-pad) var(--page-pad);
+}
+.page2 .job + .job { margin-block-start: 5mm; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5mm;
+  margin-block-start: 7mm;
+}
+.card {
+  padding: 4.5mm;
+  border: 0.25mm solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  break-inside: avoid;
+}
+.card h2 { font-size: 10pt; margin-block-end: 2.2mm; }
+.card p { font-size: 8.4pt; }
+.card .muted { color: var(--text-muted); }
+.card ul { list-style: none; display: grid; gap: 1.8mm; }
+.card blockquote {
+  margin-block-start: 2.5mm;
+  padding-inline-start: 2.5mm;
+  border-inline-start: var(--rule) solid var(--accent);
+  font-style: italic;
+  font-size: 8.6pt;
+}
+.readmore { margin-block-start: 7mm; }
+.readmore ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5mm;
+}
+.readmore li { display: flex; }
+.readmore a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8mm;
+  padding: 4mm 4.5mm;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 0.25mm solid var(--border);
+  border-block-end: var(--rule) solid var(--accent);
+}
+.readmore b { font-size: 9.6pt; }
+.readmore span { font-size: 8pt; color: var(--text-muted); }
+.readmore code { margin-block-start: auto; padding-block-start: 1mm; font-family: var(--font-mono); font-size: 7.4pt; color: var(--accent); }
+
+.foot {
+  margin-block-start: auto;
+  padding-block-start: 9mm;
+  font-size: 7.6pt;
+  color: var(--text-muted);
+  text-align: center;
+}
+.foot a { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="head">
+    <div>
+      <h1 class="name">Richy Koshy</h1>
+      <p class="role">Python engineer: GenAI, backend and automation</p>
+      <p class="claim">I build <span class="kw">RAG systems</span> and <span class="kw">automations</span> that hold up in production.</p>
+    </div>
+    <ul class="contact">
+      <li><a href="mailto:richycode.dev@gmail.com">richycode.dev@gmail.com</a><svg class="stroke" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></li>
+      <li>Mumbai, India<svg class="stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></li>
+      <li><a href="https://linkedin.com/in/richy-koshy">linkedin.com/in/richy-koshy</a><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></li>
+      <li><a href="https://github.com/richie-rk">github.com/richie-rk</a><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></li>
+      <li><a href="https://richie-rk.github.io/">richie-rk.github.io</a><svg class="stroke" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z"/></svg></li>
+    </ul>
+  </header>
+
+  <p class="summary">Python engineer with <b>5+ years</b> shipping production GenAI, backend and automation systems for a US mortgage originator, owning delivery end to end. Built an <b>enterprise Azure RAG application</b> now used organization-wide for knowledge retrieval, a custom SDK for PRMI’s loan origination platform, and <b>13 production automations</b> across compliance and investor operations.</p>
+
+  <div class="cols">
+    <main>
+      <h2>Work experience</h2>
+
+      <article class="job">
+        <div class="job__head">
+          <h3 class="job__title">Software Developer</h3>
+          <p class="job__org">Primary Residential Mortgage, Inc. (PRMI)</p>
+          <p class="job__meta">US mortgage originator. Full technical ownership of MAX AI; sole engineer on the RPA automations.</p>
+        </div>
+        <ul class="items">
+          <li class="item"><p><span class="item__lead">MAX AI, enterprise RAG platform.</span> Python backend across three Azure services: FastAPI chat with NDJSON streaming, a Durable Functions ingestion pipeline, and Function App utility APIs. Azure AI Search hybrid retrieval (vector + semantic ranking) with HyDE query expansion, Azure OpenAI (GPT-4o, ada-002), Azure AD auth with multi-tenant access mapping in SQL Server, ingestion containerized via Azure Container Registry. <b>Now the primary knowledge-retrieval tool across PRMI.</b></p></li>
+          <li class="item"><p><span class="item__lead">MAX AI front end.</span> Contributed React UI with MSAL / Microsoft Entra ID group-based access control, mapping internal and external user and admin groups to role-based permissions; ran a security audit that surfaced exposed Function App keys.</p></li>
+          <li class="item">
+            <p><span class="item__lead">Final Docs refactor.</span> Rebuilt a monolithic automation into a config-driven, object-oriented dynamic-dispatch design (YAML → handler registry) with a pandas + SQLAlchemy reconciliation engine: composite-key merges, rerun-safe de-duplication, and exception reports for ops review. <b>Cut per-investor onboarding ~80% and onboarded 4 new investors in 1 month.</b></p>
+            <div class="quote"><p>“PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.”</p><span>Corban Wells, VP of Technology Product Management, PRMI</span></div>
+          </li>
+          <li class="item"><p><span class="item__lead">Loan origination API SDK.</span> Python SDK wrapping the Encompass Cloud APIs (ICE Mortgage Technology’s loan origination system): OAuth2 with token caching, concurrent paginated pipeline queries, safe loan updates (locks loans, skips active user-edit sessions), eFolder document CRUD, and disclosure tracking.</p></li>
+          <li class="item"><p><span class="item__lead">13 production RPA automations.</span> US mortgage / BFSI automations in Power Automate + Python, spanning ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend point-of-sale credit management, warehouse collateral, and suspense resolution across 9 investors. Includes 3 OCR pipelines (Tesseract + Azure AI Document Intelligence) extracting credit data from PDF reports.</p></li>
+          <li class="item"><p><span class="item__lead">Power BI data pipeline.</span> <span class="flow">Reporting DB → Blob Storage → Function App → SQL Server → Power BI dashboards</span></p></li>
+          <li class="item"><p><span class="item__lead">Event-driven Smartsheet sync.</span> <span class="flow">Webhooks → Azure Service Bus → Function App → Smartsheet</span>, for branch partners.</p></li>
+          <li class="item"><p><span class="item__lead">Delivery ownership.</span> Led BRD and PRD gathering, produced flow diagrams, secured first-call sign-offs, coordinated UAT, and documented every delivered automation.</p></li>
+        </ul>
+      </article>
+
+    </main>
+
+    <aside class="side">
+      <section>
+        <h2>Skills</h2>
+        <div class="group"><p class="group__name">GenAI and RAG</p><p class="group__list">Azure OpenAI, Azure AI Search, LangChain, agentic AI tooling (Agno), hybrid vector + semantic retrieval, HyDE query expansion, VLM-based prompt-injection detection, FAISS, BM25, chunking and ingestion pipelines, prompt engineering</p></div>
+        <div class="group"><p class="group__name">Backend</p><p class="group__list">Python, FastAPI, asyncio, multithreading, SQLAlchemy, Pydantic, REST API design, webhooks, OAuth2, pytest, Git</p></div>
+        <div class="group"><p class="group__name">Cloud and infrastructure</p><p class="group__list">Azure (Durable Functions, App Services, Container Apps, Service Bus, Container Registry, Blob/Table Storage, Key Vault, Managed Identity, Entra ID/MSAL, VNet integration, Bicep), Docker, SQL Server, PostgreSQL</p></div>
+        <div class="group"><p class="group__name">Automation</p><p class="group__list">Power Automate, Azure Logic Apps, RPA, Playwright and Selenium browser automation, Microsoft Graph (SharePoint, OneDrive), Smartsheet, Tesseract and Azure AI Document Intelligence OCR, Unstructured.io, Pandas</p></div>
+      </section>
+
+    </aside>
+  </div>
+
+</div>
+
+<div class="page2">
+  <h2>Work experience, continued</h2>
+      <article class="job">
+        <div class="job__head">
+          <h3 class="job__title">Software Developer</h3>
+          <p class="job__org">Antz AI Solutions</p>
+        </div>
+        <ul class="items">
+          <li class="item"><p><span class="item__lead">HydroQ API (client: TechSpan Engineering, IoT).</span> Designed the FastAPI interface for the database CRUD operations of a multi-tenant remote water-quality monitoring platform, with a generic SQLAlchemy CRUD layer querying across PostgreSQL and MSSQL. <b>Replaced 2-4 hours of manual onboarding per site</b> with API-driven workflows; full endpoint test coverage.</p></li>
+          <li class="item"><p><span class="item__lead">CV-screening safeguard (internal).</span> Detects hidden-text prompt injection via VLM vs OCR mismatch, as an Agno agent tool.</p></li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job__head">
+          <h3 class="job__title">Graduate Engineer Trainee</h3>
+          <p class="job__org">Goodyear Tyres</p>
+          <p class="job__meta">Industrial automation: PLC, SCADA, VFD, CTMS/BMS.</p>
+        </div>
+      </article>
+
+  <div class="cards">
+    <section class="card">
+      <h2>Education</h2>
+      <p><b>BE, Electrical Engineering</b></p>
+      <p class="muted">University of Mumbai</p>
+      <p style="margin-top:2mm"><b>CAD Intern</b></p>
+    </section>
+    <section class="card">
+      <h2>Awards</h2>
+      <ul>
+        <li><p><b>Best Paper</b></p><p class="muted">Intl. Conf. on Advanced Trends in Engineering</p></li>
+        <li><p><b>1st Place</b></p><p class="muted">Tantragyan National Project Competition</p></li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Reference</h2>
+      <p><b>Corban Wells</b></p>
+      <p class="muted">VP of Technology Product Management, PRMI. Recommendation letter on request.</p>
+      <blockquote>“Conscientious ownership, earnest curiosity, and diligent follow-through.”</blockquote>
+    </section>
+  </div>
+
+  <section class="readmore">
+    <h2>Read more</h2>
+    <ul>
+      <li><a href="https://richie-rk.github.io/max-ai.html"><b>MAX AI deep dive</b><span>Grounded answers from the company’s own documents, with citations.</span><code>richie-rk.github.io/max-ai</code></a></li>
+      <li><a href="https://richie-rk.github.io/final-docs.html"><b>Final Docs deep dive</b><span>Treat an investor as data, not code.</span><code>richie-rk.github.io/final-docs</code></a></li>
+      <li><a href="https://richie-rk.github.io/letter.html"><b>Recommendation letter</b><span>What the VP put in writing.</span><code>richie-rk.github.io/letter</code></a></li>
+    </ul>
+  </section>
+
+  <p class="foot">Full portfolio, deep dives and contact options at <a href="https://richie-rk.github.io/">richie-rk.github.io</a></p>
+</div>
+</body>
+</html>
