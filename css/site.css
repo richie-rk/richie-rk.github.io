@@ -881,6 +881,38 @@
     color: var(--text-muted);
   }
 
+  /* ---------- Home: doors ----------
+     The deep dives as doors of equal weight, told apart by the title rule
+     rather than boxes: no background, radius or shadow. From 64rem they stand
+     side by side between hairline rules. The doors are siblings and each rule
+     is one of the grid's own pseudo-elements, pinned to the 1px track between
+     two doors: ::before and ::after, so the pattern allows at most three. */
+  .doors {
+    display: grid;
+    gap: var(--space-5);
+    margin-block-start: var(--space-5);
+  }
+  @media (min-width: 64rem) {
+    .doors {
+      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+      grid-template-rows: repeat(3, auto);
+      gap: 0 var(--space-6);
+    }
+    /* Each door spans the name, outcome and link rows as a subgrid, so those
+       line up across the doors even when a name wraps. */
+    .doors > .project {
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-4);
+    }
+    .doors::before {
+      content: "";
+      grid-column: 2;
+      grid-row: 1 / -1;
+      background: var(--border);
+    }
+  }
+
   /* ---------- Home: featured work ----------
      Three tiers, told apart by title size, the title rule and layout rather than
      boxes: the lead (MAX AI), the featured entry (Final Docs), then a quiet ledger. */
