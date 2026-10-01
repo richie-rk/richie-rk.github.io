@@ -928,7 +928,7 @@
   }
   @media (min-width: 64rem) {
     .doors {
-      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) var(--border-width) minmax(0, 1fr) var(--border-width) minmax(0, 1fr);
       grid-template-rows: repeat(3, auto);
       gap: 0 var(--space-6);
     }
@@ -939,12 +939,24 @@
       grid-template-rows: subgrid;
       row-gap: var(--space-4);
     }
-    .doors::before {
+    /* Names sit on the row's floor, so the title rules line up across doors. */
+    .doors .project__title { align-self: end; }
+    .doors::before,
+    .doors::after {
       content: "";
       grid-column: 2;
       grid-row: 1 / -1;
       background: var(--border);
     }
+    .doors::after { grid-column: 4; }
+  }
+  /* Three doors leave too little width for a two-word line at --step-3 until
+     the container is close to full width, with room to spare for a classic
+     scrollbar or the fallback font. At that size the em-based title rule
+     would paint at 1px, so it takes the rule width instead. */
+  @media (min-width: 64rem) and (max-width: 70.99rem) {
+    .doors .project__title { font-size: var(--step-2); }
+    .doors .project__name { border-block-end-width: var(--rule-width); }
   }
 
   /* Door entries: a name, a one-sentence outcome and a link to the deep dive. */

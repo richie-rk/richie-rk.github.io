@@ -40,7 +40,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/plex-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
-<link rel="expect" href="#final-docs-title" blocking="render">
+<link rel="expect" href="#encompass-title" blocking="render">
 <script src="js/site.js" defer></script>
 </head>
 <body>
@@ -98,6 +98,12 @@
       <p class="project__outcome">Investor onboarding cut from <span class="nowrap">2-4 weeks</span> to days; 4&nbsp;investors integrated in one month.</p>
       <p class="project__actions"><a href="final-docs.html">Read the Final Docs deep dive</a></p>
     </article>
+
+    <article class="project" aria-labelledby="encompass-title">
+      <h3 id="encompass-title" class="project__title"><a class="project__link" href="encompass-automation.html"><span class="project__name project__name--encompass">Encompass loan<br>automation</span></a></h3>
+      <p class="project__outcome">Unattended Encompass loan updates: direct API writes with a resource-lock protocol replaced an RPA-plus-manual-verify pipeline.</p>
+      <p class="project__actions"><a href="encompass-automation.html">Read the Encompass deep dive</a></p>
+    </article>
   </div>
 
   <figure class="quote" id="letter">
@@ -117,11 +123,7 @@
           <p class="ledger__meta">PRMI</p>
         </header>
         <div class="ledger__body">
-          <p>A custom Python SDK wrapping the Encompass Cloud APIs (the loan origination system at the heart of PRMI’s operations), used as the foundation for the automation portfolio below.</p>
-          <dl class="spec">
-            <div><dt>Role</dt><dd>Designed and built this internal Python SDK</dd></div>
-            <div class="spec__stack"><dt>Stack</dt><dd>Python, REST, OAuth2, Encompass API, asyncio</dd></div>
-          </dl>
+          <p>The custom Python SDK under the automations is covered in the <a href="encompass-automation.html#sdk">Encompass loan automation deep dive</a>.</p>
         </div>
       </article>
 
