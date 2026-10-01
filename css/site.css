@@ -876,6 +876,11 @@
   .hero .button-row { margin-block-start: var(--space-6); }
 
   /* ---------- Home: sections ---------- */
+  /* Section headings are quiet labels, so the project names below them stay louder. */
+  .section__label {
+    font-size: var(--step-1);
+    font-weight: var(--weight-strong);
+  }
   .section__lede {
     max-inline-size: var(--measure);
     margin-block-start: var(--space-3);
