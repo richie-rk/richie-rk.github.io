@@ -1072,6 +1072,11 @@
   }
   .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
   .case-study__overview dd { margin-block-start: var(--space-1); }
+  /* Role, Team and Impact share a row; the longer Stack line runs full width under them. */
+  @media (min-width: 48rem) {
+    .case-study__overview { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .case-study__overview > .spec__stack { grid-column: 1 / -1; }
+  }
   .toc { margin-block-start: var(--space-6); }
   .toc__title { font-size: var(--step--1); color: var(--text-muted); }
   .toc li { text-wrap: balance; }

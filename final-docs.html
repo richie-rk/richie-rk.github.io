@@ -58,9 +58,9 @@
     <p class="case-study__standfirst">After a mortgage loan closes, PRMI must deliver post-closing document packages to the investor banks that purchased the loans. Trailing documents arrive late, every investor reports exceptions in its own format, and delays put <strong>funding lines and regulatory standing</strong> at risk. The Final Docs Automation turns that heterogeneous exception data into one consistent picture and reconciles it against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
     <dl class="case-study__overview">
       <div><dt>Role</dt><dd>Architecture and build, end to end</dd></div>
-      <div><dt>Timeline</dt><dd>Completed Q1 2025</dd></div>
       <div><dt>Team</dt><dd>With PRMI’s closing, compliance and development teams</dd></div>
       <div><dt>Impact</dt><dd>4 investors in one month; onboarding cut from <span class="nowrap">2-4 weeks</span> to days</dd></div>
+      <div class="spec__stack"><dt>Stack</dt><dd>Python, Pandas, SQLAlchemy, YAML config, OpenPyXL, Encompass API, Strategy pattern</dd></div>
     </dl>
     <nav class="toc" aria-label="On this page">
       <p class="toc__title">On this page</p>
@@ -241,7 +241,7 @@ data = handler()</code></pre>
 
   <section id="results" class="case-study__section prose" aria-labelledby="results-title">
     <h2 id="results-title">Investor expansion at deal speed</h2>
-    <p>Onboarding a new investor fell from <span class="nowrap">2-4 weeks</span> of bespoke coding to a configuration exercise measured in days: a new YAML file, a few parameter tweaks, and a handler only if the investor needs something genuinely new. In the month after the refactor, <strong>four new investors were integrated</strong>, work that previously consumed a full quarter of engineering capacity, and the architecture was adopted as the template for two other automation initiatives.</p>
+    <p>Onboarding a new investor fell from <span class="nowrap">2-4 weeks</span> of bespoke coding to a configuration exercise measured in days: a new YAML file, a few parameter tweaks, and a handler only if the investor needs something genuinely new. In the month after the refactor, completed in <span class="nowrap">Q1 2025</span>, <strong>four new investors were integrated</strong>, work that previously consumed a full quarter of engineering capacity, and the architecture was adopted as the template for two other automation initiatives.</p>
     <p>Onboarding cut from <span class="nowrap">2-4 weeks</span> to days: a YAML change, not a code release.</p>
     <figure class="quote quote--pull">
       <blockquote><p>“PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.”</p></blockquote>
@@ -250,7 +250,6 @@ data = handler()</code></pre>
   </section>
 
   <footer class="case-study__end">
-    <dl class="spec"><div class="spec__stack"><dt>Stack</dt><dd>Python, Pandas, SQLAlchemy, YAML config, OpenPyXL, Encompass API, Strategy pattern</dd></div></dl>
     <nav aria-label="More work">
       <ul class="inline-links">
         <li><a href="max-ai.html">Next deep dive: MAX AI</a></li>
