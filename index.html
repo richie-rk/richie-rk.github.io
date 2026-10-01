@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}/* Skip the title morph when the title is off-screen on either page, so it never flies in from outside the viewport. */(function(){function g(e){if(!e.viewTransition)return;document.querySelectorAll(".project__name,.case-study__name").forEach(function(n){n.style.viewTransitionName="";var r=n.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)n.style.viewTransitionName="none"})}addEventListener("pageswap",g);addEventListener("pagereveal",g)})()</script>
+<script>/* "Also shipped" folds on phones: close it before first paint. With JS off it stays open. */(function(){if(matchMedia("(min-width:48rem)").matches)return;var o=new MutationObserver(function(){var d=document.querySelector(".ledger-fold");if(d){d.open=false;o.disconnect()}});o.observe(document,{childList:true,subtree:true});addEventListener("DOMContentLoaded",function(){o.disconnect()})})()</script>
 <title>Richy Koshy: Python and GenAI engineer, RAG and automation</title>
 <meta name="description" content="Python and GenAI engineer with 5+ years of production work for a US mortgage originator: an Azure RAG platform, an Encompass REST API SDK and 13 automations.">
 <link rel="canonical" href="https://richie-rk.github.io/">
@@ -205,19 +206,21 @@
       <figcaption>Corban Wells, VP of Technology Product Management, PRMI<br><a class="quote__link" href="letter.html">Read Corban Wells’s full letter</a></figcaption>
     </figure>
 
+  </div>
+</section>
+
+<section id="also-shipped" class="section container" aria-labelledby="also-shipped-title">
+  <h2 id="also-shipped-title" class="section__label">Also shipped</h2>
+  <details class="ledger-fold" open>
+    <summary>The SDK, 13 automations, HydroQ&nbsp;API and open source</summary>
     <div class="ledger">
       <article aria-labelledby="sdk-title">
         <header class="ledger__head">
           <h3 id="sdk-title" class="ledger__title">Encompass REST API SDK</h3>
+          <p class="ledger__meta">PRMI</p>
         </header>
         <div class="ledger__body">
           <p>A custom Python SDK wrapping the Encompass Cloud APIs (the loan origination system at the heart of PRMI’s operations), used as the foundation for the automation portfolio below.</p>
-          <ul>
-            <li><b>OAuth2 auth</b> with token caching.</li>
-            <li><b>Concurrent pipeline queries</b> with pagination.</li>
-            <li><b>Safe loan updates:</b> locks loans and skips active user-edit sessions so automations never overwrite in-progress work.</li>
-            <li><b>eFolder document and attachment CRUD</b>, disclosure tracking, and borrower pair retrieval.</li>
-          </ul>
           <dl class="spec">
             <div><dt>Role</dt><dd>Designed and built this internal Python SDK</dd></div>
             <div class="spec__stack"><dt>Stack</dt><dd>Python, REST, OAuth2, Encompass API, asyncio</dd></div>
@@ -228,24 +231,10 @@
       <article aria-labelledby="rpa-title">
         <header class="ledger__head">
           <h3 id="rpa-title" class="ledger__title">13 production RPA automations</h3>
+          <p class="ledger__meta">PRMI</p>
         </header>
         <div class="ledger__body">
-          <p>A portfolio of automations running in production across regulatory compliance and investor operations:</p>
-          <ul class="domain-list">
-            <li>ECOA adverse action</li>
-            <li>Final docs tracking</li>
-            <li>MERS sync</li>
-            <li>TRID disclosure</li>
-            <li>HMDA reporting</li>
-            <li>HFA exceptions</li>
-            <li>Blend API credit management</li>
-            <li>Warehouse collateral tracking</li>
-            <li>Suspense resolution across 9 investors</li>
-          </ul>
-          <ul>
-            <li><b>OCR pipeline:</b> 3 vendor-specific pipelines (Tesseract + Azure Form Recognizer) extracting credit scores and denial factors from PDF credit reports.</li>
-            <li><b>Delivery:</b> led BRD and PRD gathering, flow diagrams, first-call sign-offs, UAT coordination, and documentation for every automation shipped.</li>
-          </ul>
+          <p>A portfolio of automations running in production across regulatory compliance and investor operations.</p>
           <dl class="spec">
             <div><dt>Role</dt><dd>Sole engineer, from requirements through UAT and documentation, for every automation</dd></div>
             <div class="spec__stack"><dt>Stack</dt><dd>Python, Power Automate, Tesseract, Azure Form Recognizer, SQL Server</dd></div>
@@ -259,59 +248,33 @@
           <p class="ledger__meta">Antz AI, for client TechSpan Engineering (IoT remote monitoring)</p>
         </header>
         <div class="ledger__body">
-          <p>REST API for TechSpan Engineering’s remote water-quality monitoring platform, which is multi-tenant across its clients: FastAPI + SQLAlchemy + Pydantic, with a generic CRUD layer querying across PostgreSQL and MSSQL. Replaced <span class="nowrap">2-4 hours</span> of manual onboarding setup with API-driven workflows, with test coverage across all endpoints.</p>
+          <p>REST API for TechSpan Engineering’s multi-tenant remote water-quality monitoring platform, replacing <span class="nowrap">2-4 hours</span> of manual onboarding setup with API-driven workflows.</p>
           <dl class="spec">
             <div><dt>Role</dt><dd>Designed the FastAPI interface for the database CRUD operations</dd></div>
             <div class="spec__stack"><dt>Stack</dt><dd>FastAPI, SQLAlchemy, Pydantic, PostgreSQL, MSSQL, pytest</dd></div>
           </dl>
         </div>
       </article>
+
+      <article aria-labelledby="open-source-title">
+        <header class="ledger__head">
+          <h3 id="open-source-title" class="ledger__title">Open source</h3>
+        </header>
+        <div class="ledger__body">
+          <p>Original repos with full READMEs, built to learn in the open: RAG references, retrieval experiments, and one physics calculator.</p>
+          <ul class="inline-links">
+            <li><a class="repo__name" href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+            <li><a class="repo__name" href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">EncompassRest-RAG-Assistant<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+            <li><a class="repo__name" href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">PyTeslaCoil<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+            <li><a class="repo__name" href="https://github.com/richie-rk/Bible-VerseFinder-AI" target="_blank" rel="noopener">Bible-VerseFinder-AI<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          </ul>
+          <dl class="spec">
+            <div class="spec__stack"><dt>Stack</dt><dd>Python, TypeScript</dd></div>
+          </dl>
+        </div>
+      </article>
     </div>
-
-  </div>
-</section>
-
-<section id="open-source" class="section container" aria-labelledby="open-source-title">
-  <h2 id="open-source-title" class="section__label">Public work on GitHub</h2>
-  <p class="section__lede">Original repos with full READMEs, built to learn in the open. RAG references, retrieval experiments, and one physics calculator.</p>
-  <div class="ledger">
-    <article>
-      <header class="ledger__head">
-        <h3 class="ledger__title"><a class="repo__name" href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a></h3>
-        <p class="ledger__meta">TypeScript + Python</p>
-      </header>
-      <div class="ledger__body">
-        <p>Full-stack enterprise RAG reference on Azure: hybrid search (vector + semantic + BM25), NDJSON streaming, MSAL SSO, Fluent UI 9, document ingestion pipeline, and project isolation.</p>
-      </div>
-    </article>
-    <article>
-      <header class="ledger__head">
-        <h3 class="ledger__title"><a class="repo__name" href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">EncompassRest-RAG-Assistant<span class="visually-hidden"> (opens in a new tab)</span></a></h3>
-        <p class="ledger__meta">Python</p>
-      </header>
-      <div class="ledger__body">
-        <p>RAG system for querying ICE Mortgage Encompass API documentation in natural language: hybrid FAISS + BM25 retrieval with multiple LLM backends.</p>
-      </div>
-    </article>
-    <article>
-      <header class="ledger__head">
-        <h3 class="ledger__title"><a class="repo__name" href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">PyTeslaCoil<span class="visually-hidden"> (opens in a new tab)</span></a></h3>
-        <p class="ledger__meta">Python, 73 tests</p>
-      </header>
-      <div class="ledger__body">
-        <p>Pure Python port of the JavaTC Tesla coil calculator: solenoid physics, 73 unit tests, and a NiceGUI interface.</p>
-      </div>
-    </article>
-    <article>
-      <header class="ledger__head">
-        <h3 class="ledger__title"><a class="repo__name" href="https://github.com/richie-rk/Bible-VerseFinder-AI" target="_blank" rel="noopener">Bible-VerseFinder-AI<span class="visually-hidden"> (opens in a new tab)</span></a></h3>
-        <p class="ledger__meta">TypeScript</p>
-      </header>
-      <div class="ledger__body">
-        <p>Bible verse search engine with LLM summarization and full chapter reading.</p>
-      </div>
-    </article>
-  </div>
+  </details>
 </section>
 
 <section id="skills" class="section container" aria-labelledby="skills-title">
