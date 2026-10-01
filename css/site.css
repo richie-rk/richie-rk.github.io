@@ -824,7 +824,14 @@
   .diagram__code { font-family: var(--font-mono); }
 
   /* ---------- Home: hero ---------- */
-  .hero { padding-block-start: var(--space-7); }
+  /* The hero runs tight so that on a phone the first door shares its screen;
+     the gap after it keeps the section floor. */
+  .hero { padding-block-start: var(--space-5); }
+  .hero + .section { padding-block-start: var(--space-7); }
+  @media (min-width: 48rem) {
+    .hero { padding-block-start: var(--space-6); }
+    .hero + .section { padding-block-start: var(--space-8); }
+  }
   .hero__title { max-inline-size: var(--hero-width); }
   /* The name is already in the header, so the hero opens with the role instead;
      the h1 still carries the name for screen readers and search. */
@@ -860,14 +867,24 @@
     display: block;
     max-inline-size: var(--measure-claim);
     margin-block-start: var(--space-2);
-    font-size: var(--step-4);
+    font-size: var(--step-3);
     line-height: var(--leading-tight);
   }
   .hero__proof {
     max-inline-size: var(--measure-standfirst);
     margin-block-start: var(--space-5);
   }
-  .hero .button-row { margin-block-start: var(--space-6); }
+  .hero .button-row { margin-block-start: var(--space-5); }
+  .hero__email { margin-block-start: var(--space-4); }
+  /* Here the copy status shows under the address, clear of the buttons above it. */
+  .hero__email .email-copy[data-state]::after {
+    inset-block-start: 100%;
+    inset-block-end: auto;
+  }
+  @media (min-width: 48rem) {
+    .hero__claim { font-size: var(--step-4); }
+    .hero .button-row { margin-block-start: var(--space-6); }
+  }
 
   /* ---------- Home: sections ---------- */
   /* Section headings are quiet labels, so the project names below them stay louder. */
