@@ -1080,12 +1080,19 @@
   .toc { margin-block-start: var(--space-6); }
   .toc__title { font-size: var(--step--1); color: var(--text-muted); }
   .toc li { text-wrap: balance; }
-  /* One column: the entries are full headings, and max-content columns would push the page sideways. */
+  /* One column: a short outline read top to bottom. Max-content columns could
+     still push the page sideways at 320px. */
   .toc ul {
     display: grid;
     gap: var(--space-1);
     max-inline-size: var(--measure);
     margin-block-start: var(--space-2);
+  }
+  /* One-line labels would leave 22px links; this keeps targets past the 24px floor. */
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--space-6);
   }
   .case-study__section { margin-block-start: var(--space-7); }
   .case-study__end {
