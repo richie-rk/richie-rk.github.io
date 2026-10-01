@@ -81,11 +81,16 @@
           <li><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE query expansion; Azure OpenAI GPT-4o with ada-002 embeddings; one index per project, with multi-tenant access mapping in SQL Server behind Azure AD auth.</li>
           <li><b>Ingestion:</b> Durable Functions pipeline, idempotent via audit-table checkpointing with per-file failure isolation; local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry; Azure Document Intelligence for scans.</li>
           <li><b>Chat:</b> FastAPI service streaming NDJSON with metadata-first framing, so citations render before the first token.</li>
+          <li><b>Utility APIs:</b> a Function App for auth, projects, users, session history and feedback.</li>
         </ul>
         <p><a href="max-ai.html" data-print-url="richie-rk.github.io/max-ai.html">Read the MAX AI deep dive</a></p>
       </li>
       <li class="flow">
-        <p><a href="final-docs.html" data-no-print-url><b>Final Docs refactor</b></a>. Rebuilt a monolithic automation into config-driven dynamic dispatch: one YAML config per investor and a dispatch table that maps each investor to its handler functions, treating each investor as data, not code. <b>4 new investors onboarded in 1 month</b> vs. a full quarter before; onboarding cut from <b><span class="nowrap">2-4 weeks</span> to days</b>; adopted as the template for 2 other initiatives.</p>
+        <p><a href="final-docs.html" data-no-print-url><b>Final Docs refactor</b></a>. The automation governs how PRMI assembles and delivers post-closing packages to its investor banks, where delays put funding lines and regulatory standing at risk.</p>
+        <ul>
+          <li><b>Approach:</b> rebuilt a monolithic automation into config-driven dynamic dispatch: one YAML config per investor and a dispatch table that maps each investor to its handler functions, treating each investor as data, not code.</li>
+          <li><b>Result:</b> <b>4 new investors onboarded in 1 month</b> vs. a full quarter before; onboarding cut from <b><span class="nowrap">2-4 weeks</span> to days</b>; adopted as the template for 2 other initiatives.</li>
+        </ul>
         <p><a href="final-docs.html" data-print-url="richie-rk.github.io/final-docs.html">Read the Final Docs deep dive</a></p>
       </li>
     </ul>
@@ -138,14 +143,14 @@
     <div>
       <h3>Backend</h3>
       <dl class="spec">
-        <div><dt>Python</dt><dd>FastAPI, SQLAlchemy, Pydantic, asyncio, pytest</dd></div>
+        <div><dt>Python</dt><dd>FastAPI, SQLAlchemy, Pydantic, Pandas, asyncio, pytest</dd></div>
         <div><dt>APIs</dt><dd>REST design, OAuth2, NDJSON streaming, microservices</dd></div>
       </dl>
     </div>
     <div>
       <h3>Cloud and infrastructure</h3>
       <dl class="spec">
-        <div><dt>Azure</dt><dd>Functions, Durable Functions, Container Registry, Key Vault, Document Intelligence</dd></div>
+        <div><dt>Azure</dt><dd>Functions, Durable Functions, App Services, Container Registry, Key Vault, Document Intelligence</dd></div>
         <div><dt>Tooling</dt><dd>Docker, Git, SQL Server, PostgreSQL</dd></div>
       </dl>
     </div>

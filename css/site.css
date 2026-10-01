@@ -723,7 +723,7 @@
 
   /* Single-column grids start at minmax(0, 1fr): an auto track would grow to the
      widest unbreakable content and push the page sideways at 320px. */
-  :where(.projects, .project__body, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+  :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
          .decisions > div, .letter-scans, .cv-grid, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -913,17 +913,13 @@
     }
   }
 
-  /* ---------- Home: featured work ----------
-     Three tiers, told apart by title size, the title rule and layout rather than
-     boxes: the lead (MAX AI), the featured entry (Final Docs), then a quiet ledger. */
-  .projects {
+  /* Door entries: a name, a one-sentence outcome and a link to the deep dive. */
+  .project {
     display: grid;
-    gap: var(--space-8);
-    margin-block-start: var(--space-7);
+    align-content: start;
+    gap: var(--space-3);
   }
-  .project__title { font-size: var(--step-1); }
-  .project--lead .project__title { font-size: var(--step-3); }
-  .project--featured .project__title { font-size: var(--step-2); }
+  .project__title { font-size: var(--step-3); }
   /* Project names are links, so they take the link colour. The accent title
      rule below them acts as their underline, which makes them read as clickable
      without a hover. */
@@ -949,54 +945,17 @@
   .project__name--final-docs,
   .case-study__name--final-docs { view-transition-name: project-final-docs; }
 
-  .project__descriptor {
-    display: block;
-    margin-block-start: var(--space-2);
-    font-size: var(--step-1);
-    font-weight: var(--weight-regular);
-    line-height: var(--leading-snug);
-    letter-spacing: normal;
-    color: var(--text-muted);
-  }
   .project__outcome {
     max-inline-size: var(--measure-outcome);
-    margin-block-start: var(--space-4);
     font-size: var(--step-1);
     line-height: var(--leading-snug);
   }
-  .project__body {
-    display: grid;
-    gap: var(--space-5);
-    margin-block-start: var(--space-5);
+  .project__actions a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--target);
   }
-  .project__body > * > * + * { margin-block-start: var(--space-4); }
-  .project__main,
-  .project__summary,
-  .project__points { max-inline-size: var(--measure); }
-  .project__points {
-    display: grid;
-    gap: var(--space-2);
-  }
-  .project__points > li + li { margin-block-start: 0; }
-  .project__figure {
-    display: none;
-    margin-block-start: var(--space-6);
-  }
-  .project__actions { margin-block-start: var(--space-6); }
-
-  @media (min-width: 64rem) {
-    .projects { gap: var(--space-9); }
-    .project__body {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: var(--space-6);
-    }
-    .project--lead .project__summary { grid-column: 1 / 7; }
-    .project--lead .project__points { grid-column: 7 / -1; }
-    .project--featured .project__main { grid-column: 1 / 8; }
-    .project--featured .project__aside { grid-column: 9 / -1; }
-    /* The home diagram only shows where it fits without scrolling; the deep dive always has it. */
-    .project__figure { display: block; }
-  }
+  .doors + .quote { margin-block-start: var(--space-7); }
 
   /* ---------- Home: also shipped ----------
      One quiet ledger for everything that isn't a deep dive. On phones it folds
@@ -1284,16 +1243,16 @@
       --step-2: 12pt;
       --step-3: 20pt;
       --step-4: 20pt;
-      --leading-body: 1.5;
-      --leading-prose: 1.5;
+      --leading-body: 1.4;
+      --leading-prose: 1.4;
       --space-1: 1pt;
       --space-2: 3pt;
       --space-3: 4pt;
       --space-4: 6pt;
       --space-5: 8pt;
       --space-6: 8pt;
-      --space-7: 10pt;
-      --space-8: 12pt;
+      --space-7: 8pt;
+      --space-8: 10pt;
       --space-9: 16pt;
     }
   }
@@ -1314,11 +1273,11 @@
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
-      /* Flatten grids so an entry never splits awkwardly across pages. */
-    .cv-role > ul,
-    .cv-grid { display: block; }
-    .cv-role > ul > li + li,
-    .cv-grid > * + * { margin-block-start: var(--space-4); }
+      /* Flatten the role lists so an entry never splits awkwardly across pages;
+       the skills groups stay two-up, each kept whole. */
+    .cv-role > ul { display: block; }
+    .cv-role > ul > li + li { margin-block-start: var(--space-4); }
+    .cv-grid > * { break-inside: avoid; }
     .cv-role__head,
     .cv-role li,
     .cv__section > ul > li,
