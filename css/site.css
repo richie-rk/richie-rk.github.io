@@ -122,6 +122,7 @@
     --accent: #5FD4B0;
     --accent-hover: #83E3C6;
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
+    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
     --surface-raised: #232B47;      /* raised controls; existing line colour, text 11.9:1 */
     --surface-raised-hover: #2F3A5E;
     --link: #83E3C6;
@@ -218,9 +219,11 @@
       --text-muted: light-dark(#42517F, #9AA3C0);     /* light: 7.16:1 on bg, 7.73:1 on surface */
       --border: light-dark(#DCE0F0, #232B47);
       --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
-      --accent: light-dark(#0A7C5F, #5FD4B0);         /* mint fails on light (1.69:1); #0A7C5F is 4.79:1 */
+      --accent: light-dark(#0A7C5F, #5FD4B0);         /* teal fails on light (1.69:1); #0A7C5F is 4.79:1 */
       --accent-hover: light-dark(#086A51, #83E3C6);
       --accent-contrast: light-dark(#FFFFFF, #04241A);
+      /* Non-text accents keep a teal look in light mode: 3.12:1 on bg, 3.37:1 on surface. */
+      --rule-accent: light-dark(#1F9E7A, #5FD4B0);
       --surface-raised: light-dark(#FFFFFF, #232B47);
       --surface-raised-hover: light-dark(#E9EBF5, #2F3A5E);
       --link: light-dark(#0A7C5F, #83E3C6);
@@ -540,13 +543,13 @@
   }
   .button--secondary:hover { border-color: var(--text); }
 
-  /* The mint underline on "RAG systems" and "automations" in the home hero
+  /* The teal underline on "RAG systems" and "automations" in the home hero
      heading only. This is an exception to DESIGN_RULES §11 that Richy asked
      for. It is thick and set low under text-coloured words, so it can't be
-     mistaken for a link (links are mint text with a 1px underline). */
+     mistaken for a link (links are coloured text with a 1px underline). */
   .hero__keyword {
     text-decoration-line: underline;
-    text-decoration-color: var(--accent);
+    text-decoration-color: var(--rule-accent);
     text-decoration-thickness: var(--keyword-underline);
     text-underline-offset: var(--keyword-underline-offset);
   }
@@ -915,7 +918,7 @@
     display: inline-block;
     white-space: nowrap;
     padding-block-end: var(--title-rule-gap);
-    border-block-end: var(--title-rule) solid var(--accent);
+    border-block-end: var(--title-rule) solid var(--rule-accent);
     letter-spacing: var(--tracking-display);
   }
   .project__name--max-ai,
@@ -1225,6 +1228,7 @@
       --border-strong: #6A7391;
       --link: #0B0E1C;
       --accent: #0B0E1C;
+      --rule-accent: #0B0E1C;
       --gutter: 0;
       --target: 0;                /* touch targets don't apply on paper */
       --step--1: 9pt;
