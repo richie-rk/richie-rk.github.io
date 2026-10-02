@@ -1030,7 +1030,7 @@
     max-inline-size: var(--measure-standfirst);
     color: var(--text-strong);
   }
-  .quote__mark { color: var(--rule-accent); }
+  .quote__mark { color: var(--accent); }
   .quote.card figcaption {
     display: flex;
     flex-wrap: wrap;
