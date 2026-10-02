@@ -1,11 +1,8 @@
 /* Richy Koshy portfolio: the one shared stylesheet. Governed by DESIGN_RULES.md. */
 @layer tokens, base, layout, components, utilities;
 
-/* ------------------------------------------------------------------------
-   Fonts. Plex Sans is one variable file covering 400 and 600. The files are
-   Google's Latin subset, so the diagram arrows (U+2190/2192) and the check
-   mark fall back per glyph.
-   ------------------------------------------------------------------------ */
+/* Fonts: one variable Plex Sans for 400 and 600, Latin subset; arrows and the
+   check mark fall back per glyph. */
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("../fonts/plex-sans.woff2") format("woff2");
@@ -31,10 +28,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Metric-matched fallbacks, so the swap to Plex doesn't shift the layout.
-   Widths were measured against Arial and Courier New, weighted by the character
-   frequencies of this site's own copy. Liberation and Arimo/Cousine share
-   Arial's and Courier New's metrics, so the same overrides apply. */
+/* Metric-matched fallbacks, so the swap to Plex doesn't shift the layout. */
 @font-face {
   font-family: "Plex Sans Fallback";
   src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo");
@@ -86,7 +80,7 @@
   descent-override: 26.66%;
   line-gap-override: 0%;
 }
-/* Every mono candidate advances 0.6em like Plex Mono, so one set of overrides fits them all. */
+/* Every mono candidate advances 0.6em like Plex Mono: one override set fits all. */
 @font-face {
   font-family: "Plex Mono Fallback";
   src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("Cousine"), local("Droid Sans Mono"), local("DroidSansMono"), local("Roboto Mono");
@@ -98,33 +92,34 @@
   line-gap-override: 0%;
 }
 
-/* Signature moment: cross-document view transitions. The opt-in lives inside
-   no-preference, so reduced-motion users and unsupported browsers (Firefox)
-   get a normal page load. */
+/* Signature moment: cross-document view transitions, only without reduced
+   motion. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
   }
 }
 
-/* ======================================================================== */
 @layer tokens {
   :root {
-    /* Colour. Dark is Richy's existing palette. It is also the fallback where
-       light-dark() is unsupported; the theme toggle hides itself there. */
+    /* Colour. Dark is Richy's palette and the fallback without light-dark(). */
     color-scheme: dark;
     --bg: #0B0E1C;
     --surface: #141A2E;
-    --text: #E9EBF5;
-    --text-muted: #9AA3C0;          /* 7.66:1 on bg, 6.88:1 on surface */
+    /* Dark text: white for headings and keywords; body off-white with a faint
+       teal cast (APCA Lc 90); muted 0.12 darker in that hue. */
+    --text: #DDE7E4;                /* 15.20:1 on bg, 13.66:1 on surface; APCA Lc 90 */
+    --text-strong: #FFFFFF;         /* headings and bold keywords only */
+    --text-muted: #AEC3BE;          /* 10.38:1 on bg, 9.33:1 on surface; APCA Lc 67 */
     --border: #232B47;              /* decorative hairlines only (1.38:1) */
     --border-strong: #6A7391;       /* UI borders; fails as small text, so never used for text */
     --accent: #5FD4B0;
     --accent-hover: #83E3C6;
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
-    --surface-raised: #232B47;      /* raised controls; existing line colour, text 11.9:1 */
-    --surface-raised-hover: #2F3A5E;
-    --link: #83E3C6;
+    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
+    /* Links take the accent's lighter tint: Lc 78, where #5FD4B0 is Lc 68,
+       under the 75 floor. */
+    --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
     --focus: #5FD4B0;
     --shadow-colour: rgb(4 6 14 / 0.55);
 
@@ -133,7 +128,7 @@
     --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, monospace;
     --weight-regular: 400;
     --weight-strong: 600;
-    /* Modular scale, fluid from 320px to 1440px: ratio 1.25 at 320px (base 17px), 1.333 at 1440px (base 18px). */
+    /* Fluid modular scale: ratio 1.25 at 320px (17px base), 1.333 at 1440px (18px). */
     --step--1: 0.875rem;
     --step-0: clamp(1.0625rem, 1.0446rem + 0.0893vw, 1.125rem);
     --step-1: clamp(1.3281rem, 1.2791rem + 0.245vw, 1.5rem);
@@ -146,7 +141,8 @@
     --leading-heading: 1.2;
     --leading-tight: 1.1;
     --tracking-display: -0.01em;
-    --measure: 66ch;
+    /* 55ch sets about 66 real characters; a ch is the width of "0". */
+    --measure: 55ch;
 
     /* Spacing: the only scale. */
     --space-1: 0.25rem;
@@ -160,7 +156,7 @@
     --space-9: 6rem;
     --space-10: 8rem;
 
-    /* Layout and sizing. The ch measures resolve in the element's own font. */
+    /* Layout. The ch measures resolve in each element's own font. */
     --container: 72rem;
     --gutter: var(--space-4);
     --section-space: var(--space-7);
@@ -168,17 +164,16 @@
     --target: 2.75rem;              /* 44px touch target */
     --hero-width: 48rem;            /* 8 of 12 columns; the right third stays empty on purpose */
     --measure-claim: 20ch;
-    --measure-standfirst: 60ch;
+    --measure-standfirst: 52ch;
     --measure-outcome: 40ch;
     --measure-case-claim: 24ch;
     --column-min: 14rem;
     --scan-width: 52rem;
-    --diagram-min: 52.5rem;         /* the 940-unit diagrams stay legible; narrower screens scroll */
+    --diagram-min: 52.5rem;         /* the wide diagrams stay legible; narrower screens scroll */
 
     /* Shape: two radii, one elevation */
     --radius-sm: 0.25rem;           /* buttons, inline code, skip link */
     --radius-md: 0.5rem;            /* code blocks, figures, letter scans */
-    --radius-pill: 999px;           /* raised email buttons: the third and last radius */
     --border-width: 1px;
     --rule-width: 2px;
     --focus-width: 2px;
@@ -187,8 +182,8 @@
     --underline-offset-current: 0.35em;
     --keyword-underline: 0.11em;
     --keyword-underline-offset: 0.16em;
-    /* The signature title rule. It is em-based, so the home and deep-dive
-       snapshots scale together during the view transition. */
+    /* The signature title rule, em-based so both view-transition snapshots
+       scale together. */
     --title-rule: 0.0625em;
     --title-rule-gap: 0.125em;
     --icon-size: 1.25rem;
@@ -196,7 +191,7 @@
     --icon-stroke: 1.75;
     --z-header: 50;
     --z-skip-link: 100;
-    /* The site's single elevation level, shared by the letter scans and the raised buttons. */
+    /* The single elevation level, for the letter scans. */
     --shadow-raised: 0 1px 2px var(--shadow-colour), 0 8px 24px var(--shadow-colour);
     --inline-icon: 0.85em;
 
@@ -205,24 +200,26 @@
     --duration-morph: 300ms;
     --duration-fade-out: 150ms;
     --duration-fade-in: 250ms;
+    --duration-hover: 150ms;
+    --lift: 0.125rem;
   }
 
-  /* One declaration per token covers both themes. color-scheme picks the
-     branch: the OS by default, or the saved toggle choice via data-theme. */
+  /* One declaration per token for both themes; color-scheme picks the branch. */
   @supports (color: light-dark(#000, #fff)) {
     :root {
       color-scheme: light dark;
       --bg: light-dark(#F5F6FA, #0B0E1C);
       --surface: light-dark(#FFFFFF, #141A2E);
-      --text: light-dark(#0B0E1C, #E9EBF5);
-      --text-muted: light-dark(#42517F, #9AA3C0);     /* light: 7.16:1 on bg, 7.73:1 on surface */
+      --text: light-dark(#0B0E1C, #DDE7E4);
+      --text-strong: light-dark(#0B0E1C, #FFFFFF);
+      --text-muted: light-dark(#42517F, #AEC3BE);     /* light: 7.16:1 on bg, 7.73:1 on surface */
       --border: light-dark(#DCE0F0, #232B47);
       --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
-      --accent: light-dark(#0A7C5F, #5FD4B0);         /* mint fails on light (1.69:1); #0A7C5F is 4.79:1 */
+      --accent: light-dark(#0A7C5F, #5FD4B0);         /* teal fails on light (1.69:1); #0A7C5F is 4.79:1 */
       --accent-hover: light-dark(#086A51, #83E3C6);
       --accent-contrast: light-dark(#FFFFFF, #04241A);
-      --surface-raised: light-dark(#FFFFFF, #232B47);
-      --surface-raised-hover: light-dark(#E9EBF5, #2F3A5E);
+      /* Non-text teal in light mode: 3.12:1 on bg, 3.37:1 on surface. */
+      --rule-accent: light-dark(#1F9E7A, #5FD4B0);
       --link: light-dark(#0A7C5F, #83E3C6);
       --focus: light-dark(#0A7C5F, #5FD4B0);
       --shadow-colour: light-dark(rgb(11 14 28 / 0.08), rgb(4 6 14 / 0.55));
@@ -245,7 +242,6 @@
   }
 }
 
-/* ======================================================================== */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   * { margin: 0; }
@@ -253,8 +249,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* The sticky header must never cover a focused or linked-to element. */
-    /* --header-offset is the measured height, set by js/site.js when it runs. */
+    /* The sticky header never covers focus; --header-offset is measured by
+       js/site.js. */
     scroll-padding-block-start: calc(var(--header-offset, var(--header-size)) + var(--space-4));
   }
 
@@ -270,7 +266,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Headings and bold keywords take the strongest colour, so skimmers can
+     follow them. */
   h1, h2, h3, h4 {
+    color: var(--text-strong);
     font-weight: var(--weight-strong);
     line-height: var(--leading-heading);
     text-wrap: balance;
@@ -281,7 +280,10 @@
   h4 { font-size: var(--step-0); }
 
   p, li, dd, dt, figcaption, blockquote { text-wrap: pretty; }
-  strong, b { font-weight: var(--weight-strong); }
+  strong, b {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
 
   a {
     color: var(--link);
@@ -322,7 +324,7 @@
     }
   }
 
-  /* View-transition timing. The header stays still while the page cross-fades beneath it. */
+  /* The header stays still while the page cross-fades beneath it. */
   ::view-transition-old(root) {
     animation-duration: var(--duration-fade-out);
     animation-timing-function: ease-out;
@@ -340,7 +342,6 @@
   }
 }
 
-/* ======================================================================== */
 @layer layout {
   .container {
     inline-size: 100%;
@@ -363,7 +364,6 @@
 
   .flow > * + * { margin-block-start: var(--flow-space, var(--space-4)); }
 
-  /* Skip link: the first focusable element, off-screen until focused. */
   .skip-link {
     position: absolute;
     inset-block-start: var(--space-2);
@@ -379,7 +379,8 @@
   }
   .skip-link:focus { transform: none; }
 
-  /* Header: sticky, solid, identical on every page, so it stays still during view transitions. */
+  /* Header: sticky and identical on every page, so it holds still in view
+     transitions. */
   .site-header {
     position: sticky;
     inset-block-start: 0;
@@ -388,14 +389,12 @@
     border-block-end: var(--border-width) solid var(--border);
     view-transition-name: site-header;
   }
-  /* Below 20rem (narrow screens or a large default font size) the header can
-     wrap onto two rows. It scrolls away there rather than covering focused
-     content, which also holds with JS off. */
+  /* Below 20rem the header may wrap, so it scrolls away instead of covering
+     focus. */
   @media (max-width: 19.99rem) {
     .site-header { position: relative; }
   }
-  /* Mobile-first: at 320px the brand, three links and the toggle only fit in one
-     row with compact links. From 360px up they get full size. */
+  /* At 320px the header fits one row only with compact links. */
   .site-header__inner {
     display: flex;
     flex-wrap: wrap;
@@ -405,7 +404,7 @@
   }
   .site-header__brand {
     margin-inline-end: auto;
-    color: var(--text);
+    color: var(--text-strong);
     font-weight: var(--weight-strong);
     text-decoration: none;
     display: inline-flex;
@@ -435,10 +434,7 @@
   }
   .site-nav__list a:hover { color: var(--text); }
 
-  /* GitHub and LinkedIn marks: monochrome, with a teal glow on hover. The glow
-     is an exception to DESIGN_RULES §11 that Richy asked for. It appears from
-     30rem up; on narrower phones the header has no room, and both links stay
-     in the footer and the contact section. */
+  /* Header marks with the teal hover glow Richy asked for (§11), from 30rem. */
   .site-header__social {
     display: none;
     gap: var(--space-1);
@@ -469,7 +465,6 @@
     text-underline-offset: var(--underline-offset-current);
   }
 
-  /* Footer: carries the contact links on every page. */
   .site-footer {
     padding-block: var(--space-7);
     border-block-start: var(--border-width) solid var(--border);
@@ -496,9 +491,7 @@
     max-inline-size: var(--measure);
   }
 
-  /* From 360px the links go full size, but the gaps stay compact until 48rem:
-     at 360px the one-row header has less than 1px to spare, and it must still
-     fit while the metric-matched fallback font is showing. */
+  /* Full-size links from 360px; compact gaps until 48rem keep the row whole. */
   @media (min-width: 22.5rem) {
     .site-nav__list a { font-size: inherit; padding-inline: var(--space-1); }
   }
@@ -508,14 +501,14 @@
   }
 }
 
-/* ======================================================================== */
 @layer components {
-  /* Buttons: primary (solid accent), secondary (outline), tertiary (a plain link).
-     Hover changes colour instantly; nothing moves. */
+  /* Buttons: primary, secondary, tertiary (a link). Hover changes colour;
+     nothing moves. */
   .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: var(--space-2);
     min-block-size: var(--target);
     padding: var(--space-2) var(--space-5);
     border: var(--border-width) solid transparent;
@@ -531,8 +524,8 @@
     color: var(--accent-contrast);
   }
   .button--primary:hover { background: var(--accent-hover); }
-  /* A surface-fill hover would be about 1.1:1 against --bg, which is invisible,
-     so the outline switches to full text colour instead. */
+  /* A surface-fill hover would be invisible (1.1:1), so the outline takes the
+     text colour. */
   .button--secondary {
     border-color: var(--border-strong);
     background: transparent;
@@ -540,33 +533,15 @@
   }
   .button--secondary:hover { border-color: var(--text); }
 
-  /* The mint underline on "RAG systems" and "automations" in the home hero
-     heading only. This is an exception to DESIGN_RULES §11 that Richy asked
-     for. It is thick and set low under text-coloured words, so it can't be
-     mistaken for a link (links are mint text with a 1px underline). */
+  /* The hero keywords' teal underline, a §11 exception Richy asked for; thick
+     and low, so not a link. */
   .hero__keyword {
     text-decoration-line: underline;
-    text-decoration-color: var(--accent);
+    text-decoration-color: var(--rule-accent);
     text-decoration-thickness: var(--keyword-underline);
     text-underline-offset: var(--keyword-underline-offset);
   }
 
-  /* Raised: rounded, borderless and lifted, for the email actions. It presses
-     down on click. Only transform moves, and the change is instant. */
-  .button--raised {
-    gap: var(--space-2);
-    border-radius: var(--radius-pill);
-    background: var(--surface-raised);
-    color: var(--text);
-    box-shadow: var(--shadow-raised);
-  }
-  .button--raised:hover { background: var(--surface-raised-hover); }
-  .button--raised:active {
-    transform: translateY(var(--border-width));
-    box-shadow: none;
-  }
-
-  /* Copy icons: a stroke icon that swaps to a check once copied. */
   .copy-icon {
     inline-size: var(--inline-icon);
     block-size: var(--inline-icon);
@@ -581,8 +556,7 @@
   [data-state="copied"] .copy-icon { display: none; }
   [data-state="copied"] .copy-icon--done { display: inline; }
 
-  /* Email addresses copy on click once JS turns them into buttons. Without JS
-     they are mailto links, so the copy icon is hidden there. */
+  /* Emails become copy buttons with JS; without it they stay mailto links. */
   .email-copy {
     display: inline-flex;
     align-items: center;
@@ -607,8 +581,7 @@
   .js .email-copy .copy-icon:not(.copy-icon--done) { display: inline; }
   .js .email-copy[data-state="copied"] .copy-icon { display: none; }
   .js .email-copy[data-state="copied"] .copy-icon--done { display: inline; }
-  /* The state label sits above the address, out of the text flow, so it never
-     reflows the line or shifts what follows. */
+  /* The state label sits outside the text flow, so it never shifts the line. */
   .email-copy { position: relative; }
   .email-copy[data-state]::after {
     position: absolute;
@@ -624,8 +597,7 @@
   .email-copy[data-state="failed"]::after { content: "Copy failed"; }
 
 
-  /* Social links: monochrome marks with labels. The teal hover glow matches
-     the header icons (an exception Richy asked for). */
+  /* Social links: the same teal hover glow as the header icons. */
   .social-links {
     display: flex;
     flex-wrap: wrap;
@@ -660,11 +632,15 @@
     gap: var(--space-3);
   }
 
-  /* Theme toggle: it reports "Dark theme" pressed or not pressed. It shows a sun
-     while dark is on and a moon while light is on (the theme a click switches to).
-     The inline <head> script adds .js before first paint, so the header never
-     shifts when the button appears. Where light-dark() is unsupported the site
-     stays dark and the button stays hidden. */
+  /* Email actions by device, by media query so it works with JS off. */
+  .email-options__web { display: none; }
+  @media (min-width: 48rem) {
+    .email-options__app { display: none; }
+    .email-options__web { display: flex; }
+  }
+
+  /* Theme toggle: shows the theme a click switches to. .js is set before first
+     paint, so nothing shifts. */
   .theme-toggle { display: none; }
   @supports (color: light-dark(#000, #fff)) {
     .js .theme-toggle { display: inline-grid; }
@@ -689,9 +665,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  /* The icon follows the theme that is actually showing (a saved choice, or
-     otherwise the OS), not aria-pressed. site.js sets aria-pressed only after it
-     loads, and waiting for it would flash the wrong icon on first paint. */
+  /* The icon follows the theme shown, not aria-pressed, which JS sets late. */
   .theme-toggle__sun { display: none; }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) .theme-toggle__sun { display: block; }
@@ -707,8 +681,8 @@
     background: var(--surface);
     overflow-wrap: anywhere;
   }
-  /* No ch cap here: ch would resolve in the 14px mono and make code blocks
-     narrower than the prose. The .prose parent already sets the measure. */
+  .card :not(pre) > code { background: var(--bg); }
+  /* No ch cap: ch would resolve in the 14px mono. */
   pre {
     padding: var(--space-4) var(--space-5);
     border: var(--border-width) solid var(--border);
@@ -727,14 +701,12 @@
   .copy-button { display: none; }
   .js .copy-button { display: inline-flex; }
 
-  /* Single-column grids start at minmax(0, 1fr): an auto track would grow to the
-     widest unbreakable content and push the page sideways at 320px. */
-  :where(.projects, .project__body, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+  /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
+  :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
          .decisions > div, .letter-scans, .cv-grid, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Rows of related links: contact, next deep dive, CV contact line. */
   .inline-links {
     display: flex;
     flex-wrap: wrap;
@@ -749,9 +721,7 @@
     min-block-size: var(--target);
   }
 
-  /* Spec list: short key/value facts (role, stack, contact details, letter metadata). */
-  /* The list appears in slots from a narrow aside to the full column, so it
-     switches layout on its own width, not the viewport's. */
+  /* Spec list: switches layout on its own width, as its slots vary. */
   .spec {
     display: grid;
     gap: var(--space-3);
@@ -770,13 +740,12 @@
     }
   }
 
-  /* Quotes and asides: a neutral rule at the start, no tint, no decorative marks. */
-  .quote,
-  .note {
+  /* Quotes: a neutral rule at the start. */
+  .quote {
+    max-inline-size: var(--measure);
     padding-inline-start: var(--space-5);
     border-inline-start: var(--rule-width) solid var(--border-strong);
   }
-  .quote { max-inline-size: var(--measure); }
   .quote blockquote {
     font-size: var(--step-1);
     line-height: var(--leading-snug);
@@ -793,16 +762,89 @@
     font-size: var(--step--1);
     color: var(--text-muted);
   }
+  /* Asides: muted text in a card. */
   .note { color: var(--text-muted); }
-  .note :is(b, strong) { color: var(--text); }
 
-  /* Figures: one panel style for diagrams. Wide content scrolls inside its own region. */
+  /* Cards (Richy's request, 2 October 2026; a §11 exception): flat, no shadow.
+     Declared after .quote and .note so a card wins. */
+  .card {
+    position: relative;
+    padding: var(--space-4);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  @media (min-width: 48rem) {
+    .card { padding: var(--space-5) var(--space-6); }
+  }
+  /* A card of rows: the rows carry the padding and the hairlines. */
+  .card--list {
+    padding: 0;
+    list-style: none;
+  }
+  .card--list > * { padding: var(--space-4); }
+  .card--list > * + * { border-block-start: var(--border-width) solid var(--border); }
+  @media (min-width: 48rem) {
+    .card--list > * { padding: var(--space-4) var(--space-6); }
+  }
+
+  /* One link per tappable card, stretched over it by ::after; the focus ring
+     and hover edge are drawn on that overlay. */
+  .card__link::after {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--border-width));
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-md);
+  }
+  .card__link:focus-visible { outline: none; }
+  .card__link:focus-visible::after {
+    outline: var(--focus-width) solid var(--focus);
+    outline-offset: var(--focus-offset);
+  }
+  /* Hover turns the edge grey, never the accent, so it can't look focused. */
+  @media (hover: hover) {
+    .card__link:hover { text-decoration-thickness: var(--rule-width); }
+    .card__link:hover::after,
+    .next-card:hover { border-color: var(--border-strong); }
+  }
+  /* A small lift on hover: transform only, and off under reduced motion. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:has(.card__link),
+    .next-card { transition: transform var(--duration-hover) var(--ease-out); }
+    .card:has(.card__link:hover),
+    .next-card:hover { transform: translateY(calc(-1 * var(--lift))); }
+  }
+
+  /* Tags: outlined, no fill or hover, so never mistaken for buttons. */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  .tags > li {
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+  .tags--muted > li { color: var(--text-muted); }
+
+  /* Figures: wide content scrolls inside its own region. */
   .figure {
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface);
   }
-  .figure__scroll { overflow-x: auto; padding: var(--space-4); }
+  /* Slim side padding on phones gives the stacked diagrams more width. */
+  .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
+  @media (min-width: 48rem) {
+    .figure__scroll { padding: var(--space-4); }
+    .figure figcaption { padding-inline: var(--space-6); }
+  }
   .figure figcaption {
     padding: var(--space-3) var(--space-4);
     border-block-start: var(--border-width) solid var(--border);
@@ -810,7 +852,6 @@
     color: var(--text-muted);
   }
 
-  /* Architecture diagrams: colours come from the theme tokens, so both themes work. */
   .diagram {
     inline-size: 100%;
     min-inline-size: var(--diagram-min);
@@ -828,14 +869,30 @@
   .diagram__note { fill: var(--text-muted); }
   .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
   .diagram__code { font-family: var(--font-mono); }
+  /* Diagrams drawn twice: the stacked twin shows until the wide one fits, at
+     59rem even beside a classic scrollbar. */
+  .diagram--stacked {
+    inline-size: auto;
+    min-inline-size: 0;
+    margin-inline: auto;
+  }
+  .diagram--wide { display: none; }
+  @media (min-width: 59rem) {
+    .diagram--wide { display: block; }
+    .diagram--stacked { display: none; }
+  }
 
   /* ---------- Home: hero ---------- */
-  .hero { padding-block-start: var(--space-7); }
+  /* The hero runs tight so a phone's first screen reaches the first door. */
+  .hero { padding-block-start: var(--space-5); }
+  .hero + .section { padding-block-start: var(--space-7); }
+  @media (min-width: 48rem) {
+    .hero { padding-block-start: var(--space-6); }
+    .hero + .section { padding-block-start: var(--space-8); }
+  }
   .hero__title { max-inline-size: var(--hero-width); }
-  /* The name is already in the header, so the hero opens with the role instead;
-     the h1 still carries the name for screen readers and search. */
-  /* On screen the name is in the header, so in the hero it is for screen readers
-     and search only. On paper the header is hidden, so the hero shows it. */
+  /* On screen the name is in the header; here it serves screen readers, search
+     and print. */
   @media screen {
     .hero__name {
       position: absolute;
@@ -851,8 +908,7 @@
     .hero__name { display: block; font-size: var(--step-3); }
     .hero__name-sep { display: none; }
   }
-  /* A real inline full stop, so the heading reads "…automation. I build…".
-     It's transparent because the role line is a label. */
+  /* A real full stop, kept transparent, so the heading reads as sentences. */
   .hero__stop { color: transparent; }
   .hero__role {
     display: block;
@@ -866,131 +922,188 @@
     display: block;
     max-inline-size: var(--measure-claim);
     margin-block-start: var(--space-2);
-    font-size: var(--step-4);
+    font-size: var(--step-3);
     line-height: var(--leading-tight);
   }
   .hero__proof {
     max-inline-size: var(--measure-standfirst);
     margin-block-start: var(--space-5);
-    color: var(--text-muted);
   }
-  .hero__proof strong { color: var(--text); }
-  .hero .button-row { margin-block-start: var(--space-6); }
+  .hero .button-row { margin-block-start: var(--space-4); }
+  .hero__email { margin-block-start: var(--space-3); }
+  /* Here the copy status shows under the address, clear of the buttons. */
+  .hero__email .email-copy[data-state]::after {
+    inset-block-start: 100%;
+    inset-block-end: auto;
+  }
+  @media (min-width: 48rem) {
+    .hero__claim { font-size: var(--step-4); }
+    .hero .button-row { margin-block-start: var(--space-6); }
+  }
 
   /* ---------- Home: sections ---------- */
+  /* Quiet section labels, so the project names stay louder. */
+  .section__label {
+    font-size: var(--step-1);
+    font-weight: var(--weight-strong);
+  }
   .section__lede {
     max-inline-size: var(--measure);
     margin-block-start: var(--space-3);
     color: var(--text-muted);
   }
 
-  /* ---------- Home: featured work ----------
-     Three tiers, told apart by title size, the title rule and layout rather than
-     boxes: the lead (MAX AI), the featured entry (Final Docs), then a quiet ledger. */
-  .projects {
+  /* ---------- Home: doors ----------
+     Tappable cards of equal weight (ADR 0001), side by side from 64rem. */
+  .doors {
     display: grid;
-    gap: var(--space-8);
-    margin-block-start: var(--space-7);
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
   }
-  .project__title { font-size: var(--step-1); }
-  .project--lead .project__title { font-size: var(--step-3); }
-  .project--featured .project__title { font-size: var(--step-2); }
-  /* Project names are links, so they take the link colour. The accent title
-     rule below them acts as their underline, which makes them read as clickable
-     without a hover. */
-  .project__link {
-    color: var(--link);
-    text-decoration: none;
+  @media (min-width: 48rem) {
+    .doors { margin-block-start: var(--space-5); }
   }
-  .project__link:hover { color: var(--text); }
+  @media (min-width: 64rem) {
+    .doors {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(3, auto);
+      gap: 0 var(--space-5);
+    }
+    /* Each door spans its rows as a subgrid, so names, outcomes and links line
+       up. */
+    .doors > .project {
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-4);
+    }
+    /* Names sit on the row's floor, so the title rules line up. */
+    .doors .project__title { align-self: end; }
+  }
+  /* Side by side, names step down a size; the rule stays at least the rule
+     width. */
+  @media (min-width: 64rem) {
+    .doors .project__title { font-size: var(--step-2); }
+    .doors .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
+  }
 
-  /* The signature element: the accent rule under a project name. The same rule
-     sits under the deep-dive h1 name, and it travels with the name in the
-     view transition. */
+  .project {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+  .project__title { font-size: var(--step-3); }
+
+  /* The signature: the accent rule under a project name, carried by the view
+     transition. */
   .project__name,
   .case-study__name {
     display: inline-block;
-    white-space: nowrap;
     padding-block-end: var(--title-rule-gap);
-    border-block-end: var(--title-rule) solid var(--accent);
+    border-block-end: var(--title-rule) solid var(--rule-accent);
     letter-spacing: var(--tracking-display);
   }
   .project__name--max-ai,
   .case-study__name--max-ai { view-transition-name: project-max-ai; }
   .project__name--final-docs,
   .case-study__name--final-docs { view-transition-name: project-final-docs; }
+  .project__name--encompass,
+  .case-study__name--encompass { view-transition-name: project-encompass; }
 
-  .project__descriptor {
-    display: block;
-    margin-block-start: var(--space-2);
-    font-size: var(--step-1);
-    font-weight: var(--weight-regular);
-    line-height: var(--leading-snug);
-    letter-spacing: normal;
-    color: var(--text-muted);
-  }
-  .project__outcome {
-    max-inline-size: var(--measure-outcome);
-    margin-block-start: var(--space-4);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
-  }
-  .project__body {
-    display: grid;
-    gap: var(--space-5);
-    margin-block-start: var(--space-5);
-    color: var(--text-muted);
-  }
-  .project__body > * > * + * { margin-block-start: var(--space-4); }
-  .project__body :is(b, strong) { color: var(--text); }
-  .project__main,
-  .project__summary,
-  .project__points { max-inline-size: var(--measure); }
-  .project__points {
-    display: grid;
-    gap: var(--space-2);
-  }
-  .project__points > li + li { margin-block-start: 0; }
-  .project__figure {
-    display: none;
-    margin-block-start: var(--space-6);
-  }
-  .project__actions { margin-block-start: var(--space-6); }
-
-  @media (min-width: 64rem) {
-    .projects { gap: var(--space-9); }
-    .project__body {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: var(--space-6);
+  .project__outcome { max-inline-size: var(--measure-outcome); }
+  .project__actions,
+  .next-card__claim { text-wrap: balance; }
+  /* The card is the target, so its link needs no touch padding; the hairline is
+     desktop-only (ADR 0002). */
+  @media (min-width: 48rem) {
+    .project__actions {
+      padding-block-start: var(--space-3);
+      border-block-start: var(--border-width) solid var(--border);
     }
-    .project--lead .project__summary { grid-column: 1 / 7; }
-    .project--lead .project__points { grid-column: 7 / -1; }
-    .project--featured .project__main { grid-column: 1 / 8; }
-    .project--featured .project__aside { grid-column: 9 / -1; }
-    /* The home diagram only shows where it fits without scrolling; the deep dive always has it. */
-    .project__figure { display: block; }
   }
 
-  /* Ledger: hairline-separated rows for the quieter tier, open source, and so on. */
+  /* Testimonial card: quote in heading colour, marks in the accent. */
+  .doors + .quote {
+    max-inline-size: none;
+    margin-block-start: var(--space-4);
+  }
+  .quote.card blockquote {
+    max-inline-size: var(--measure-standfirst);
+    color: var(--text-strong);
+  }
+  .quote__mark { color: var(--accent); }
+  .quote.card figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--space-5);
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-2);
+    border-block-start: var(--border-width) solid var(--border);
+  }
+  @media (min-width: 48rem) {
+    .quote.card blockquote { font-size: var(--step-2); }
+  }
+
+  /* ---------- Home: also shipped ----------
+     One card of rows, folded on phones by a head script before first paint;
+     open from 48rem and with JS off. */
+  .ledger-fold {
+    margin-block-start: var(--space-4);
+    padding: 0;
+  }
+  .ledger-fold > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-block-size: var(--target);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    color: var(--link);
+    list-style: none;
+    cursor: pointer;
+  }
+  .ledger-fold > summary::-webkit-details-marker { display: none; }
+  /* A chevron in place of the triangle, pointing up while open. */
+  .ledger-fold > summary::after {
+    content: "";
+    flex: none;
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    border-inline-end: var(--rule-width) solid currentColor;
+    border-block-end: var(--rule-width) solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+  }
+  .ledger-fold[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+  @media (prefers-reduced-motion: no-preference) {
+    .ledger-fold > summary::after { transition: transform var(--duration-hover) var(--ease-out); }
+  }
+  .ledger-fold > summary:hover { text-decoration-line: underline; }
+  @media (min-width: 48rem) {
+    .ledger-fold { margin-block-start: var(--space-5); }
+    .ledger-fold[open] > summary { display: none; }
+  }
+
   .ledger > * {
     display: grid;
     gap: var(--space-4);
-    padding-block: var(--space-6);
+    padding: var(--space-5) var(--space-4);
     border-block-start: var(--border-width) solid var(--border);
-    color: var(--text-muted);
   }
-  .ledger :is(b, strong) { color: var(--text); }
-  .ledger__title {
-    font-size: var(--step-1);
-    color: var(--text);
+  @media (min-width: 48rem) {
+    .ledger > * { padding: var(--space-6); }
+    /* With the summary hidden, the first row needs no rule. */
+    .ledger-fold[open] .ledger > :first-child { border-block-start: 0; }
   }
+  .ledger__title { font-size: var(--step-0); }
   .ledger__meta {
     margin-block-start: var(--space-1);
     font-size: var(--step--1);
+    color: var(--text-muted);
   }
   .ledger__body { display: grid; gap: var(--space-4); }
   .ledger__body > * { max-inline-size: var(--measure); }
-  .ledger__body ul { display: grid; gap: var(--space-2); }
   @media (min-width: 64rem) {
     .ledger > * {
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1000,28 +1113,21 @@
     .ledger__body { grid-column: 5 / -1; }
   }
 
-  .domain-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--column-min), 1fr));
-    gap: var(--space-2) var(--space-6);
-  }
   .repo__name {
     font-family: var(--font-mono);
     font-size: var(--step-0);
   }
-  .section__lede + .ledger { margin-block-start: var(--space-6); }
 
-  /* Skills: one grouped list, named technologies only. */
   .skills {
     display: grid;
     gap: var(--space-5);
-    margin-block-start: var(--space-6);
+    margin-block-start: var(--space-5);
   }
-  .skills dt { font-weight: var(--weight-strong); }
-  .skills dd {
-    margin-block-start: var(--space-1);
-    color: var(--text-muted);
+  .skills dt {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
   }
+  .skills dd { margin-block-start: var(--space-3); }
   @media (min-width: 48rem) {
     .skills {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1033,6 +1139,8 @@
   }
 
   /* ---------- Home: contact ---------- */
+  /* The intro leads into the address, so it is body text, not a muted caption. */
+  .contact .section__lede { color: var(--text); }
   /* One size down on phones, so the address stays on one line at 320px. */
   .contact__email {
     margin-block-start: var(--space-5);
@@ -1044,20 +1152,14 @@
   }
   .contact .email-options { margin-block-start: var(--space-4); }
   .contact .spec,
-  .contact__discord,
-  .contact__letter { margin-block-start: var(--space-6); }
+  .contact__discord { margin-block-start: var(--space-6); }
   .contact .social-links { margin-block-start: var(--space-3); }
-  .contact__discord,
-  .contact__letter { max-inline-size: var(--measure); color: var(--text-muted); }
-  .contact__letter b { color: var(--text); }
+  .contact__discord { max-inline-size: var(--measure); }
 
   /* ---------- Deep dives ---------- */
-  /* The container query lets wide figures break out to the full column set. */
-  .case-study {
-    container-type: inline-size;
-    padding-block-end: var(--section-space);
-  }
-  .case-study__head { padding-block-start: var(--space-7); }
+  .case-study { padding-block-end: var(--section-space); }
+  /* On phones the head runs tight, so the overview shares the first screen. */
+  .case-study__head { padding-block-start: var(--space-6); }
   .case-study__title { font-size: var(--step-3); }
   .case-study__claim {
     display: block;
@@ -1067,49 +1169,188 @@
     font-weight: var(--weight-regular);
     letter-spacing: normal;
   }
-  .case-study__standfirst {
+  .case-study__summary {
     max-inline-size: var(--measure-standfirst);
-    margin-block-start: var(--space-5);
+    margin-block-start: var(--space-4);
   }
   .case-study__overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--column-min), 1fr));
-    gap: var(--space-5) var(--space-6);
-    margin-block-start: var(--space-6);
-    padding-block: var(--space-5);
-    border-block: var(--border-width) solid var(--border);
+    gap: var(--space-3) var(--space-6);
+    margin-block-start: var(--space-4);
   }
+  /* Tighter tag rows keep the overview in a phone's first screen. */
+  .case-study__overview .tags { row-gap: var(--space-1); }
   .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
-  .case-study__overview dd { margin-block-start: var(--space-1); }
-  .toc { margin-block-start: var(--space-6); }
+  .case-study__overview > div {
+    display: grid;
+    grid-template-columns: var(--space-7) minmax(0, 1fr);
+    column-gap: var(--space-3);
+    align-items: baseline;
+  }
+  /* Role, Team and Impact share a row; Stack runs full width under them. */
+  @media (min-width: 48rem) {
+    .case-study__overview {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: var(--space-5);
+    }
+    .case-study__overview { margin-block-start: var(--space-6); }
+    .case-study__overview > div { display: block; }
+    .case-study__overview dd { margin-block-start: var(--space-1); }
+    .case-study__overview > .spec__stack { grid-column: 1 / -1; }
+  }
+  .case-study__figure { margin-block-start: var(--space-6); }
+  .toc {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-6);
+  }
   .toc__title { font-size: var(--step--1); color: var(--text-muted); }
   .toc li { text-wrap: balance; }
-  /* One column: the entries are full headings, and max-content columns would push the page sideways. */
+  /* One column on phones: max-content columns could overflow at 320px. */
   .toc ul {
     display: grid;
     gap: var(--space-1);
     max-inline-size: var(--measure);
     margin-block-start: var(--space-2);
   }
+  /* Keeps one-line links past the 24px target floor. */
+  .toc a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--space-6);
+  }
+  @media (min-width: 48rem) {
+    .toc ul {
+      display: block;
+      columns: 2;
+      column-gap: var(--space-6);
+    }
+    .toc li { break-inside: avoid; }
+  }
   .case-study__section { margin-block-start: var(--space-7); }
+
+  /* Before and after panels, side by side from 64rem; the after panel has the
+     accent edge. */
+  .compare {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-7);
+  }
+  .compare > .case-study__section { margin-block-start: 0; }
+  .compare__after { border-color: var(--rule-accent); }
+  @media (min-width: 48rem) {
+    .compare { margin-block-start: var(--space-8); }
+  }
+  @media (min-width: 64rem) {
+    .compare {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  /* A real sequence, so numbered (§11): accent numerals in rings on a rail. */
+  .steps {
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+  .steps > li {
+    position: relative;
+    padding-inline-start: calc(var(--space-6) + var(--space-4));
+    counter-increment: step;
+  }
+  .steps > li::before {
+    content: counter(step);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border: var(--border-width) solid var(--rule-accent);
+    border-radius: 50%;
+    color: var(--link);
+    font-size: var(--step--1);
+    font-weight: var(--weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .steps > li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    inset-block: calc(var(--space-6) + var(--space-1)) calc(var(--space-1) - var(--space-4));
+    inset-inline-start: calc(var(--space-6) / 2);
+    border-inline-start: var(--border-width) solid var(--border);
+  }
+
+  /* Results: one row per figure; a subgrid sizes the number column. */
+  .stats {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: var(--space-4);
+  }
+  .stats > li {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+  }
+  .stats__value {
+    color: var(--text-strong);
+    font-size: var(--step-3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-tight);
+  }
+
+  /* The next deep dive as one block link whose name morphs into that page's
+     title. */
   .case-study__end {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4);
     margin-block-start: var(--space-8);
-    padding-block-start: var(--space-6);
-    border-block-start: var(--border-width) solid var(--border);
   }
+  .case-study__end-nav {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .next-card {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    max-inline-size: var(--measure);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .next-card__label {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .next-card .project__name {
+    margin-block-end: var(--space-1);
+    color: var(--text-strong);
+    font-size: var(--step-2);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-heading);
+  }
+  /* Rows padded and ruled by the list card. */
   .decisions > div {
     display: grid;
     gap: var(--space-1);
-    padding-block: var(--space-4);
-    border-block-start: var(--border-width) solid var(--border);
   }
-  .decisions dt { font-weight: var(--weight-strong); }
-  .decisions dd { color: var(--text-muted); }
+  .decisions dt {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
 
   @media (min-width: 48rem) {
-    .case-study__standfirst { font-size: var(--step-1); line-height: var(--leading-body); }
+    .case-study__head { padding-block-start: var(--space-7); }
+    .case-study__summary {
+      margin-block-start: var(--space-5);
+      font-size: var(--step-1);
+      line-height: var(--leading-body);
+    }
     .case-study__section { margin-block-start: var(--space-8); }
     .decisions > div {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -1118,7 +1359,6 @@
   }
   @media (min-width: 64rem) {
     .case-study__head { padding-block-start: var(--space-9); }
-    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
   }
 
   /* ---------- CV ---------- */
@@ -1146,9 +1386,7 @@
     display: grid;
     gap: var(--space-2);
     margin-block-start: var(--space-2);
-    color: var(--text-muted);
   }
-  .cv-role ul ul b { color: var(--text); }
   .cv-role .quote { margin-block-start: var(--space-5); }
   .cv-grid { display: grid; gap: var(--space-6); }
   .cv-grid h3 { font-size: var(--step-0); }
@@ -1189,7 +1427,6 @@
   }
 }
 
-/* ======================================================================== */
 @layer utilities {
   .visually-hidden {
     position: absolute !important;
@@ -1206,11 +1443,7 @@
   .nowrap { white-space: nowrap; }
 }
 
-/* ========================================================================
-   Print. The CV is print-first (DESIGN_RULES §10); other pages get clean basics.
-   Spacing and type tokens switch to points, so components need no print
-   variants of their own.
-   ======================================================================== */
+/* Print: tokens switch to points, so components need no print variants. */
 @media print {
   @page { size: A4; margin: 15mm; }
 }
@@ -1222,11 +1455,13 @@
       --bg: #FFFFFF;
       --surface: #FFFFFF;
       --text: #0B0E1C;
+      --text-strong: #0B0E1C;
       --text-muted: #42517F;
       --border: #6A7391;
       --border-strong: #6A7391;
       --link: #0B0E1C;
       --accent: #0B0E1C;
+      --rule-accent: #0B0E1C;
       --gutter: 0;
       --target: 0;                /* touch targets don't apply on paper */
       --step--1: 9pt;
@@ -1235,16 +1470,16 @@
       --step-2: 12pt;
       --step-3: 20pt;
       --step-4: 20pt;
-      --leading-body: 1.5;
-      --leading-prose: 1.5;
+      --leading-body: 1.4;
+      --leading-prose: 1.4;
       --space-1: 1pt;
       --space-2: 3pt;
       --space-3: 4pt;
       --space-4: 6pt;
       --space-5: 8pt;
       --space-6: 8pt;
-      --space-7: 10pt;
-      --space-8: 12pt;
+      --space-7: 8pt;
+      --space-8: 10pt;
       --space-9: 16pt;
     }
   }
@@ -1265,11 +1500,11 @@
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
-      /* Flatten grids so an entry never splits awkwardly across pages. */
-    .cv-role > ul,
-    .cv-grid { display: block; }
-    .cv-role > ul > li + li,
-    .cv-grid > * + * { margin-block-start: var(--space-4); }
+      /* Role lists flatten so entries never split; skills groups stay two-up
+         and whole. */
+    .cv-role > ul { display: block; }
+    .cv-role > ul > li + li { margin-block-start: var(--space-4); }
+    .cv-grid > * { break-inside: avoid; }
     .cv-role__head,
     .cv-role li,
     .cv__section > ul > li,
@@ -1278,14 +1513,21 @@
     .quote { break-inside: avoid; }
     h2,
     h3 { break-after: avoid; }
-    /* The diagrams' screen minimum width would make Chrome shrink the whole page to fit. */
+    /* The diagrams' screen minimum width would make Chrome shrink the page. */
     .diagram { min-inline-size: 0; }
-    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
     .figure { break-inside: avoid; }
     pre { white-space: pre-wrap; overflow: visible; }
+    /* Entries split for phones run together on paper, keeping the CV to two
+       pages. */
+    .print-join > p,
+    .print-run-lead,
+    .print-run,
+    .print-run > li { display: inline; }
+    .print-run { padding: 0; }
+    .print-run > li:not(:last-child)::after { content: ","; }
     /* Inline, so the printed URL keeps its leading space. */
     .quote__link { display: inline; }
-    /* External URLs print after their link text. Links whose text already is the URL opt out. */
+    /* External URLs print after their link text, unless the text is the URL. */
     .cv a[href^="http"]:not([data-no-print-url], [data-print-url])::after { content: " (" attr(href) ")"; }
     .cv a[data-print-url]::after { content: " (" attr(data-print-url) ")"; }
     .figure__scroll { overflow: visible; }
