@@ -1361,6 +1361,24 @@
     border-inline-start: var(--border-width) solid var(--border);
   }
 
+  /* Results as figures: one card of confirmed numbers, one row each, the
+     number in its own column with what it measures beside it. */
+  .stats > li {
+    display: grid;
+    grid-template-columns: var(--space-9) minmax(0, 1fr);
+    column-gap: var(--space-4);
+    align-items: baseline;
+  }
+  .stats__value {
+    color: var(--text-strong);
+    font-size: var(--step-3);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-tight);
+  }
+  @media (min-width: 48rem) {
+    .stats > li { grid-template-columns: var(--space-10) minmax(0, 1fr); }
+  }
+
   /* The end of a deep dive: the next one as a card, one block link whose name
      morphs into that page's title, as the doors on home do. */
   .case-study__end {
@@ -1398,14 +1416,15 @@
     .next-card { transition: transform var(--duration-hover) var(--ease-out); }
     .next-card:hover { transform: translateY(calc(-1 * var(--lift))); }
   }
+  /* Decisions sit in a list card, which pads and rules the rows. */
   .decisions > div {
     display: grid;
     gap: var(--space-1);
-    padding-block: var(--space-4);
-    border-block-start: var(--border-width) solid var(--border);
   }
-  .decisions dt { font-weight: var(--weight-strong); }
-  .decisions dd { color: var(--text-muted); }
+  .decisions dt {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
 
   @media (min-width: 48rem) {
     .case-study__head { padding-block-start: var(--space-7); }

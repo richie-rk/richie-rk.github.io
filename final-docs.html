@@ -316,7 +316,7 @@ data = handler()</code></pre>
 
   <section id="normalization" class="case-study__section prose" aria-labelledby="normalization-title">
     <h2 id="normalization-title">Two normalization problems, solved before reconciliation</h2>
-    <ul>
+    <ul class="card card--list" role="list">
       <li class="flow">
         <p><b>Loan identity.</b> Some investors report only their own loan number. A resolver queries Encompass with the investor loan number plus the borrower name and recovers the PRMI Loan Number.</p>
         <p>Ambiguous or empty results are marked unresolved rather than guessed, and surface later in the Mismatch report instead of disappearing.</p>
@@ -338,7 +338,7 @@ data = handler()</code></pre>
       <li>records whose PRMI Loan Number could not be resolved are called out separately</li>
       <li>duplicate loan-and-document-type combinations are detected and reported.</li>
     </ul>
-    <ul>
+    <ul class="card card--list" role="list">
       <li><b>Rerun-safe:</b> same-day duplicates from re-runs are collapsed before reconciliation, earliest record wins, so reprocessing is idempotent.</li>
       <li><b>Missing input file:</b> logged and a notification goes out, instead of the run silently proceeding as if the file existed.</li>
       <li><b>Custodian data missing for the day:</b> the workflow falls back to the most recent weekly snapshot rather than failing the run.</li>
@@ -354,31 +354,35 @@ data = handler()</code></pre>
   <section id="architecture" class="case-study__section prose" aria-labelledby="architecture-title">
     <h2 id="architecture-title">Prepare, persist, reconcile</h2>
     <p>The system separates four responsibilities:</p>
-    <ul>
+    <ul class="card card--list" role="list">
       <li><strong>Batch orchestration</strong> decides which investors to process.</li>
       <li><strong>Per-investor processing</strong> decides how one investor’s data becomes the common schema.</li>
       <li><strong>Reconciliation</strong> decides what is missing or inconsistent.</li>
       <li><strong>Reporting</strong> decides what the business sees.</li>
     </ul>
     <p>An Investor Batch Orchestrator loads the YAML configuration and creates one Investor Data Processor per requested investor; every processor runs the same pipeline:</p>
-    <ul>
-      <li>load</li>
-      <li>normalize columns</li>
-      <li>resolve the PRMI Loan Number where required</li>
-      <li>assign and standardize document types</li>
-      <li>persist.</li>
-    </ul>
+    <ol class="steps" role="list">
+      <li>Load</li>
+      <li>Normalize columns</li>
+      <li>Resolve the PRMI Loan Number where required</li>
+      <li>Assign and standardize document types</li>
+      <li>Persist</li>
+    </ol>
     <p>The consolidated data lands in the database in the common Final Docs schema, and reconciliation compares it with First American data on the PRMI Loan Number.</p>
     <p><a href="#diagram">Back to the architecture diagram</a></p>
   </section>
 
   <section id="results" class="case-study__section prose" aria-labelledby="results-title">
     <h2 id="results-title">Investor expansion at deal speed</h2>
+    <ul class="stats card card--list" role="list">
+      <li><span class="stats__value">Days</span> <span class="stats__label">to onboard a new investor, down from <span class="nowrap">2-4 weeks</span>: a YAML change, not a code release.</span></li>
+      <li><span class="stats__value">4</span> <span class="stats__label">new investors integrated in the month after the refactor.</span></li>
+      <li><span class="stats__value">2</span> <span class="stats__label">other automation initiatives adopted the architecture as their template.</span></li>
+    </ul>
     <p>Onboarding a new investor fell from <span class="nowrap">2-4 weeks</span> of bespoke coding to a configuration exercise measured in days: a new YAML file, a few parameter tweaks, and a handler only if the investor needs something genuinely new.</p>
     <p>In the month after the refactor, completed in <span class="nowrap">Q1 2025</span>, <strong>four new investors were integrated</strong>, work that previously consumed a full quarter of engineering capacity, and the architecture was adopted as the template for two other automation initiatives.</p>
-    <p>Onboarding cut from <span class="nowrap">2-4 weeks</span> to days: a YAML change, not a code release.</p>
-    <figure class="quote quote--pull">
-      <blockquote><p>“PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.”</p></blockquote>
+    <figure class="quote quote--pull card">
+      <blockquote><p><span class="quote__mark">“</span>PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.<span class="quote__mark">”</span></p></blockquote>
       <figcaption>Corban Wells, VP of Technology Product Management, PRMI<br><a class="quote__link" href="letter.html">Read Corban Wells’s full letter</a></figcaption>
     </figure>
   </section>

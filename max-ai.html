@@ -294,7 +294,7 @@
     <p><b>The durable trio.</b> A single HTTP function cannot index a corpus: the work outlives any HTTP timeout, and at scale a crash mid-run is a certainty, not a possibility. Durable Functions splits accept, coordinate, and work.</p>
     <p>An async HTTP starter validates the request and returns <code>202 Accepted</code> with a status-polling URL in milliseconds, the asynchronous request-reply pattern.</p>
     <p>The orchestrator is a replayed Python generator that describes the workflow and nothing else. The activity does all the real work, with the function timeout removed entirely.</p>
-    <ul>
+    <ul class="card card--list" role="list">
       <li>
         <p><b>The per-file pipeline:</b></p>
         <ul>
@@ -321,25 +321,38 @@
 
   <section id="read-path" class="case-study__section prose" aria-labelledby="read-path-title">
     <h2 id="read-path-title">Retrieve, ground, stream</h2>
-    <p><b>Retrieval is hybrid, in three layers.</b> BM25 over a lemmatizing English analyzer catches exact identifiers that embeddings blur: program names, form numbers. An HNSW vector index (1,536-d, cosine) catches paraphrase that keywords miss entirely.</p>
-    <p>A semantic reranker then re-scores the top candidates with a cross-encoder: too expensive for the whole index, affordable for fifty. Recall is stage one’s job; precision is stage two’s.</p>
-    <p><b>HyDE closes the gap between short questions and long documents.</b></p>
-    <p>Queries and documents sit in different regions of embedding space, not because they differ in meaning but because they differ in register and length: eight words of telegraphic shorthand versus a thousand characters of formal prose.</p>
-    <p>So instead of embedding the question, an LLM drafts a plausible answer and <em>that</em> gets embedded.</p>
-    <p>The draft is wrong on facts but right on form, so its vector lands in the document neighborhood and retrieves the real chunks the fake one imitates.</p>
-    <p>The fabricated text is thrown away; only its position in space is used. It costs one extra completion per question, which is why it is enabled per index rather than globally.</p>
-    <p><b>Grounding is a data-formatting decision as much as a prompting one.</b> Each retrieved chunk is prefixed with its own file and page label inside the context window, which is the only reason the model can emit citations like <code>[guide.pdf#page=12]</code>.</p>
-    <p>The system prompt constrains answers to the provided sources and mandates refusal when they do not contain the answer.</p>
-    <p>Generation runs at temperature 0 with a hard token ceiling: for a compliance-facing tool, determinism and a bounded cost per call beat variety.</p>
-    <p><b>Streaming is NDJSON:</b> one complete JSON object per line over ordinary chunked HTTP.</p>
-    <p>A single JSON array cannot be parsed until its closing bracket arrives; SSE imposes framing and reconnection semantics this app does not need; WebSockets add a stateful channel for what is a one-shot exchange.</p>
-    <p>NDJSON gives incremental parseability with zero protocol overhead. Frame 0 carries the citations and model metadata <em>before the first token</em>, so the UI paints the sources panel while generation is still in flight.</p>
-    <p>Token frames follow, and the final frame carries suggested follow-up questions, extracted from the stream by a small state machine so its delimiters never leak into the visible answer.</p>
+    <div class="card card--list">
+      <div class="flow">
+        <h3>Retrieval is hybrid, in three layers</h3>
+        <p>BM25 over a lemmatizing English analyzer catches exact identifiers that embeddings blur: program names, form numbers. An HNSW vector index (1,536-d, cosine) catches paraphrase that keywords miss entirely.</p>
+        <p>A semantic reranker then re-scores the top candidates with a cross-encoder: too expensive for the whole index, affordable for fifty. Recall is stage one’s job; precision is stage two’s.</p>
+      </div>
+      <div class="flow">
+        <h3>HyDE closes the gap between short questions and long documents</h3>
+        <p>Queries and documents sit in different regions of embedding space, not because they differ in meaning but because they differ in register and length: eight words of telegraphic shorthand versus a thousand characters of formal prose.</p>
+        <p>So instead of embedding the question, an LLM drafts a plausible answer and <em>that</em> gets embedded.</p>
+        <p>The draft is wrong on facts but right on form, so its vector lands in the document neighborhood and retrieves the real chunks the fake one imitates.</p>
+        <p>The fabricated text is thrown away; only its position in space is used. It costs one extra completion per question, which is why it is enabled per index rather than globally.</p>
+      </div>
+      <div class="flow">
+        <h3>Grounding is a data-formatting decision as much as a prompting one</h3>
+        <p>Each retrieved chunk is prefixed with its own file and page label inside the context window, which is the only reason the model can emit citations like <code>[guide.pdf#page=12]</code>.</p>
+        <p>The system prompt constrains answers to the provided sources and mandates refusal when they do not contain the answer.</p>
+        <p>Generation runs at temperature 0 with a hard token ceiling: for a compliance-facing tool, determinism and a bounded cost per call beat variety.</p>
+      </div>
+      <div class="flow">
+        <h3>Streaming is NDJSON</h3>
+        <p>One complete JSON object per line over ordinary chunked HTTP.</p>
+        <p>A single JSON array cannot be parsed until its closing bracket arrives; SSE imposes framing and reconnection semantics this app does not need; WebSockets add a stateful channel for what is a one-shot exchange.</p>
+        <p>NDJSON gives incremental parseability with zero protocol overhead. Frame 0 carries the citations and model metadata <em>before the first token</em>, so the UI paints the sources panel while generation is still in flight.</p>
+        <p>Token frames follow, and the final frame carries suggested follow-up questions, extracted from the stream by a small state machine so its delimiters never leak into the visible answer.</p>
+      </div>
+    </div>
   </section>
 
   <section id="decisions" class="case-study__section prose" aria-labelledby="decisions-title">
     <h2 id="decisions-title">Two more choices, each with a reason</h2>
-    <dl class="decisions">
+    <dl class="decisions card card--list">
       <div><dt>A container because of OCR.</dt><dd class="flow"><p>Local PDF partitioning and table extraction in the activity function use the unstructured library, which needs two system installs: poppler to rasterize pages and Tesseract to read them.</p><p>A standard Function App cannot carry system packages, so the ingestion ships as a Docker image served from Azure Container Registry.</p></dd></div>
       <div><dt>One search index per project.</dt><dd>Multi-tenancy by physical isolation, with a project-to-index map in SQL. Simple to reason about, and nothing to filter at query time.</dd></div>
     </dl>
@@ -371,7 +384,7 @@
 
   <section id="next" class="case-study__section prose" aria-labelledby="next-title">
     <h2 id="next-title">What I’d do next: parallel ingestion, a retrieval evaluation harness, structured follow-ups</h2>
-    <ul>
+    <ul class="card card--list" role="list">
       <li><b>Fan-out/fan-in ingestion:</b> list blobs in the orchestrator and schedule one activity per file with per-file retry, turning a serial hours-long run into parallel work.</li>
       <li><b>A retrieval evaluation harness:</b> a labelled question set with recall@k tracking, so chunk size, top-k and HNSW parameters get tuned against measurement instead of anecdote.</li>
       <li><b>Structured outputs for the follow-up channel:</b> replace in-band text delimiters with a tool call, so the transport stops depending on the model’s punctuation.</li>
