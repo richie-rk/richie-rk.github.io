@@ -152,7 +152,9 @@
     --leading-heading: 1.2;
     --leading-tight: 1.1;
     --tracking-display: -0.01em;
-    --measure: 66ch;
+    /* A ch is the width of "0", wider than the average letter: 55ch sets lines
+       of about 66 characters in Plex Sans, where 66ch ran to about 80. */
+    --measure: 55ch;
 
     /* Spacing: the only scale. */
     --space-1: 0.25rem;
@@ -174,7 +176,7 @@
     --target: 2.75rem;              /* 44px touch target */
     --hero-width: 48rem;            /* 8 of 12 columns; the right third stays empty on purpose */
     --measure-claim: 20ch;
-    --measure-standfirst: 60ch;
+    --measure-standfirst: 52ch;
     --measure-outcome: 40ch;
     --measure-case-claim: 24ch;
     --column-min: 14rem;
