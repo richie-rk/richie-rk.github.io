@@ -115,15 +115,22 @@
     color-scheme: dark;
     --bg: #0B0E1C;
     --surface: #141A2E;
-    --text: #E9EBF5;
-    --text-muted: #9AA3C0;          /* 7.66:1 on bg, 6.88:1 on surface */
+    /* Dark text: white is kept for headings and bold keywords. Body text is a
+       cool off-white with a faint teal cast (OKLCH 0.92 0.011 176), at APCA's
+       suggested Lc 90 ceiling for body text on dark, so it reads without glare.
+       Muted text keeps that hue family, 0.12 lower in lightness. */
+    --text: #DDE7E4;                /* 15.20:1 on bg, 13.66:1 on surface; APCA Lc 90 */
+    --text-strong: #FFFFFF;         /* headings and bold keywords only */
+    --text-muted: #AEC3BE;          /* 10.38:1 on bg, 9.33:1 on surface; APCA Lc 67 */
     --border: #232B47;              /* decorative hairlines only (1.38:1) */
     --border-strong: #6A7391;       /* UI borders; fails as small text, so never used for text */
     --accent: #5FD4B0;
     --accent-hover: #83E3C6;
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
     --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
-    --link: #83E3C6;
+    /* Link text takes the accent's lighter tint: APCA Lc 78 clears the Lc 75
+       body-text floor, which #5FD4B0 (Lc 68) misses as small text. */
+    --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
     --focus: #5FD4B0;
     --shadow-colour: rgb(4 6 14 / 0.55);
 
@@ -212,8 +219,9 @@
       color-scheme: light dark;
       --bg: light-dark(#F5F6FA, #0B0E1C);
       --surface: light-dark(#FFFFFF, #141A2E);
-      --text: light-dark(#0B0E1C, #E9EBF5);
-      --text-muted: light-dark(#42517F, #9AA3C0);     /* light: 7.16:1 on bg, 7.73:1 on surface */
+      --text: light-dark(#0B0E1C, #DDE7E4);
+      --text-strong: light-dark(#0B0E1C, #FFFFFF);
+      --text-muted: light-dark(#42517F, #AEC3BE);     /* light: 7.16:1 on bg, 7.73:1 on surface */
       --border: light-dark(#DCE0F0, #232B47);
       --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
       --accent: light-dark(#0A7C5F, #5FD4B0);         /* teal fails on light (1.69:1); #0A7C5F is 4.79:1 */
@@ -268,7 +276,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Headings and bold keywords take the strongest text colour, a step above
+     body text, so a skimming reader can follow them alone. */
   h1, h2, h3, h4 {
+    color: var(--text-strong);
     font-weight: var(--weight-strong);
     line-height: var(--leading-heading);
     text-wrap: balance;
@@ -279,7 +290,10 @@
   h4 { font-size: var(--step-0); }
 
   p, li, dd, dt, figcaption, blockquote { text-wrap: pretty; }
-  strong, b { font-weight: var(--weight-strong); }
+  strong, b {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
 
   a {
     color: var(--link);
@@ -403,7 +417,7 @@
   }
   .site-header__brand {
     margin-inline-end: auto;
-    color: var(--text);
+    color: var(--text-strong);
     font-weight: var(--weight-strong);
     text-decoration: none;
     display: inline-flex;
@@ -788,7 +802,6 @@
     color: var(--text-muted);
   }
   .note { color: var(--text-muted); }
-  .note :is(b, strong) { color: var(--text); }
 
   /* Figures: one panel style for diagrams. Wide content scrolls inside its own region. */
   .figure {
@@ -1033,10 +1046,7 @@
     padding-block: var(--space-6);
     border-block-start: var(--border-width) solid var(--border);
   }
-  .ledger__title {
-    font-size: var(--step-0);
-    color: var(--text);
-  }
+  .ledger__title { font-size: var(--step-0); }
   .ledger__meta {
     margin-block-start: var(--space-1);
     font-size: var(--step--1);
@@ -1064,7 +1074,10 @@
     gap: var(--space-5);
     margin-block-start: var(--space-5);
   }
-  .skills dt { font-weight: var(--weight-strong); }
+  .skills dt {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
   .skills dd { margin-block-start: var(--space-1); }
   @media (min-width: 48rem) {
     .skills {
@@ -1287,6 +1300,7 @@
       --bg: #FFFFFF;
       --surface: #FFFFFF;
       --text: #0B0E1C;
+      --text-strong: #0B0E1C;
       --text-muted: #42517F;
       --border: #6A7391;
       --border-strong: #6A7391;
