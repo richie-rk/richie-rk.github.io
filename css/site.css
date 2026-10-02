@@ -869,15 +869,15 @@
   .diagram__note { fill: var(--text-muted); }
   .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
   .diagram__code { font-family: var(--font-mono); }
-  /* Diagrams drawn twice: the stacked twin (at most 360 units wide) shows below
-     48rem. */
+  /* Diagrams drawn twice: the stacked twin shows until the wide one fits, at
+     59rem even beside a classic scrollbar. */
   .diagram--stacked {
     inline-size: auto;
     min-inline-size: 0;
     margin-inline: auto;
   }
   .diagram--wide { display: none; }
-  @media (min-width: 48rem) {
+  @media (min-width: 59rem) {
     .diagram--wide { display: block; }
     .diagram--stacked { display: none; }
   }
