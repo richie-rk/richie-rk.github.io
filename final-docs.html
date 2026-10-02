@@ -62,81 +62,7 @@
       <div><dt>Impact</dt><dd>4 investors in one month; onboarding cut from <span class="nowrap">2-4 weeks</span> to days</dd></div>
       <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>Pandas</li><li>SQLAlchemy</li><li>YAML config</li><li>OpenPyXL</li><li>Encompass API</li><li>Strategy pattern</li></ul></dd></div>
     </dl>
-    <nav class="toc card" aria-label="On this page">
-      <p class="toc__title">On this page</p>
-      <ul>
-        <li><a href="#problem">The problem</a></li>
-        <li><a href="#configuration">Code to configuration</a></li>
-        <li><a href="#dispatch">Dispatch table</a></li>
-        <li><a href="#normalization">Normalization</a></li>
-        <li><a href="#reconciliation">Reconciliation</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#results">Results</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section id="problem" class="case-study__section prose" aria-labelledby="problem-title">
-    <h2 id="problem-title">Same business concepts, a different format from every investor</h2>
-    <p>Every investor reports final-document exceptions differently: different source files and report locations, different column names for the same business field, different ways of identifying loans, investor-specific document-type vocabulary, and in some cases data that has to be generated from another system rather than read from a file at all. The downstream business process needs exactly one consistent representation.</p>
-    <p>The original implementation absorbed those differences as branching logic inside a monolith, so every new investor meant <strong><span class="nowrap">2-4 weeks</span> (two sprints)</strong> of bespoke coding and QA. Growth of the investor network was capped by engineering capacity, not by business appetite.</p>
-    <p>So there were two problems to solve, not one: <strong>convert heterogeneous investor data into a unified internal representation</strong>, and <strong>reconcile it against First American custodian data</strong> to identify missing documents and discrepancies.</p>
-  </section>
-
-  <section id="configuration" class="case-study__section prose" aria-labelledby="configuration-title">
-    <h2 id="configuration-title">What used to be code became configuration</h2>
-    <p>Each investor is described by one YAML file: source directory and report name, a <code>column_map</code> that translates the investor’s column names into the common schema, whether loan-number resolution is required, document-type mappings, and, where needed, the name of a custom processing hook. Illustrative shape, names generalized:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative investor configuration in YAML"><code><span class="code__comment"># one file per investor: source, mapping, hooks</span>
-<span class="code__key">Investor-A</span>:
-  <span class="code__key">project_directories</span>:
-    <span class="code__key">report_folders</span>: <span class="code__value">investor-a/reports</span>
-    <span class="code__key">report_name</span>: <span class="code__value">exception-report.xlsx</span>
-  <span class="code__key">get_PRMI_loan_number</span>: <span class="code__value">true</span>
-  <span class="code__key">column_map</span>:
-    <span class="code__key">PRMI Loan Number</span>: <span class="code__value">Seller Loan Number</span>
-    <span class="code__key">LOAN NUMBER</span>: <span class="code__value">Investor Loan Number</span>
-    <span class="code__key">BORROWER FIRST</span>: <span class="code__value">Borrower Name</span>
-    <span class="code__key">Document Type</span>: <span class="code__value">Document</span></code></pre>
-    <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape. The core modules treat an investor as data, not as hard-wired branches.</p>
-  </section>
-
-  <section id="dispatch" class="case-study__section prose" aria-labelledby="dispatch-title">
-    <h2 id="dispatch-title">Custom paths without touching the core</h2>
-    <p>Not every investor can be processed by reading a file. Some need custom data generation: one path builds a second-liens dataset by querying the loan origination system (Encompass) directly and filtering loans on their milestone history. Those paths live in a <strong>dispatch table</strong>: the YAML names a key, the processor looks up the callable. Illustrative shape:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative dispatch table in Python"><code><span class="code__key">FD_DATA_FUNCTION_MAP</span> = {
-    <span class="code__value">"Second-Liens"</span>: generate_second_liens_data,
-    <span class="code__value">"Investor-B-Document-Types"</span>: investor_b_document_types,
-    <span class="code__value">"Investor-C-Document-Types"</span>: investor_c_document_types,
-}
-handler = FD_DATA_FUNCTION_MAP[config_key]   <span class="code__comment"># config names the key</span>
-data = handler()</code></pre>
-    <p>The alternative is the familiar failure mode: <code>if investor A</code>, <code>elif investor B</code>, and a central workflow that grows a branch per counterparty. The registry keeps the central processor stable; adding a custom path means registering a function and naming it in configuration, never editing the dispatch core. Open for extension, closed for modification.</p>
-  </section>
-
-  <section id="normalization" class="case-study__section prose" aria-labelledby="normalization-title">
-    <h2 id="normalization-title">Two normalization problems, solved before reconciliation</h2>
-    <ul>
-      <li><b>Loan identity.</b> Some investors report only their own loan number. A resolver queries Encompass with the investor loan number plus the borrower name and recovers the PRMI Loan Number. Ambiguous or empty results are marked unresolved rather than guessed, and surface later in the Mismatch report instead of disappearing.</li>
-      <li><b>Document vocabulary.</b> Free-text comments are inspected for known keywords to infer a standardized document type, and existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become <code>Final Title Insurance</code>. Reconciliation then operates on standardized business terminology, not investor-specific variations.</li>
-    </ul>
-  </section>
-
-  <section id="reconciliation" class="case-study__section prose" aria-labelledby="reconciliation-title">
-    <h2 id="reconciliation-title">Every record lands in a category</h2>
-    <p>The consolidated investor data is compared with First American custodian data, joined on the PRMI Loan Number. Findings separate into business categories, and nothing is silently dropped: matched records produce the <strong>Missing/Defect</strong> findings; investor records whose loan number is absent from the custodian data are reported as <strong>mismatches</strong>; records whose PRMI Loan Number could not be resolved are called out separately; and duplicate loan-and-document-type combinations are detected and reported.</p>
-    <ul>
-      <li><b>Rerun-safe:</b> same-day duplicates from re-runs are collapsed before reconciliation, earliest record wins, so reprocessing is idempotent.</li>
-      <li><b>Missing input file:</b> logged and a notification goes out, instead of the run silently proceeding as if the file existed.</li>
-      <li><b>Custodian data missing for the day:</b> the workflow falls back to the most recent weekly snapshot rather than failing the run.</li>
-      <li><b>Database failures:</b> logged and re-raised. A write that fails is a run that fails loudly.</li>
-    </ul>
-    <p>The output is an Excel workbook with <code>Missing_Defect</code>, <code>Mismatch</code> and the consolidated investor report plus a summary sheet, and the same findings persisted to the database so downstream systems can consume the results without touching the spreadsheet.</p>
-  </section>
-
-  <section id="architecture" class="case-study__section prose" aria-labelledby="architecture-title">
-    <h2 id="architecture-title">Prepare, persist, reconcile</h2>
-    <p>The system separates four responsibilities. <strong>Batch orchestration</strong> decides which investors to process. <strong>Per-investor processing</strong> decides how one investor’s data becomes the common schema. <strong>Reconciliation</strong> decides what is missing or inconsistent. <strong>Reporting</strong> decides what the business sees. An Investor Batch Orchestrator loads the YAML configuration and creates one Investor Data Processor per requested investor; every processor runs the same pipeline: load, normalize columns, resolve the PRMI Loan Number where required, assign and standardize document types, persist. The consolidated data lands in the database in the common Final Docs schema, and reconciliation compares it with First American data on the PRMI Loan Number.</p>
-    <figure class="figure figure--wide">
+    <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
       <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: a batch orchestrator reads YAML configuration and creates one data processor per investor; each processor loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">
         <defs>
@@ -316,6 +242,81 @@ data = handler()</code></pre>
       </div>
       <figcaption id="architecture-caption">Configuration decides how each investor is processed; the database is the boundary between preparation and reconciliation.</figcaption>
     </figure>
+    <nav class="toc card" aria-label="On this page">
+      <p class="toc__title">On this page</p>
+      <ul>
+        <li><a href="#problem">The problem</a></li>
+        <li><a href="#configuration">Code to configuration</a></li>
+        <li><a href="#dispatch">Dispatch table</a></li>
+        <li><a href="#normalization">Normalization</a></li>
+        <li><a href="#reconciliation">Reconciliation</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#results">Results</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="problem" class="case-study__section prose" aria-labelledby="problem-title">
+    <h2 id="problem-title">Same business concepts, a different format from every investor</h2>
+    <p>Every investor reports final-document exceptions differently: different source files and report locations, different column names for the same business field, different ways of identifying loans, investor-specific document-type vocabulary, and in some cases data that has to be generated from another system rather than read from a file at all. The downstream business process needs exactly one consistent representation.</p>
+    <p>The original implementation absorbed those differences as branching logic inside a monolith, so every new investor meant <strong><span class="nowrap">2-4 weeks</span> (two sprints)</strong> of bespoke coding and QA. Growth of the investor network was capped by engineering capacity, not by business appetite.</p>
+    <p>So there were two problems to solve, not one: <strong>convert heterogeneous investor data into a unified internal representation</strong>, and <strong>reconcile it against First American custodian data</strong> to identify missing documents and discrepancies.</p>
+  </section>
+
+  <section id="configuration" class="case-study__section prose" aria-labelledby="configuration-title">
+    <h2 id="configuration-title">What used to be code became configuration</h2>
+    <p>Each investor is described by one YAML file: source directory and report name, a <code>column_map</code> that translates the investor’s column names into the common schema, whether loan-number resolution is required, document-type mappings, and, where needed, the name of a custom processing hook. Illustrative shape, names generalized:</p>
+    <pre tabindex="0" role="region" aria-label="Illustrative investor configuration in YAML"><code><span class="code__comment"># one file per investor: source, mapping, hooks</span>
+<span class="code__key">Investor-A</span>:
+  <span class="code__key">project_directories</span>:
+    <span class="code__key">report_folders</span>: <span class="code__value">investor-a/reports</span>
+    <span class="code__key">report_name</span>: <span class="code__value">exception-report.xlsx</span>
+  <span class="code__key">get_PRMI_loan_number</span>: <span class="code__value">true</span>
+  <span class="code__key">column_map</span>:
+    <span class="code__key">PRMI Loan Number</span>: <span class="code__value">Seller Loan Number</span>
+    <span class="code__key">LOAN NUMBER</span>: <span class="code__value">Investor Loan Number</span>
+    <span class="code__key">BORROWER FIRST</span>: <span class="code__value">Borrower Name</span>
+    <span class="code__key">Document Type</span>: <span class="code__value">Document</span></code></pre>
+    <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape. The core modules treat an investor as data, not as hard-wired branches.</p>
+  </section>
+
+  <section id="dispatch" class="case-study__section prose" aria-labelledby="dispatch-title">
+    <h2 id="dispatch-title">Custom paths without touching the core</h2>
+    <p>Not every investor can be processed by reading a file. Some need custom data generation: one path builds a second-liens dataset by querying the loan origination system (Encompass) directly and filtering loans on their milestone history. Those paths live in a <strong>dispatch table</strong>: the YAML names a key, the processor looks up the callable. Illustrative shape:</p>
+    <pre tabindex="0" role="region" aria-label="Illustrative dispatch table in Python"><code><span class="code__key">FD_DATA_FUNCTION_MAP</span> = {
+    <span class="code__value">"Second-Liens"</span>: generate_second_liens_data,
+    <span class="code__value">"Investor-B-Document-Types"</span>: investor_b_document_types,
+    <span class="code__value">"Investor-C-Document-Types"</span>: investor_c_document_types,
+}
+handler = FD_DATA_FUNCTION_MAP[config_key]   <span class="code__comment"># config names the key</span>
+data = handler()</code></pre>
+    <p>The alternative is the familiar failure mode: <code>if investor A</code>, <code>elif investor B</code>, and a central workflow that grows a branch per counterparty. The registry keeps the central processor stable; adding a custom path means registering a function and naming it in configuration, never editing the dispatch core. Open for extension, closed for modification.</p>
+  </section>
+
+  <section id="normalization" class="case-study__section prose" aria-labelledby="normalization-title">
+    <h2 id="normalization-title">Two normalization problems, solved before reconciliation</h2>
+    <ul>
+      <li><b>Loan identity.</b> Some investors report only their own loan number. A resolver queries Encompass with the investor loan number plus the borrower name and recovers the PRMI Loan Number. Ambiguous or empty results are marked unresolved rather than guessed, and surface later in the Mismatch report instead of disappearing.</li>
+      <li><b>Document vocabulary.</b> Free-text comments are inspected for known keywords to infer a standardized document type, and existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become <code>Final Title Insurance</code>. Reconciliation then operates on standardized business terminology, not investor-specific variations.</li>
+    </ul>
+  </section>
+
+  <section id="reconciliation" class="case-study__section prose" aria-labelledby="reconciliation-title">
+    <h2 id="reconciliation-title">Every record lands in a category</h2>
+    <p>The consolidated investor data is compared with First American custodian data, joined on the PRMI Loan Number. Findings separate into business categories, and nothing is silently dropped: matched records produce the <strong>Missing/Defect</strong> findings; investor records whose loan number is absent from the custodian data are reported as <strong>mismatches</strong>; records whose PRMI Loan Number could not be resolved are called out separately; and duplicate loan-and-document-type combinations are detected and reported.</p>
+    <ul>
+      <li><b>Rerun-safe:</b> same-day duplicates from re-runs are collapsed before reconciliation, earliest record wins, so reprocessing is idempotent.</li>
+      <li><b>Missing input file:</b> logged and a notification goes out, instead of the run silently proceeding as if the file existed.</li>
+      <li><b>Custodian data missing for the day:</b> the workflow falls back to the most recent weekly snapshot rather than failing the run.</li>
+      <li><b>Database failures:</b> logged and re-raised. A write that fails is a run that fails loudly.</li>
+    </ul>
+    <p>The output is an Excel workbook with <code>Missing_Defect</code>, <code>Mismatch</code> and the consolidated investor report plus a summary sheet, and the same findings persisted to the database so downstream systems can consume the results without touching the spreadsheet.</p>
+  </section>
+
+  <section id="architecture" class="case-study__section prose" aria-labelledby="architecture-title">
+    <h2 id="architecture-title">Prepare, persist, reconcile</h2>
+    <p>The system separates four responsibilities. <strong>Batch orchestration</strong> decides which investors to process. <strong>Per-investor processing</strong> decides how one investor’s data becomes the common schema. <strong>Reconciliation</strong> decides what is missing or inconsistent. <strong>Reporting</strong> decides what the business sees. An Investor Batch Orchestrator loads the YAML configuration and creates one Investor Data Processor per requested investor; every processor runs the same pipeline: load, normalize columns, resolve the PRMI Loan Number where required, assign and standardize document types, persist. The consolidated data lands in the database in the common Final Docs schema, and reconciliation compares it with First American data on the PRMI Loan Number.</p>
+    <p><a href="#diagram">Back to the architecture diagram</a></p>
   </section>
 
   <section id="results" class="case-study__section prose" aria-labelledby="results-title">

@@ -1228,11 +1228,7 @@
   .contact__discord { max-inline-size: var(--measure); }
 
   /* ---------- Deep dives ---------- */
-  /* The container query lets wide figures break out to the full column set. */
-  .case-study {
-    container-type: inline-size;
-    padding-block-end: var(--section-space);
-  }
+  .case-study { padding-block-end: var(--section-space); }
   /* On a phone the head runs tight, so the overview card shares the first screen. */
   .case-study__head { padding-block-start: var(--space-6); }
   .case-study__title { font-size: var(--step-3); }
@@ -1426,7 +1422,6 @@
   }
   @media (min-width: 64rem) {
     .case-study__head { padding-block-start: var(--space-9); }
-    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
   }
 
   /* ---------- CV ---------- */
@@ -1588,7 +1583,6 @@
     h3 { break-after: avoid; }
     /* The diagrams' screen minimum width would make Chrome shrink the whole page to fit. */
     .diagram { min-inline-size: 0; }
-    .figure--wide { inline-size: 100cqi; max-inline-size: none; }
     .figure { break-inside: avoid; }
     pre { white-space: pre-wrap; overflow: visible; }
     /* Inline, so the printed URL keeps its leading space. */
