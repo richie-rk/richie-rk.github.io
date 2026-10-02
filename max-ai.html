@@ -290,7 +290,7 @@
   </section>
 
   <section id="write-path" class="case-study__section prose" aria-labelledby="write-path-title">
-    <h2 id="write-path-title">How a PDF becomes searchable chunks with page-level citations</h2>
+    <h2 id="write-path-title">How a PDF becomes searchable chunks with <span class="nowrap">page-level</span> citations</h2>
     <p><b>The durable trio.</b> A single HTTP function cannot index a corpus: the work outlives any HTTP timeout, and at scale a crash mid-run is a certainty, not a possibility. Durable Functions splits accept, coordinate, and work.</p>
     <p>An async HTTP starter validates the request and returns <code>202 Accepted</code> with a status-polling URL in milliseconds, the asynchronous request-reply pattern.</p>
     <p>The orchestrator is a replayed Python generator that describes the workflow and nothing else. The activity does all the real work, with the function timeout removed entirely.</p>
@@ -364,7 +364,7 @@
     <p>Coupling them into one process would force one set of trade-offs onto both, so they ship as separate deployables: a Durable Functions app with unlimited timeout for the write path, and an always-warm FastAPI service for the read path.</p>
     <p>A third Function App carries the utility surface: auth, projects, users, session history, feedback.</p>
     <p><a href="#diagram">Back to the architecture diagram</a></p>
-    <div class="note flow">
+    <div class="note card flow">
       <p><b>Provenance, stated plainly:</b> the platform grew out of Microsoft’s open-source RAG reference architecture.</p>
       <p>The bespoke engineering on top is:</p>
       <ul>

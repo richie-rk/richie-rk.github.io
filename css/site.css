@@ -491,8 +491,7 @@
     max-inline-size: var(--measure);
   }
 
-  /* Full-size links from 360px; gaps stay compact until 48rem so the row fits
-     in the fallback font. */
+  /* Full-size links from 360px; compact gaps until 48rem keep the row whole. */
   @media (min-width: 22.5rem) {
     .site-nav__list a { font-size: inherit; padding-inline: var(--space-1); }
   }
@@ -682,8 +681,8 @@
     background: var(--surface);
     overflow-wrap: anywhere;
   }
-  /* No ch cap: ch would resolve in the 14px mono; the .prose parent sets the
-     measure. */
+  .card :not(pre) > code { background: var(--bg); }
+  /* No ch cap: ch would resolve in the 14px mono. */
   pre {
     padding: var(--space-4) var(--space-5);
     border: var(--border-width) solid var(--border);
@@ -763,16 +762,11 @@
     font-size: var(--step--1);
     color: var(--text-muted);
   }
-  /* Asides: a quiet panel. */
-  .note {
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    color: var(--text-muted);
-  }
+  /* Asides: muted text in a card. */
+  .note { color: var(--text-muted); }
 
-  /* Cards (Richy's request, 2 October 2026, a §11 exception): flat, a lighter
-     surface and a hairline, no shadow; after .quote and .note so a card wins. */
+  /* Cards (Richy's request, 2 October 2026; a §11 exception): flat, no shadow.
+     Declared after .quote and .note so a card wins. */
   .card {
     position: relative;
     padding: var(--space-4);
@@ -849,6 +843,7 @@
   .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
   @media (min-width: 48rem) {
     .figure__scroll { padding: var(--space-4); }
+    .figure figcaption { padding-inline: var(--space-6); }
   }
   .figure figcaption {
     padding: var(--space-3) var(--space-4);
@@ -1015,8 +1010,10 @@
   .case-study__name--encompass { view-transition-name: project-encompass; }
 
   .project__outcome { max-inline-size: var(--measure-outcome); }
+  .project__actions,
+  .next-card__claim { text-wrap: balance; }
   /* The card is the target, so its link needs no touch padding; the hairline is
-     desktop-only, so phone cards stay short (ADR 0002). */
+     desktop-only (ADR 0002). */
   @media (min-width: 48rem) {
     .project__actions {
       padding-block-start: var(--space-3);
@@ -1024,8 +1021,7 @@
     }
   }
 
-  /* Testimonial card: the quote in heading colour, marks in the accent,
-     attribution under a hairline. */
+  /* Testimonial card: quote in heading colour, marks in the accent. */
   .doors + .quote {
     max-inline-size: none;
     margin-block-start: var(--space-4);
@@ -1063,6 +1059,7 @@
     gap: var(--space-4);
     min-block-size: var(--target);
     padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
     color: var(--link);
     list-style: none;
     cursor: pointer;
@@ -1288,11 +1285,16 @@
     border-inline-start: var(--border-width) solid var(--border);
   }
 
-  /* Results: one row per confirmed figure. */
+  /* Results: one row per figure; a subgrid sizes the number column. */
+  .stats {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: var(--space-4);
+  }
   .stats > li {
     display: grid;
-    grid-template-columns: var(--space-9) minmax(0, 1fr);
-    column-gap: var(--space-4);
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     align-items: baseline;
   }
   .stats__value {
@@ -1300,9 +1302,6 @@
     font-size: var(--step-3);
     font-weight: var(--weight-strong);
     line-height: var(--leading-tight);
-  }
-  @media (min-width: 48rem) {
-    .stats > li { grid-template-columns: var(--space-10) minmax(0, 1fr); }
   }
 
   /* The next deep dive as one block link whose name morphs into that page's

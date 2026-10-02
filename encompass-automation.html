@@ -66,7 +66,7 @@
 <main id="main">
 <article class="case-study container" aria-labelledby="case-title">
   <header class="case-study__head">
-    <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--encompass">Encompass loan<br>automation</span><span class="visually-hidden">: </span><span class="case-study__claim">Unattended loan updates that never overwrite in-progress work.</span></h1>
+    <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--encompass">Encompass<br>loan automation</span><span class="visually-hidden">: </span><span class="case-study__claim">Unattended loan updates that never overwrite <span class="nowrap">in-progress</span> work.</span></h1>
     <p class="case-study__summary">PRMI’s loan updates ran through an RPA-driven batch tool, checked by hand on a status page that didn’t load reliably. I replaced it with direct Encompass REST API writes behind resource locks, so the job runs unattended and never overwrites <span class="nowrap">in-progress</span> work.</p>
     <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Designed and built the automation and the custom SDK under it</dd></div>
@@ -250,7 +250,7 @@
       <li><b>Retry the locked loans</b> in a later batch.</li>
     </ol>
     <p>While the lock is held, a user who opens the loan in Encompass desktop is told it is locked and can open it only read-only, so nobody else can change the loan mid-update.</p>
-    <div class="note flow">
+    <div class="note card flow">
       <p>The protocol was built when opening a loan in Encompass desktop always placed an exclusive lock on it.</p>
       <p>Encompass release 26.1 later added an optional Shared Loan Lock, which lets an API integration update a loan while it is open in Encompass desktop.</p>
     </div>

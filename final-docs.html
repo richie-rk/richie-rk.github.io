@@ -308,7 +308,8 @@
     <span class="code__value">"Investor-B-Document-Types"</span>: investor_b_document_types,
     <span class="code__value">"Investor-C-Document-Types"</span>: investor_c_document_types,
 }
-handler = FD_DATA_FUNCTION_MAP[config_key]   <span class="code__comment"># config names the key</span>
+<span class="code__comment"># config names the key</span>
+handler = FD_DATA_FUNCTION_MAP[config_key]
 data = handler()</code></pre>
     <p>The alternative is the familiar failure mode: <code>if investor A</code>, <code>elif investor B</code>, and a central workflow that grows a branch per counterparty.</p>
     <p>The registry keeps the central processor stable; adding a custom path means registering a function and naming it in configuration, never editing the dispatch core. Open for extension, closed for modification.</p>
@@ -389,7 +390,7 @@ data = handler()</code></pre>
 
   <footer class="case-study__end">
     <nav class="case-study__end-nav" aria-label="More work">
-      <a class="next-card card" href="encompass-automation.html"><span class="next-card__label">Next deep dive<span class="visually-hidden">:</span></span> <span class="project__name project__name--encompass">Encompass loan<br>automation</span> <span class="next-card__claim">Unattended loan updates that never overwrite in-progress work.</span></a>
+      <a class="next-card card" href="encompass-automation.html"><span class="next-card__label">Next deep dive<span class="visually-hidden">:</span></span> <span class="project__name project__name--encompass">Encompass<br>loan automation</span> <span class="next-card__claim">Unattended loan updates that never overwrite in-progress work.</span></a>
       <ul class="inline-links">
         <li><a href="index.html#work">All work</a></li>
       </ul>
