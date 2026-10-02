@@ -55,7 +55,7 @@
 <article class="case-study container" aria-labelledby="case-title">
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--final-docs">Final Docs</span><span class="visually-hidden">: </span><span class="case-study__claim">Treat an investor as data, not code.</span></h1>
-    <p class="case-study__standfirst">After a mortgage loan closes, PRMI must deliver post-closing document packages to the investor banks that purchased the loans. Trailing documents arrive late, every investor reports exceptions in its own format, and delays put <strong>funding lines and regulatory standing</strong> at risk. The Final Docs Automation turns that heterogeneous exception data into one consistent picture and reconciles it against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
+    <p class="case-study__summary">Every investor reports exceptions in its own format. Final Docs turns them into one consistent picture, reconciled against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
     <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Architecture and build, end to end</dd></div>
       <div><dt>Team</dt><dd>With PRMI’s closing, compliance and development teams</dd></div>
@@ -258,6 +258,7 @@
 
   <section id="problem" class="case-study__section prose" aria-labelledby="problem-title">
     <h2 id="problem-title">Same business concepts, a different format from every investor</h2>
+    <p>After a mortgage loan closes, PRMI must deliver post-closing document packages to the investor banks that purchased the loans. Trailing documents arrive late, and delays put <strong>funding lines and regulatory standing</strong> at risk.</p>
     <p>Every investor reports final-document exceptions differently: different source files and report locations, different column names for the same business field, different ways of identifying loans, investor-specific document-type vocabulary, and in some cases data that has to be generated from another system rather than read from a file at all. The downstream business process needs exactly one consistent representation.</p>
     <p>The original implementation absorbed those differences as branching logic inside a monolith, so every new investor meant <strong><span class="nowrap">2-4 weeks</span> (two sprints)</strong> of bespoke coding and QA. Growth of the investor network was capped by engineering capacity, not by business appetite.</p>
     <p>So there were two problems to solve, not one: <strong>convert heterogeneous investor data into a unified internal representation</strong>, and <strong>reconcile it against First American custodian data</strong> to identify missing documents and discrepancies.</p>

@@ -1240,7 +1240,6 @@
     font-weight: var(--weight-regular);
     letter-spacing: normal;
   }
-  .case-study__standfirst,
   .case-study__summary {
     max-inline-size: var(--measure-standfirst);
     margin-block-start: var(--space-4);
@@ -1410,10 +1409,11 @@
 
   @media (min-width: 48rem) {
     .case-study__head { padding-block-start: var(--space-7); }
-    .case-study__standfirst,
-    .case-study__summary { margin-block-start: var(--space-5); }
-    .case-study__standfirst,
-    .case-study__summary { font-size: var(--step-1); line-height: var(--leading-body); }
+    .case-study__summary {
+      margin-block-start: var(--space-5);
+      font-size: var(--step-1);
+      line-height: var(--leading-body);
+    }
     .case-study__section { margin-block-start: var(--space-8); }
     .decisions > div {
       grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
