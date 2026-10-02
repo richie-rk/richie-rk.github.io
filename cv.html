@@ -61,7 +61,10 @@
     <li><a href="https://github.com/richie-rk" data-no-print-url target="_blank" rel="noopener">github.com/richie-rk<span class="visually-hidden"> (opens in a new tab)</span></a></li>
     <li><a href="https://linkedin.com/in/richy-koshy" data-no-print-url target="_blank" rel="noopener">linkedin.com/in/richy-koshy<span class="visually-hidden"> (opens in a new tab)</span></a></li>
   </ul>
-  <p class="cv__summary"><b>5+ years of Python development</b>, plus <b>a year of industrial automation</b>. Shipped production GenAI, backend, and automation systems for a US mortgage originator: an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations across compliance and investor operations.</p>
+  <div class="cv__summary flow print-join">
+    <p><b>5+ years of Python development</b>, plus <b>a year of industrial automation</b>.</p>
+    <p>Shipped production GenAI, backend, and automation systems for a US mortgage originator: an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations across compliance and investor operations.</p>
+  </div>
   <a class="button button--primary" href="Richy_Koshy_CV.pdf" download>Download CV (PDF)</a>
 </header>
 
@@ -78,8 +81,14 @@
       <li class="flow">
         <p><a href="max-ai.html" data-no-print-url><b>MAX AI, enterprise RAG platform</b></a>. Owned the full Python backend across three Azure services; now PRMI’s primary knowledge-retrieval tool <b>organization-wide</b>.</p>
         <ul>
-          <li><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE query expansion; Azure OpenAI GPT-4o with ada-002 embeddings; one index per project, with multi-tenant access mapping in SQL Server behind Azure AD auth.</li>
-          <li><b>Ingestion:</b> Durable Functions pipeline, idempotent via audit-table checkpointing with per-file failure isolation; local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry; Azure Document Intelligence for scans.</li>
+          <li class="flow print-join">
+            <p><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE query expansion; Azure OpenAI GPT-4o with ada-002 embeddings.</p>
+            <p>One index per project, with multi-tenant access mapping in SQL Server behind Azure AD auth.</p>
+          </li>
+          <li class="flow print-join">
+            <p><b>Ingestion:</b> Durable Functions pipeline, idempotent via audit-table checkpointing with per-file failure isolation.</p>
+            <p>Local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry; Azure Document Intelligence for scans.</p>
+          </li>
           <li><b>Chat:</b> FastAPI service streaming NDJSON with metadata-first framing, so citations render before the first token.</li>
           <li><b>Utility APIs:</b> a Function App for auth, projects, users, session history and feedback.</li>
         </ul>
@@ -100,10 +109,19 @@
     </figure>
     <ul>
       <li class="flow">
-        <p><b>Encompass REST API SDK.</b> Internal Python package consumed by all 13 automations: OAuth2 token caching, concurrent paginated pipeline reads (ThreadPoolExecutor), transactional loan writes with a lock → write → read-back → unlock pattern that prevents lost updates on shared loans, eFolder document CRUD, disclosure tracking, and 429 retry with backoff.</p>
+        <p class="print-run-lead"><b>Encompass REST API SDK.</b> Internal Python package consumed by all 13 automations:</p>
+        <ul class="print-run">
+          <li>OAuth2 token caching</li>
+          <li>concurrent paginated pipeline reads (ThreadPoolExecutor)</li>
+          <li>transactional loan writes with a lock → write → read-back → unlock pattern that prevents lost updates on shared loans</li>
+          <li>eFolder document CRUD, disclosure tracking, and 429 retry with backoff.</li>
+        </ul>
         <p><a href="encompass-automation.html" data-print-url="richie-rk.github.io/encompass-automation.html">Read the Encompass deep dive</a></p>
       </li>
-      <li><b>13 production RPA automations</b> (Power Automate + Python) across ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend credit management, warehouse collateral, and suspense resolution across 9 investors; plus 3 OCR pipelines (Tesseract + Azure Form Recognizer) extracting credit data from PDF reports.</li>
+      <li class="flow print-join">
+        <p><b>13 production RPA automations</b> (Power Automate + Python) across ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend credit management, warehouse collateral, and suspense resolution across 9 investors.</p>
+        <p>Plus 3 OCR pipelines (Tesseract + Azure Form Recognizer) extracting credit data from PDF reports.</p>
+      </li>
       <li><b>Delivery ownership.</b> Led BRD/PRD gathering, flow diagrams, first-call sign-offs, UAT coordination, and documentation for every delivered automation.</li>
     </ul>
   </article>
@@ -115,7 +133,10 @@
       <p class="cv-role__meta">Client: TechSpan Engineering (IoT)</p>
     </header>
     <ul>
-      <li><b>HydroQ API.</b> Designed the FastAPI interface for the database CRUD operations of a multi-tenant remote water-quality monitoring platform: SQLAlchemy with a generic CRUD layer over PostgreSQL and MSSQL; replaced <b><span class="nowrap">2-4 hours</span> of manual onboarding per site</b> with API-driven workflows; full endpoint test coverage.</li>
+      <li class="flow print-join">
+        <p><b>HydroQ API.</b> Designed the FastAPI interface for the database CRUD operations of a multi-tenant remote water-quality monitoring platform: SQLAlchemy with a generic CRUD layer over PostgreSQL and MSSQL.</p>
+        <p>Replaced <b><span class="nowrap">2-4 hours</span> of manual onboarding per site</b> with API-driven workflows; full endpoint test coverage.</p>
+      </li>
     </ul>
   </article>
 

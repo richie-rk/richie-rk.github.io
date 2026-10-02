@@ -1604,6 +1604,14 @@
     .diagram { min-inline-size: 0; }
     .figure { break-inside: avoid; }
     pre { white-space: pre-wrap; overflow: visible; }
+    /* Entries split for phones run back together on paper, so the CV keeps
+       to two pages; the source's own line breaks give the spaces. */
+    .print-join > p,
+    .print-run-lead,
+    .print-run,
+    .print-run > li { display: inline; }
+    .print-run { padding: 0; }
+    .print-run > li:not(:last-child)::after { content: ","; }
     /* Inline, so the printed URL keeps its leading space. */
     .quote__link { display: inline; }
     /* External URLs print after their link text. Links whose text already is the URL opt out. */
