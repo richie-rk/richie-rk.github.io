@@ -212,6 +212,8 @@
     --duration-morph: 300ms;
     --duration-fade-out: 150ms;
     --duration-fade-in: 250ms;
+    --duration-hover: 150ms;
+    --lift: 0.125rem;
   }
 
   /* One declaration per token covers both themes. color-scheme picks the
@@ -805,6 +807,69 @@
   }
   .note { color: var(--text-muted); }
 
+  /* ---------- Cards ----------
+     A contained surface for content that stands on its own: the deep-dive
+     doors, the testimonial, the Also shipped list and the deep-dive panels.
+     Richy asked for cards on 2 October 2026, past DESIGN_RULES §11. They stay
+     flat: a lighter surface and a hairline lift them off the page, never a
+     shadow, so the site keeps its one elevation for the letter scans. Declared
+     after .quote and .note, so a card's own box wins where they combine. */
+  .card {
+    position: relative;
+    padding: var(--space-4);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  @media (min-width: 48rem) {
+    .card { padding: var(--space-5) var(--space-6); }
+  }
+  /* A tappable card has exactly one link, stretched over the whole card by its
+     ::after (the Inclusive Components cards pattern): one target, one tab stop,
+     and a link name that makes sense on its own. The focus ring and the hover
+     border are drawn on that overlay, so they trace the card's own edge. */
+  .card__link::after {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--border-width));
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-md);
+  }
+  .card__link:focus-visible { outline: none; }
+  .card__link:focus-visible::after {
+    outline: var(--focus-width) solid var(--focus);
+    outline-offset: var(--focus-offset);
+  }
+  /* On hover the edge turns the UI-border grey, never the accent, so a hovered
+     card can't be mistaken for the focused one. */
+  @media (hover: hover) {
+    .card__link:hover { text-decoration-thickness: var(--rule-width); }
+    .card__link:hover::after { border-color: var(--border-strong); }
+  }
+  /* A small lift on hover, the only movement: transform alone, fast, and off
+     under reduced motion (DESIGN_RULES §5). */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:has(.card__link) { transition: transform var(--duration-hover) var(--ease-out); }
+    .card:has(.card__link:hover) { transform: translateY(calc(-1 * var(--lift))); }
+  }
+
+  /* Tags: short labels, such as a stack, as a wrapping row. Outlined with no
+     fill, small and without hover, so they never read as buttons. */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  .tags > li {
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
   /* Figures: one panel style for diagrams. Wide content scrolls inside its own region. */
   .figure {
     border: var(--border-width) solid var(--border);
@@ -906,8 +971,8 @@
     max-inline-size: var(--measure-standfirst);
     margin-block-start: var(--space-5);
   }
-  .hero .button-row { margin-block-start: var(--space-5); }
-  .hero__email { margin-block-start: var(--space-4); }
+  .hero .button-row { margin-block-start: var(--space-4); }
+  .hero__email { margin-block-start: var(--space-3); }
   /* Here the copy status shows under the address, clear of the buttons above it. */
   .hero__email .email-copy[data-state]::after {
     inset-block-start: 100%;
@@ -931,21 +996,21 @@
   }
 
   /* ---------- Home: doors ----------
-     The deep dives as doors of equal weight, told apart by the title rule
-     rather than boxes: no background, radius or shadow. From 64rem they stand
-     side by side between hairline rules. The doors are siblings and each rule
-     is one of the grid's own pseudo-elements, pinned to the 1px track between
-     two doors: ::before and ::after, so the pattern allows at most three. */
+     The deep dives as doors of equal weight (ADR 0001): one tappable card
+     each. They stack on phones and stand side by side from 64rem. */
   .doors {
     display: grid;
-    gap: var(--space-5);
-    margin-block-start: var(--space-5);
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
+  }
+  @media (min-width: 48rem) {
+    .doors { margin-block-start: var(--space-5); }
   }
   @media (min-width: 64rem) {
     .doors {
-      grid-template-columns: minmax(0, 1fr) var(--border-width) minmax(0, 1fr) var(--border-width) minmax(0, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       grid-template-rows: repeat(3, auto);
-      gap: 0 var(--space-6);
+      gap: 0 var(--space-5);
     }
     /* Each door spans the name, outcome and link rows as a subgrid, so those
        line up across the doors even when a name wraps. */
@@ -956,39 +1021,22 @@
     }
     /* Names sit on the row's floor, so the title rules line up across doors. */
     .doors .project__title { align-self: end; }
-    .doors::before,
-    .doors::after {
-      content: "";
-      grid-column: 2;
-      grid-row: 1 / -1;
-      background: var(--border);
-    }
-    .doors::after { grid-column: 4; }
   }
-  /* Three doors leave too little width for a two-word line at --step-3 until
-     the container is close to full width, with room to spare for a classic
-     scrollbar or the fallback font. At that size the em-based title rule
-     would paint at 1px, so it takes the rule width instead. */
-  @media (min-width: 64rem) and (max-width: 70.99rem) {
+  /* Side by side, a card is too narrow for a two-word line at --step-3, so the
+     names step down one size. The em-based title rule could then paint at 1px,
+     so it keeps at least the rule width. */
+  @media (min-width: 64rem) {
     .doors .project__title { font-size: var(--step-2); }
-    .doors .project__name { border-block-end-width: var(--rule-width); }
+    .doors .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
   }
 
-  /* Door entries: a name, a one-sentence outcome and a link to the deep dive. */
+  /* Door entries: a name, a one-sentence outcome and the card's one link. */
   .project {
     display: grid;
     align-content: start;
     gap: var(--space-3);
   }
   .project__title { font-size: var(--step-3); }
-  /* Project names are links, so they take the link colour. The accent title
-     rule below them acts as their underline, which makes them read as clickable
-     without a hover. */
-  .project__link {
-    color: var(--link);
-    text-decoration: none;
-  }
-  .project__link:hover { color: var(--text); }
 
   /* The signature element: the accent rule under a project name. The same rule
      sits under the deep-dive h1 name, and it travels with the name in the
@@ -1007,46 +1055,95 @@
   .project__name--encompass,
   .case-study__name--encompass { view-transition-name: project-encompass; }
 
-  .project__outcome {
-    max-inline-size: var(--measure-outcome);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
+  .project__outcome { max-inline-size: var(--measure-outcome); }
+  /* The card's foot holds its one link. The whole card is the target, so the
+     link needs no touch-size padding of its own. From 48rem a hairline sets it
+     apart; on a phone the stacked cards stay short enough that all three names
+     start within one and a half screens (ADR 0002). */
+  @media (min-width: 48rem) {
+    .project__actions {
+      padding-block-start: var(--space-3);
+      border-block-start: var(--border-width) solid var(--border);
+    }
   }
-  .project__actions a {
-    display: inline-flex;
+
+  /* The testimonial card: the quote in heading colour with its marks in the
+     accent, then the attribution and the letter link under a hairline. */
+  .doors + .quote {
+    max-inline-size: none;
+    margin-block-start: var(--space-4);
+  }
+  .quote.card blockquote {
+    max-inline-size: var(--measure-standfirst);
+    color: var(--text-strong);
+  }
+  .quote__mark { color: var(--rule-accent); }
+  .quote.card figcaption {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    min-block-size: var(--target);
+    justify-content: space-between;
+    column-gap: var(--space-5);
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-2);
+    border-block-start: var(--border-width) solid var(--border);
   }
-  .doors + .quote { margin-block-start: var(--space-7); }
+  @media (min-width: 48rem) {
+    .quote.card blockquote { font-size: var(--step-2); }
+  }
 
   /* ---------- Home: also shipped ----------
-     One quiet ledger for everything that isn't a deep dive. On phones it folds
-     behind one summary line, which a head script closes before first paint.
-     From 48rem it is opened and the summary hides while it is open, so a
-     closed fold never loses its control. With JS off it is open everywhere. */
-  .ledger-fold { margin-block-start: var(--space-3); }
-  /* A hanging indent keeps a wrapped line clear of the disclosure triangle. */
+     One card of quiet rows for everything that isn't a deep dive. On phones it
+     folds behind its summary row, which a head script closes before first
+     paint. From 48rem it is opened and the summary hides while it is open, so
+     a closed fold never loses its control. With JS off it is open everywhere. */
+  .ledger-fold {
+    margin-block-start: var(--space-4);
+    padding: 0;
+  }
   .ledger-fold > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
     min-block-size: var(--target);
-    padding-block: var(--space-2);
-    padding-inline-start: 1em;
-    text-indent: -1em;
+    padding: var(--space-3) var(--space-4);
     color: var(--link);
+    list-style: none;
     cursor: pointer;
   }
+  .ledger-fold > summary::-webkit-details-marker { display: none; }
+  /* A chevron in place of the default triangle, pointing up while open. */
+  .ledger-fold > summary::after {
+    content: "";
+    flex: none;
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    border-inline-end: var(--rule-width) solid currentColor;
+    border-block-end: var(--rule-width) solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+  }
+  .ledger-fold[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+  @media (prefers-reduced-motion: no-preference) {
+    .ledger-fold > summary::after { transition: transform var(--duration-hover) var(--ease-out); }
+  }
   .ledger-fold > summary:hover { text-decoration-line: underline; }
-  .ledger-fold[open] > summary { margin-block-end: var(--space-3); }
   @media (min-width: 48rem) {
-    .ledger-fold { margin-block-start: var(--space-6); }
+    .ledger-fold { margin-block-start: var(--space-5); }
     .ledger-fold[open] > summary { display: none; }
   }
 
-  /* Ledger: hairline-separated rows for the quieter tier. */
+  /* Ledger rows, split by hairlines. */
   .ledger > * {
     display: grid;
     gap: var(--space-4);
-    padding-block: var(--space-6);
+    padding: var(--space-5) var(--space-4);
     border-block-start: var(--border-width) solid var(--border);
+  }
+  @media (min-width: 48rem) {
+    .ledger > * { padding: var(--space-6); }
+    /* With the summary hidden, the first row sits on the card's own edge. */
+    .ledger-fold[open] .ledger > :first-child { border-block-start: 0; }
   }
   .ledger__title { font-size: var(--step-0); }
   .ledger__meta {
@@ -1080,7 +1177,7 @@
     color: var(--text-strong);
     font-weight: var(--weight-strong);
   }
-  .skills dd { margin-block-start: var(--space-1); }
+  .skills dd { margin-block-start: var(--space-3); }
   @media (min-width: 48rem) {
     .skills {
       grid-template-columns: repeat(2, minmax(0, 1fr));
