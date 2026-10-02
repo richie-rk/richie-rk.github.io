@@ -68,11 +68,11 @@
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--encompass">Encompass loan<br>automation</span><span class="visually-hidden">: </span><span class="case-study__claim">Unattended loan updates that never overwrite in-progress work.</span></h1>
     <p class="case-study__summary">PRMI’s loan updates ran through an RPA-driven batch tool, checked by hand on a status page that didn’t load reliably. I replaced it with direct Encompass REST API writes behind resource locks, so the job runs unattended and never overwrites <span class="nowrap">in-progress</span> work.</p>
-    <dl class="case-study__overview">
+    <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Designed and built the automation and the custom SDK under it</dd></div>
       <div><dt>Team</dt><dd>Sole engineer, from discovery and the BRD to UAT and release</dd></div>
       <div><dt>Impact</dt><dd>Loan updates run unattended, with no manual check after each batch</dd></div>
-      <div class="spec__stack"><dt>Stack</dt><dd>Python, requests, ThreadPoolExecutor, OAuth2, Encompass REST API</dd></div>
+      <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>requests</li><li>ThreadPoolExecutor</li><li>OAuth2</li><li>Encompass REST API</li></ul></dd></div>
     </dl>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="diagram-caption">
@@ -219,7 +219,8 @@
     </figure>
   </header>
 
-  <section id="before" class="case-study__section prose" aria-labelledby="before-title">
+  <div class="compare">
+  <section id="before" class="case-study__section prose card" aria-labelledby="before-title">
     <h2 id="before-title">Before: a pipeline that couldn’t run unattended</h2>
     <p>Loan attribute updates ran through Mace Innovations’ Excel-driven batch tool, pushed by RPA.</p>
     <p>To confirm a batch, the team relied on Mace’s status page. Nothing checked Encompass itself, and the status page didn’t load reliably.</p>
@@ -227,7 +228,7 @@
     <p>Fixing that needed programmatic access to Encompass itself.</p>
   </section>
 
-  <section id="after" class="case-study__section prose" aria-labelledby="after-title">
+  <section id="after" class="case-study__section prose card compare__after" aria-labelledby="after-title">
     <h2 id="after-title">After: Encompass’s own answer replaces the manual check</h2>
     <p>The job now writes through the Encompass REST API directly, loan by loan, with the V3 Field Writer: <code>POST /encompass/v3/loans/<wbr>{loanId}/<wbr>fieldWriter</code>.</p>
     <p>It updates fields by field ID, under the same business rules as the Update Loan API.</p>
@@ -235,12 +236,13 @@
     <p>Each loan ends with a status that comes from Encompass itself: updated, with the values read back, or locked, with the loan’s details kept so a later batch can retry it.</p>
     <p>With that status for every loan, the manual check after every batch is gone, and the job runs unattended.</p>
   </section>
+  </div>
 
   <section id="locks" class="case-study__section prose" aria-labelledby="locks-title">
     <h2 id="locks-title">A lock protocol that never writes to a loan in use</h2>
     <p>An automated write must never land on a loan that someone is working in.</p>
     <p>So every write in the SDK follows one pattern, lock → write → read-back → unlock, even one that takes under a second. It prevents lost updates on loans that several users work on:</p>
-    <ol>
+    <ol class="steps" role="list">
       <li><b>Take an exclusive resource lock on the loan.</b> If someone has the loan open, the lock is refused: the loan is skipped and its status shows as locked, so nobody loses in-progress work.</li>
       <li><b>Write the fields</b> with the Field Writer.</li>
       <li><b>Read them back</b> with the Field Reader, for record keeping.</li>
@@ -248,14 +250,16 @@
       <li><b>Retry the locked loans</b> in a later batch.</li>
     </ol>
     <p>While the lock is held, a user who opens the loan in Encompass desktop is told it is locked and can open it only read-only, so nobody else can change the loan mid-update.</p>
-    <p>The protocol was built when opening a loan in Encompass desktop always placed an exclusive lock on it.</p>
-    <p>Encompass release 26.1 later added an optional Shared Loan Lock, which lets an API integration update a loan while it is open in Encompass desktop.</p>
+    <div class="note flow">
+      <p>The protocol was built when opening a loan in Encompass desktop always placed an exclusive lock on it.</p>
+      <p>Encompass release 26.1 later added an optional Shared Loan Lock, which lets an API integration update a loan while it is open in Encompass desktop.</p>
+    </div>
   </section>
 
   <section id="sdk" class="case-study__section prose" aria-labelledby="sdk-title">
     <h2 id="sdk-title">The SDK underneath</h2>
     <p>The lock handling lives in a custom Python SDK wrapping the Encompass Cloud APIs. Encompass is the loan origination system at the heart of PRMI’s operations. I designed and built the SDK, and every one of my production automations runs on it.</p>
-    <ul>
+    <ul class="card card--list" role="list">
       <li><b>OAuth2 auth</b> with token caching.</li>
       <li><b>Pipeline queries with pagination:</b> pages fetched in parallel on a <code>ThreadPoolExecutor</code>, then a check that every record arrived.</li>
       <li><b>Safe loan updates:</b> the lock → write → read-back → unlock method above, so automations never overwrite in-progress work.</li>
@@ -265,9 +269,9 @@
   </section>
 
   <footer class="case-study__end">
-    <nav aria-label="More work">
+    <nav class="case-study__end-nav" aria-label="More work">
+      <a class="next-card card" href="max-ai.html"><span class="next-card__label">Next deep dive<span class="visually-hidden">:</span></span> <span class="project__name project__name--max-ai">MAX AI</span> <span class="next-card__claim">Grounded answers from the company’s own documents, with citations.</span></a>
       <ul class="inline-links">
-        <li><a href="max-ai.html">Next deep dive: MAX AI</a></li>
         <li><a href="index.html#work">All work</a></li>
       </ul>
     </nav>

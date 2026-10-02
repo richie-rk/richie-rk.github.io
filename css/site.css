@@ -782,13 +782,13 @@
     }
   }
 
-  /* Quotes and asides: a neutral rule at the start, no tint, no decorative marks. */
-  .quote,
-  .note {
+  /* Quotes: a neutral rule at the start, no tint, no decorative marks. The
+     testimonial on home is a card instead. */
+  .quote {
+    max-inline-size: var(--measure);
     padding-inline-start: var(--space-5);
     border-inline-start: var(--rule-width) solid var(--border-strong);
   }
-  .quote { max-inline-size: var(--measure); }
   .quote blockquote {
     font-size: var(--step-1);
     line-height: var(--leading-snug);
@@ -805,7 +805,13 @@
     font-size: var(--step--1);
     color: var(--text-muted);
   }
-  .note { color: var(--text-muted); }
+  /* Asides: a quiet panel, set back from the prose by its surface alone. */
+  .note {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-muted);
+  }
 
   /* ---------- Cards ----------
      A contained surface for content that stands on its own: the deep-dive
@@ -824,6 +830,18 @@
   @media (min-width: 48rem) {
     .card { padding: var(--space-5) var(--space-6); }
   }
+  /* A card of rows, such as a list: the rows carry the padding and a hairline
+     between them. */
+  .card--list {
+    padding: 0;
+    list-style: none;
+  }
+  .card--list > * { padding: var(--space-4); }
+  .card--list > * + * { border-block-start: var(--border-width) solid var(--border); }
+  @media (min-width: 48rem) {
+    .card--list > * { padding: var(--space-4) var(--space-6); }
+  }
+
   /* A tappable card has exactly one link, stretched over the whole card by its
      ::after (the Inclusive Components cards pattern): one target, one tab stop,
      and a link name that makes sense on its own. The focus ring and the hover
@@ -869,6 +887,8 @@
     font-size: var(--step--1);
     line-height: var(--leading-snug);
   }
+  /* DESIGN_RULES §4: stack labels are small, muted and text-only. */
+  .tags--muted > li { color: var(--text-muted); }
 
   /* Figures: one panel style for diagrams. Wide content scrolls inside its own region. */
   .figure {
@@ -1210,7 +1230,8 @@
     container-type: inline-size;
     padding-block-end: var(--section-space);
   }
-  .case-study__head { padding-block-start: var(--space-7); }
+  /* On a phone the head runs tight, so the overview card shares the first screen. */
+  .case-study__head { padding-block-start: var(--space-6); }
   .case-study__title { font-size: var(--step-3); }
   .case-study__claim {
     display: block;
@@ -1223,22 +1244,23 @@
   .case-study__standfirst,
   .case-study__summary {
     max-inline-size: var(--measure-standfirst);
-    margin-block-start: var(--space-5);
+    margin-block-start: var(--space-4);
   }
+  /* The overview is a card (with the .card class in the markup). */
   .case-study__overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--column-min), 1fr));
     gap: var(--space-3) var(--space-6);
-    margin-block-start: var(--space-6);
-    padding-block: var(--space-5);
-    border-block: var(--border-width) solid var(--border);
+    margin-block-start: var(--space-4);
   }
+  /* Stack tags pack closer here, so on a phone the card fits the first screen. */
+  .case-study__overview .tags { row-gap: var(--space-1); }
   .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
   /* On a phone each fact sits beside its label, so the whole list fits the first screen. */
   .case-study__overview > div {
     display: grid;
-    grid-template-columns: var(--space-8) minmax(0, 1fr);
-    column-gap: var(--space-4);
+    grid-template-columns: var(--space-7) minmax(0, 1fr);
+    column-gap: var(--space-3);
     align-items: baseline;
   }
   /* Role, Team and Impact share a row; the longer Stack line runs full width under them. */
@@ -1247,12 +1269,16 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       row-gap: var(--space-5);
     }
+    .case-study__overview { margin-block-start: var(--space-6); }
     .case-study__overview > div { display: block; }
     .case-study__overview dd { margin-block-start: var(--space-1); }
     .case-study__overview > .spec__stack { grid-column: 1 / -1; }
   }
   .case-study__figure { margin-block-start: var(--space-6); }
-  .toc { margin-block-start: var(--space-6); }
+  .toc {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-6);
+  }
   .toc__title { font-size: var(--step--1); color: var(--text-muted); }
   .toc li { text-wrap: balance; }
   /* One column: a short outline read top to bottom. Max-content columns could
@@ -1269,13 +1295,110 @@
     align-items: center;
     min-block-size: var(--space-6);
   }
+  /* From 48rem the outline runs in two columns, still read top to bottom. */
+  @media (min-width: 48rem) {
+    .toc ul {
+      display: block;
+      columns: 2;
+      column-gap: var(--space-6);
+    }
+    .toc li { break-inside: avoid; }
+  }
   .case-study__section { margin-block-start: var(--space-7); }
+
+  /* Before and after as two panels, side by side from 64rem. The after panel
+     carries the accent edge; each keeps its prose measure inside. */
+  .compare {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-7);
+  }
+  .compare > .case-study__section { margin-block-start: 0; }
+  .compare__after { border-color: var(--rule-accent); }
+  @media (min-width: 48rem) {
+    .compare { margin-block-start: var(--space-8); }
+  }
+  @media (min-width: 64rem) {
+    .compare {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  /* A real sequence, so it is numbered (DESIGN_RULES §11): accent numerals in
+     rings, joined by a rail, one step to a row. */
+  .steps {
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+  .steps > li {
+    position: relative;
+    padding-inline-start: calc(var(--space-6) + var(--space-4));
+    counter-increment: step;
+  }
+  .steps > li::before {
+    content: counter(step);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border: var(--border-width) solid var(--rule-accent);
+    border-radius: 50%;
+    color: var(--link);
+    font-size: var(--step--1);
+    font-weight: var(--weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .steps > li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    inset-block: calc(var(--space-6) + var(--space-1)) calc(var(--space-1) - var(--space-4));
+    inset-inline-start: calc(var(--space-6) / 2);
+    border-inline-start: var(--border-width) solid var(--border);
+  }
+
+  /* The end of a deep dive: the next one as a card, one block link whose name
+     morphs into that page's title, as the doors on home do. */
   .case-study__end {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4);
     margin-block-start: var(--space-8);
-    padding-block-start: var(--space-6);
-    border-block-start: var(--border-width) solid var(--border);
+  }
+  .case-study__end-nav {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .next-card {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    max-inline-size: var(--measure);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .next-card__label {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .next-card .project__name {
+    margin-block-end: var(--space-1);
+    color: var(--text-strong);
+    font-size: var(--step-2);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-heading);
+  }
+  @media (hover: hover) {
+    .next-card:hover { border-color: var(--border-strong); }
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .next-card { transition: transform var(--duration-hover) var(--ease-out); }
+    .next-card:hover { transform: translateY(calc(-1 * var(--lift))); }
   }
   .decisions > div {
     display: grid;
@@ -1287,6 +1410,9 @@
   .decisions dd { color: var(--text-muted); }
 
   @media (min-width: 48rem) {
+    .case-study__head { padding-block-start: var(--space-7); }
+    .case-study__standfirst,
+    .case-study__summary { margin-block-start: var(--space-5); }
     .case-study__standfirst,
     .case-study__summary { font-size: var(--step-1); line-height: var(--leading-body); }
     .case-study__section { margin-block-start: var(--space-8); }

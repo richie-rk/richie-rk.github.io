@@ -56,13 +56,13 @@
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--final-docs">Final Docs</span><span class="visually-hidden">: </span><span class="case-study__claim">Treat an investor as data, not code.</span></h1>
     <p class="case-study__standfirst">After a mortgage loan closes, PRMI must deliver post-closing document packages to the investor banks that purchased the loans. Trailing documents arrive late, every investor reports exceptions in its own format, and delays put <strong>funding lines and regulatory standing</strong> at risk. The Final Docs Automation turns that heterogeneous exception data into one consistent picture and reconciles it against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
-    <dl class="case-study__overview">
+    <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Architecture and build, end to end</dd></div>
       <div><dt>Team</dt><dd>With PRMI’s closing, compliance and development teams</dd></div>
       <div><dt>Impact</dt><dd>4 investors in one month; onboarding cut from <span class="nowrap">2-4 weeks</span> to days</dd></div>
-      <div class="spec__stack"><dt>Stack</dt><dd>Python, Pandas, SQLAlchemy, YAML config, OpenPyXL, Encompass API, Strategy pattern</dd></div>
+      <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>Pandas</li><li>SQLAlchemy</li><li>YAML config</li><li>OpenPyXL</li><li>Encompass API</li><li>Strategy pattern</li></ul></dd></div>
     </dl>
-    <nav class="toc" aria-label="On this page">
+    <nav class="toc card" aria-label="On this page">
       <p class="toc__title">On this page</p>
       <ul>
         <li><a href="#problem">The problem</a></li>
@@ -250,9 +250,9 @@ data = handler()</code></pre>
   </section>
 
   <footer class="case-study__end">
-    <nav aria-label="More work">
+    <nav class="case-study__end-nav" aria-label="More work">
+      <a class="next-card card" href="encompass-automation.html"><span class="next-card__label">Next deep dive<span class="visually-hidden">:</span></span> <span class="project__name project__name--encompass">Encompass loan<br>automation</span> <span class="next-card__claim">Unattended loan updates that never overwrite in-progress work.</span></a>
       <ul class="inline-links">
-        <li><a href="encompass-automation.html">Next deep dive: Encompass loan automation</a></li>
         <li><a href="index.html#work">All work</a></li>
       </ul>
     </nav>
