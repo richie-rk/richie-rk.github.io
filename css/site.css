@@ -1209,6 +1209,9 @@
   }
 
   /* ---------- Home: contact ---------- */
+  /* The intro is the section's message and leads into the address, so it
+     takes the body colour, not the muted one of a caption. */
+  .contact .section__lede { color: var(--text); }
   /* One size down on phones, so the address stays on one line at 320px. */
   .contact__email {
     margin-block-start: var(--space-5);
