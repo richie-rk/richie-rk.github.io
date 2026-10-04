@@ -194,6 +194,7 @@
     /* The single elevation level, for the letter scans. */
     --shadow-raised: 0 1px 2px var(--shadow-colour), 0 8px 24px var(--shadow-colour);
     --inline-icon: 0.85em;
+    --logo-size: 1.125em;
 
     /* Motion */
     --ease-out: cubic-bezier(0.2, 0, 0, 1);
@@ -825,6 +826,9 @@
     list-style: none;
   }
   .tags > li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     padding: var(--space-1) var(--space-2);
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-sm);
@@ -832,6 +836,13 @@
     line-height: var(--leading-snug);
   }
   .tags--muted > li { color: var(--text-muted); }
+  /* CV skill logos (Richy, 4 October 2026): text colour; width from the viewBox. */
+  .tags svg {
+    block-size: var(--logo-size);
+    overflow: visible;
+    flex: none;
+    fill: currentColor;
+  }
 
   /* Figures: wide content scrolls inside its own region. */
   .figure {
@@ -1475,6 +1486,7 @@
     .skip-link,
     .theme-toggle,
     .copy-icon,
+    .tags svg,
     .button,
     .email-options,
     .toc { display: none !important; }
