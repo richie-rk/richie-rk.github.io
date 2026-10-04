@@ -703,7 +703,7 @@
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
   :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
-         .decisions > div, .letter-scans, .cv-grid, .site-footer__inner) {
+         .decisions > div, .letter-scans, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1118,26 +1118,6 @@
     font-size: var(--step-0);
   }
 
-  .skills {
-    display: grid;
-    gap: var(--space-5);
-    margin-block-start: var(--space-5);
-  }
-  .skills dt {
-    color: var(--text-strong);
-    font-weight: var(--weight-strong);
-  }
-  .skills dd { margin-block-start: var(--space-3); }
-  @media (min-width: 48rem) {
-    .skills {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--space-6);
-    }
-  }
-  @media (min-width: 64rem) {
-    .skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  }
-
   /* ---------- Home: contact ---------- */
   /* The intro leads into the address, so it is body text, not a muted caption. */
   .contact .section__lede { color: var(--text); }
@@ -1388,12 +1368,16 @@
     margin-block-start: var(--space-2);
   }
   .cv-role .quote { margin-block-start: var(--space-5); }
-  .cv-grid { display: grid; gap: var(--space-6); }
-  .cv-grid h3 { font-size: var(--step-0); }
-  .cv-grid h3 + * { margin-block-start: var(--space-3); }
-  @media (min-width: 40rem) {
-    .cv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Skills: one group per row, its tags under the label. */
+  .skills {
+    display: grid;
+    gap: var(--space-5);
   }
+  .skills dt {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
+  .skills dd { margin-block-start: var(--space-3); }
 
   /* ---------- Testimonial letter ---------- */
   .letter-page__head { max-inline-size: var(--measure); }
@@ -1500,16 +1484,14 @@
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
-      /* Role lists flatten so entries never split; skills groups stay two-up
-         and whole. */
+    /* Role lists flatten so entries never split. */
     .cv-role > ul { display: block; }
     .cv-role > ul > li + li { margin-block-start: var(--space-4); }
-    .cv-grid > * { break-inside: avoid; }
     .cv-role__head,
     .cv-role li,
     .cv__section > ul > li,
-    .cv__section > div:not(.cv-grid),
-    .cv-grid .spec > div,
+    .cv__section > div,
+    .skills > div,
     .quote { break-inside: avoid; }
     h2,
     h3 { break-after: avoid; }
@@ -1523,8 +1505,13 @@
     .print-run-lead,
     .print-run,
     .print-run > li { display: inline; }
-    .print-run { padding: 0; }
+    .print-run,
+    .print-run > li { padding: 0; border: 0; font-size: inherit; }
     .print-run > li:not(:last-child)::after { content: ","; }
+    /* Skills groups print as one run each: "Label: a, b, c". */
+    .skills dt,
+    .skills dd { display: inline; }
+    .skills dt::after { content: ":"; }
     /* Inline, so the printed URL keeps its leading space. */
     .quote__link { display: inline; }
     /* External URLs print after their link text, unless the text is the URL. */
