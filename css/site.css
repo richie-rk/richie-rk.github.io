@@ -560,6 +560,7 @@
   /* Emails become copy buttons with JS; without it they stay mailto links. */
   .email-copy {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     min-block-size: var(--target);
@@ -578,24 +579,30 @@
     overflow-wrap: anywhere;
   }
   .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
-  .email-copy .copy-icon { display: none; }
-  .js .email-copy .copy-icon:not(.copy-icon--done) { display: inline; }
-  .js .email-copy[data-state="copied"] .copy-icon { display: none; }
-  .js .email-copy[data-state="copied"] .copy-icon--done { display: inline; }
-  /* The state label sits outside the text flow, so it never shifts the line. */
-  .email-copy { position: relative; }
-  .email-copy[data-state]::after {
-    position: absolute;
-    inset-block-end: 100%;
-    inset-inline-end: 0;
+  /* With JS, a visible "Copy" label, outlined like a control, not a tag. */
+  .email-copy__action { display: none; }
+  .js .email-copy__action {
+    display: inline-grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+    padding-inline: var(--space-2);
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
     font-size: var(--step--1);
     font-weight: var(--weight-regular);
-    line-height: var(--leading-snug);
-    white-space: nowrap;
-    color: var(--text-muted);
   }
-  .email-copy[data-state="copied"]::after { content: "Copied"; }
-  .email-copy[data-state="failed"]::after { content: "Copy failed"; }
+  .email-copy:hover .email-copy__action { border-color: var(--text); color: var(--text); }
+  /* A hidden "Copied" sets the width, so copying shifts nothing. */
+  .email-copy__action > svg { grid-area: 1 / 2; }
+  .email-copy .copy-label { grid-area: 1 / 3; margin-inline-start: var(--space-1); }
+  .email-copy__action::after {
+    content: "Copied";
+    grid-area: 1 / 1 / 2 / -1;
+    padding-inline-start: calc(var(--inline-icon) + var(--space-1));
+    block-size: 0;
+    visibility: hidden;
+  }
 
 
   /* Social links: the same teal hover glow as the header icons. */
@@ -942,11 +949,6 @@
   }
   .hero .button-row { margin-block-start: var(--space-4); }
   .hero__email { margin-block-start: var(--space-3); }
-  /* Here the copy status shows under the address, clear of the buttons. */
-  .hero__email .email-copy[data-state]::after {
-    inset-block-start: 100%;
-    inset-block-end: auto;
-  }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
     .hero .button-row { margin-block-start: var(--space-6); }
@@ -1485,7 +1487,7 @@
     .site-footer,
     .skip-link,
     .theme-toggle,
-    .copy-icon,
+    .email-copy__action,
     .tags svg,
     .button,
     .email-options,

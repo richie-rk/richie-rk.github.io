@@ -22,17 +22,18 @@
 
   // Email addresses are mailto links without JS. With JS they become real
   // buttons that copy the address; the "Open in…" buttons still open a draft.
-  // The hidden prefix keeps the visible address inside the accessible name.
+  // The name is the visible address, then a hidden "Copy email address", so it
+  // starts with the visible text; the visible "Copy" label is aria-hidden.
   document.querySelectorAll('a.email-copy').forEach(function (link) {
     var button = document.createElement('button');
     button.type = 'button';
     button.className = link.className;
     button.setAttribute('data-copy', link.getAttribute('data-copy'));
-    var prefix = document.createElement('span');
-    prefix.className = 'visually-hidden';
-    prefix.textContent = 'Copy email address ';
-    button.appendChild(prefix);
     while (link.firstChild) button.appendChild(link.firstChild);
+    var hint = document.createElement('span');
+    hint.className = 'visually-hidden';
+    hint.textContent = ' Copy email address';
+    button.appendChild(hint);
     link.parentNode.replaceChild(button, link);
   });
 
@@ -61,8 +62,7 @@
     return legacyCopy(text);
   };
   document.querySelectorAll('button[data-copy], button[data-copy-from]').forEach(function (button) {
-    // Buttons with a .copy-label swap that text; the email buttons show the state
-    // through their icon (data-state drives the CSS).
+    // A .copy-label shows the state in words; data-state swaps the icons in CSS.
     var labelEl = button.querySelector('.copy-label');
     var label = labelEl && labelEl.textContent;
     var timer;
@@ -84,7 +84,8 @@
       copyText(text).then(function () {
         report('copied', 'Copied', 'Copied to the clipboard');
       }, function () {
-        report('failed', 'Copy failed', labelEl ? 'Copying failed. Select the text and copy it instead.' : 'Copying failed. The address is ' + text);
+        // An email label keeps the width of "Copied", which "Failed" fits.
+        report('failed', from ? 'Copy failed' : 'Failed', from ? 'Copying failed. Select the text and copy it instead.' : 'Copying failed. The address is ' + text);
       });
     });
   });
