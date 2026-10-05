@@ -262,6 +262,7 @@
         <li><a href="#reconciliation">Reconciliation</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#results">Results</a></li>
+        <li><a href="#next">Next steps</a></li>
       </ul>
     </nav>
   </header>
@@ -283,18 +284,40 @@
     <p>So there were two problems to solve, not one: <strong>convert heterogeneous investor data into a unified internal representation</strong>, and <strong>reconcile it against First American custodian data</strong> to identify missing documents and discrepancies.</p>
   </section>
 
-  <section id="configuration" class="case-study__section prose" aria-labelledby="configuration-title">
-    <h2 id="configuration-title">What used to be code became configuration</h2>
-    <p>Each investor is described by one YAML file:</p>
-    <ul>
-      <li>source directory and report name</li>
-      <li>a column map that translates the investor’s column names into the common schema</li>
-      <li>whether loan-number resolution is required</li>
-      <li>document-type mappings</li>
-      <li>where needed, the name of a custom processing hook.</li>
-    </ul>
-    <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape.</p>
-    <p>The core modules treat an investor as data, not as hard-wired branches.</p>
+  <section id="configuration" class="case-study__section case-study__aside" aria-labelledby="configuration-title">
+    <div class="prose">
+      <h2 id="configuration-title">What used to be code became configuration</h2>
+      <p>Each investor is described by one YAML file:</p>
+      <ul>
+        <li>source directory and report name</li>
+        <li>a column map that translates the investor’s column names into the common schema</li>
+        <li>whether loan-number resolution is required</li>
+        <li>document-type mappings</li>
+        <li>where needed, the name of a custom processing hook.</li>
+      </ul>
+      <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape.</p>
+      <p>The core modules treat an investor as data, not as hard-wired branches.</p>
+    </div>
+    <figure class="figure flow-figure">
+      <ol class="steps flow-steps" role="list">
+        <li>Bots fetch each investor’s exception report into a dated folder. A few investors need a custom handler instead, such as a second-liens list built from the loan system.</li>
+        <li>Map the investor’s columns onto one shared schema.</li>
+        <li>Recover PRMI’s loan number from the loan system when the investor gives only its own.</li>
+        <li>Read the document type out of free-text comments.</li>
+        <li>Standardize document names, so a dozen spellings become one.</li>
+        <li class="flow-steps__boundary">Store the day’s investor records: the line between preparing and reconciling.</li>
+        <li>Bring in First American’s imaged-not-shipped list, falling back to the previous Monday’s.</li>
+        <li>Keep the earliest copy of each record, so reruns are safe.</li>
+        <li>Match on PRMI loan number and sort every record:
+          <ul>
+            <li>Missing/Defect: the action list.</li>
+            <li>Mismatch, with a reason: no loan number, not at First American with no document type, or a duplicate.</li>
+          </ul>
+        </li>
+        <li>Publish an Excel feedback report with a summary sheet, and keep the history in the database.</li>
+      </ol>
+      <figcaption>From investor report to action list. Steps 2 to 5 follow each investor’s configuration; step 6 is the line between preparing and reconciling.</figcaption>
+    </figure>
   </section>
 
   <section id="dispatch" class="case-study__section prose" aria-labelledby="dispatch-title">
@@ -366,7 +389,7 @@
   <section id="results" class="case-study__section prose" aria-labelledby="results-title">
     <h2 id="results-title">Investor expansion at deal speed</h2>
     <ul class="stats card card--list" role="list">
-      <li><span class="stats__value">Days</span> <span class="stats__label">to onboard a new investor, down from <span class="nowrap">2-4 weeks</span>: a YAML change, not a code release.</span></li>
+      <li><span class="stats__value">Days</span> <span class="stats__label">to onboard a new investor, down from <span class="nowrap">2-4 weeks</span> (about 75% less): a YAML change, not a code release.</span></li>
       <li><span class="stats__value">4</span> <span class="stats__label">new investors integrated in the month after the refactor.</span></li>
       <li><span class="stats__value">2</span> <span class="stats__label">other automation initiatives adopted the architecture as their template.</span></li>
     </ul>
@@ -376,6 +399,14 @@
       <blockquote><p><span class="quote__mark">“</span>PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.<span class="quote__mark">”</span></p></blockquote>
       <figcaption>Corban Wells, VP of Technology Product Management, PRMI<br><a class="quote__link" href="letter.html">Read Corban Wells’s full letter</a></figcaption>
     </figure>
+  </section>
+
+  <section id="next" class="case-study__section prose" aria-labelledby="next-title">
+    <h2 id="next-title">What I’d do next: faster lookups, cleaner exceptions</h2>
+    <ul class="card card--list" role="list">
+      <li><b>Batch the loan-number lookups.</b> Recovery calls the loan system once per row, one at a time; batching them, or running them concurrently, would cut run time on large reports.</li>
+      <li><b>Report every unresolved record once.</b> In the version I shipped, a record with neither a loan number nor a document type lands in the Mismatch report twice.</li>
+    </ul>
   </section>
 
   <footer class="case-study__end">

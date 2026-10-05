@@ -1249,6 +1249,39 @@
     border-inline-start: var(--border-width) solid var(--border);
   }
 
+  /* The Final Docs flow: plain HTML, the static, reduced-motion and JS-off
+     state of the later animation (ADR 0003). The dashed line marks where
+     preparing ends and reconciling begins. */
+  .flow-figure {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-6);
+  }
+  .flow-steps { padding: var(--space-4); }
+  .flow-steps ul { margin-block-start: var(--space-2); }
+  .flow-steps__boundary {
+    padding-block-end: var(--space-4);
+    border-block-end: var(--border-width) dashed var(--border-strong);
+  }
+  @media (min-width: 48rem) {
+    .flow-steps { padding: var(--space-5) var(--space-6); }
+  }
+  /* Beside its prose once the container is at full width; narrower, the
+     steps would wrap at about 25 characters. */
+  @media (min-width: 80rem) {
+    .case-study__aside {
+      display: grid;
+      grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+    .flow-figure {
+      position: sticky;
+      inset-block-start: calc(var(--header-offset, var(--header-size)) + var(--space-4));
+      max-inline-size: none;
+      margin-block-start: 0;
+    }
+  }
+
   /* Results: one row per figure; a subgrid sizes the number column. */
   .stats {
     display: grid;
