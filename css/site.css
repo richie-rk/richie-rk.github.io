@@ -480,11 +480,8 @@
     padding: 0;
     list-style: none;
   }
-  .site-footer__links a {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--target);
-  }
+  /* The footer stays monochrome, its focus ring included. */
+  .site-footer :focus-visible { outline-color: var(--text-strong); }
   .site-footer__meta {
     font-size: var(--step--1);
     max-inline-size: var(--measure);

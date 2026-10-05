@@ -20,10 +20,10 @@
   status.setAttribute('role', 'status');
   document.body.appendChild(status);
 
-  // Email addresses are mailto links without JS. With JS they become real
-  // buttons that copy the address; the "Open in…" buttons still open a draft.
-  // The name is the visible address, then a hidden "Copy email address", so it
-  // starts with the visible text; the visible "Copy" label is aria-hidden.
+  // Email links are mailto links without JS. With JS they become real buttons
+  // that copy the address; the "Open in…" buttons still open a draft. The name
+  // is the visible label, then a hidden ", copy the address", so it starts with
+  // the visible text; the visible "Copy" label is aria-hidden.
   document.querySelectorAll('a.email-copy').forEach(function (link) {
     var button = document.createElement('button');
     button.type = 'button';
@@ -32,7 +32,7 @@
     while (link.firstChild) button.appendChild(link.firstChild);
     var hint = document.createElement('span');
     hint.className = 'visually-hidden';
-    hint.textContent = ' Copy email address';
+    hint.textContent = ', copy the address';
     button.appendChild(hint);
     link.parentNode.replaceChild(button, link);
   });
@@ -84,8 +84,11 @@
       copyText(text).then(function () {
         report('copied', 'Copied', 'Copied to the clipboard');
       }, function () {
-        // An email label keeps the width of "Copied", which "Failed" fits.
-        report('failed', from ? 'Copy failed' : 'Failed', from ? 'Copying failed. Select the text and copy it instead.' : 'Copying failed. The address is ' + text);
+        if (from) return report('failed', 'Copy failed', 'Copying failed. Select the text and copy it instead.');
+        // Most labels don't show the address, so a failed copy opens a draft
+        // instead. An email label keeps the width of "Copied", which "Failed" fits.
+        report('failed', 'Failed', 'Copying failed, so your email app opens instead. The address is ' + text);
+        window.location.href = 'mailto:' + text;
       });
     });
   });
