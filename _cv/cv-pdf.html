@@ -275,7 +275,7 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
     </ul>
   </header>
 
-  <p class="summary">Python engineer with <b>5+ years</b> shipping production GenAI, backend and automation systems for a US mortgage originator, owning delivery end to end. Built an <b>enterprise Azure RAG application</b> now used organization-wide for knowledge retrieval, a custom SDK for PRMI’s loan origination platform, and <b>13 production automations</b> across compliance and investor operations.</p>
+  <p class="summary">Python engineer with <b>5+ years</b> of experience. For a US mortgage originator, owned delivery end to end of production GenAI, backend and automation systems: an <b>enterprise Azure RAG application</b> now used organization-wide for knowledge retrieval, a custom SDK for PRMI’s loan origination platform, and <b>13 production automations</b> across compliance and investor operations.</p>
 
   <div class="cols">
     <main>
@@ -288,10 +288,10 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
           <p class="job__meta">US mortgage originator. Full technical ownership of MAX AI; sole engineer on the RPA automations.</p>
         </div>
         <ul class="items">
-          <li class="item"><p><span class="item__lead">MAX AI, enterprise RAG platform.</span> Python backend across three Azure services: FastAPI chat with NDJSON streaming, a Durable Functions ingestion pipeline, and Function App utility APIs. Azure AI Search hybrid retrieval (vector + semantic ranking) with HyDE query expansion, Azure OpenAI (GPT-4o, ada-002), Azure AD auth with multi-tenant access mapping in SQL Server, ingestion containerized via Azure Container Registry. <b>Now the primary knowledge-retrieval tool across PRMI.</b></p></li>
-          <li class="item"><p><span class="item__lead">MAX AI front end.</span> Contributed React UI with MSAL / Microsoft Entra ID group-based access control, mapping internal and external user and admin groups to role-based permissions; ran a security audit that surfaced exposed Function App keys.</p></li>
+          <li class="item"><p><span class="item__lead">MAX AI, enterprise RAG platform.</span> Python backend across three Azure services: FastAPI chat with NDJSON streaming, a Durable Functions ingestion pipeline, and Function App utility APIs. Azure AI Search hybrid retrieval (vector + semantic ranking) with HyDE as a fallback when recall is low, Azure OpenAI (GPT-4o, ada-002), Entra ID auth with multi-tenant access mapping in SQL Server, ingestion containerized via Azure Container Registry. <b>Now the primary knowledge-retrieval tool across PRMI.</b></p></li>
+          <li class="item"><p><span class="item__lead">MAX AI front end.</span> Contributed React UI with MSAL / Microsoft Entra ID group-based access control, mapping internal and external user and admin groups to role-based permissions.</p></li>
           <li class="item">
-            <p><span class="item__lead">Final Docs refactor.</span> Rebuilt a monolithic automation into a config-driven, object-oriented dynamic-dispatch design (YAML → handler registry) with a pandas + SQLAlchemy reconciliation engine: composite-key merges, rerun-safe de-duplication, and exception reports for ops review. <b>Cut per-investor onboarding ~80% and onboarded 4 new investors in 1 month.</b></p>
+            <p><span class="item__lead">Final Docs refactor.</span> Rebuilt a monolithic automation into a config-driven, object-oriented dynamic-dispatch design (YAML → handler registry) with a pandas + SQLAlchemy reconciliation engine: keyed merges with rerun-safe, composite-key de-duplication and exception reports for ops review. <b>Cut per-investor onboarding ~75% and onboarded 4 new investors in 1 month.</b></p>
             <div class="quote"><p>“PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.”</p><span>Corban Wells, VP of Technology Product Management, PRMI</span></div>
           </li>
           <li class="item"><p><span class="item__lead">Loan origination API SDK.</span> Python SDK wrapping the Encompass Cloud APIs (ICE Mortgage Technology’s loan origination system): OAuth2 with token caching, concurrent paginated pipeline queries, safe loan updates (locks loans, skips active user-edit sessions), eFolder document CRUD, and disclosure tracking.</p></li>
@@ -337,9 +337,13 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
       <article class="job">
         <div class="job__head">
           <h3 class="job__title">Graduate Engineer Trainee</h3>
-          <p class="job__org">Goodyear Tyres</p>
+          <p class="job__org">Goodyear South Asia Tyres</p>
           <p class="job__meta">Industrial automation: PLC, SCADA, VFD, CTMS/BMS.</p>
         </div>
+        <ul class="items">
+          <li class="item"><p>Commissioned the Cut Tyre Measurement System (CTMS) and Bead Measurement System (BMS) alongside Rockwell and Honeywell engineers.</p></li>
+          <li class="item"><p>Programmed and troubleshot PLCs and VFDs; SCADA and HMIs, including sensor calibration; Python (pylogix) scripts pulling drive data from Rockwell PLCs.</p></li>
+        </ul>
       </article>
 
   <div class="cards">
