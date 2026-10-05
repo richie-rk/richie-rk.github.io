@@ -76,7 +76,7 @@
     </dl>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="diagram-caption">
-      <svg viewBox="0 0 940 400" role="img" aria-label="Before and after. Before: RPA pushed loan attribute updates through Mace Innovations’ Excel-driven batch tool into Encompass, and a person checked every batch on Mace’s status page, which didn’t load reliably; nothing checked Encompass itself. After: an update job takes an exclusive resource lock on each loan. If the lock is refused because the loan is in use, the loan is skipped with the status locked and retried in a later batch. Otherwise the job writes the fields with the Field Writer, reads them back with the Field Reader and releases the lock in a finally block, recording the status updated with the values read back." class="diagram diagram--wide">
+      <svg viewBox="0 0 940 400" role="img" aria-label="Before and after. Before: RPA pushed loan attribute updates through a vendor’s Excel-driven batch tool into Encompass, and a person checked every batch on the vendor’s status page, which didn’t load reliably; nothing checked Encompass itself. After: an update job takes an exclusive resource lock on each loan. If the lock is refused because the loan is in use, the loan is skipped with the status locked and retried in a later batch. Otherwise the job writes the fields with the Field Writer, reads them back with the Field Reader and releases the lock in a finally block, recording the status updated with the values read back." class="diagram diagram--wide">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -92,7 +92,7 @@
         <path d="M455 79 H504" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
         <text x="482" y="67" font-size="10.5" text-anchor="middle" class="diagram__label">updates</text>
         <path d="M345 112 C345 158 835 158 835 118" stroke-width="1.3" marker-end="url(#arr)" class="diagram__edge diagram__edge--dashed"/>
-        <text x="590" y="170" font-size="10.5" text-anchor="middle" class="diagram__label">Mace status page, loads unreliably</text>
+        <text x="590" y="170" font-size="10.5" text-anchor="middle" class="diagram__label">Vendor status page, loads unreliably</text>
 
         <!-- before boxes -->
         <rect x="20" y="46" width="170" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
@@ -100,8 +100,8 @@
         <text x="105" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">pushes the updates</text>
 
         <rect x="235" y="46" width="220" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="345" y="74" font-size="13" text-anchor="middle" class="diagram__title">Mace batch tool</text>
-        <text x="345" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">Excel-driven, Mace Innovations</text>
+        <text x="345" y="74" font-size="13" text-anchor="middle" class="diagram__title">Vendor batch tool</text>
+        <text x="345" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">Excel-driven</text>
 
         <rect x="510" y="46" width="180" height="66" rx="10" stroke-width="1.2" class="diagram__node diagram__node--external"/>
         <text x="600" y="74" font-size="13" text-anchor="middle" class="diagram__title">Encompass</text>
@@ -145,7 +145,7 @@
         <text x="310" y="348" font-size="13" text-anchor="middle" class="diagram__title">Skip the loan</text>
         <text x="310" y="366" font-size="10.5" text-anchor="middle" class="diagram__label">status: locked, kept for retry</text>
       </svg>
-      <svg viewBox="0 0 340 680" width="340" height="680" role="img" aria-label="Before and after. Before: RPA pushed loan attribute updates through Mace Innovations’ Excel-driven batch tool into Encompass, and a person checked every batch on Mace’s status page, which didn’t load reliably; nothing checked Encompass itself. After: an update job takes an exclusive resource lock on each loan. If the lock is refused because the loan is in use, the loan is skipped with the status locked and retried in a later batch. Otherwise the job writes the fields with the Field Writer, reads them back with the Field Reader and releases the lock in a finally block, recording the status updated with the values read back." class="diagram diagram--stacked">
+      <svg viewBox="0 0 340 680" width="340" height="680" role="img" aria-label="Before and after. Before: RPA pushed loan attribute updates through a vendor’s Excel-driven batch tool into Encompass, and a person checked every batch on the vendor’s status page, which didn’t load reliably; nothing checked Encompass itself. After: an update job takes an exclusive resource lock on each loan. If the lock is refused because the loan is in use, the loan is skipped with the status locked and retried in a later batch. Otherwise the job writes the fields with the Field Writer, reads them back with the Field Reader and releases the lock in a finally block, recording the status updated with the values read back." class="diagram diagram--stacked">
         <defs>
           <marker id="arr-stacked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -158,7 +158,7 @@
         <path d="M108 160 V178" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
         <text x="118" y="173" font-size="12" class="diagram__label">updates</text>
         <path d="M208 133 H220 V289 H214" stroke-width="1.3" marker-end="url(#arr-stacked)" class="diagram__edge diagram__edge--dashed"/>
-        <text x="230" y="196" font-size="12" class="diagram__label">Mace status</text>
+        <text x="230" y="196" font-size="12" class="diagram__label">Vendor status</text>
         <text x="230" y="211" font-size="12" class="diagram__label">page, loads</text>
         <text x="230" y="226" font-size="12" class="diagram__label">unreliably</text>
 
@@ -167,8 +167,8 @@
         <text x="108" y="70" font-size="12" text-anchor="middle" class="diagram__label">pushes the updates</text>
 
         <rect x="8" y="106" width="200" height="54" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="108" y="130" font-size="14" text-anchor="middle" class="diagram__title">Mace batch tool</text>
-        <text x="108" y="148" font-size="12" text-anchor="middle" class="diagram__label">Excel-driven, Mace Innovations</text>
+        <text x="108" y="130" font-size="14" text-anchor="middle" class="diagram__title">Vendor batch tool</text>
+        <text x="108" y="148" font-size="12" text-anchor="middle" class="diagram__label">Excel-driven</text>
 
         <rect x="8" y="184" width="200" height="54" rx="10" stroke-width="1.2" class="diagram__node diagram__node--external"/>
         <text x="108" y="208" font-size="14" text-anchor="middle" class="diagram__title">Encompass</text>
@@ -215,15 +215,15 @@
         <text x="108" y="658" font-size="12" text-anchor="middle" class="diagram__label">REST API</text>
       </svg>
       </div>
-      <figcaption id="diagram-caption" class="flow"><p>Before, a person checked every batch on Mace’s status page, which didn’t load reliably, and nothing checked Encompass itself.</p><p>After, every loan gets its own status from Encompass: updated, with the values read back, or locked and retried in a later batch.</p></figcaption>
+      <figcaption id="diagram-caption" class="flow"><p>Before, a person checked every batch on the vendor’s status page, which didn’t load reliably, and nothing checked Encompass itself.</p><p>After, every loan gets its own status from Encompass: updated, with the values read back, or locked and retried in a later batch.</p></figcaption>
     </figure>
   </header>
 
   <div class="compare">
   <section id="before" class="case-study__section prose card" aria-labelledby="before-title">
     <h2 id="before-title">Before: a pipeline that couldn’t run unattended</h2>
-    <p>Loan attribute updates ran through Mace Innovations’ Excel-driven batch tool, pushed by RPA.</p>
-    <p>To confirm a batch, the team relied on Mace’s status page. Nothing checked Encompass itself, and the status page didn’t load reliably.</p>
+    <p>Loan attribute updates ran through a vendor’s Excel-driven batch tool, pushed by RPA.</p>
+    <p>To confirm a batch, the team relied on the vendor’s status page. Nothing checked Encompass itself, and the status page didn’t load reliably.</p>
     <p>The problem wasn’t the effort of that check. It was reliability: there was no dependable answer to whether each loan had updated, and a pipeline that needs a person after every run can’t run unattended.</p>
     <p>Fixing that needed programmatic access to Encompass itself.</p>
   </section>
