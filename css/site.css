@@ -115,6 +115,7 @@
     --border-strong: #6A7391;       /* UI borders; fails as small text, so never used for text */
     --accent: #5FD4B0;
     --accent-hover: #83E3C6;
+    --accent-pressed: #A3EAD5;      /* a step past hover in the same hue */
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
     --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
     /* Links take the accent's lighter tint: Lc 78, where #5FD4B0 is Lc 68,
@@ -218,6 +219,7 @@
       --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
       --accent: light-dark(#0A7C5F, #5FD4B0);         /* teal fails on light (1.69:1); #0A7C5F is 4.79:1 */
       --accent-hover: light-dark(#086A51, #83E3C6);
+      --accent-pressed: light-dark(#065541, #A3EAD5);
       --accent-contrast: light-dark(#FFFFFF, #04241A);
       /* Non-text teal in light mode: 3.12:1 on bg, 3.37:1 on surface. */
       --rule-accent: light-dark(#1F9E7A, #5FD4B0);
@@ -503,8 +505,8 @@
 }
 
 @layer components {
-  /* Buttons: primary, secondary, tertiary (a link). Hover changes colour;
-     nothing moves. */
+  /* Buttons: primary, secondary; a tertiary action is a text link. States
+     change colour only; nothing moves. */
   .button {
     display: inline-flex;
     align-items: center;
@@ -518,13 +520,17 @@
     line-height: var(--leading-snug);
     text-decoration: none;
     text-align: center;
-    text-wrap: balance;
+  }
+  /* Trimmed to cap height and baseline, the label centres optically;
+     without text-box the symmetric padding still centres the line box. */
+  .button__label { text-box: trim-both cap alphabetic; }
+  @media (min-width: 22.5rem) {
+    .button { white-space: nowrap; }
   }
   .button--primary {
     background: var(--accent);
     color: var(--accent-contrast);
   }
-  .button--primary:hover { background: var(--accent-hover); }
   /* A surface-fill hover would be invisible (1.1:1), so the outline takes the
      text colour. */
   .button--secondary {
@@ -532,7 +538,19 @@
     background: transparent;
     color: var(--text);
   }
-  .button--secondary:hover { border-color: var(--text); }
+  @media (hover: hover) {
+    .button--primary:hover { background: var(--accent-hover); }
+    .button--secondary:hover { border-color: var(--text-strong); color: var(--text-strong); }
+  }
+  .button--primary:active { background: var(--accent-pressed); }
+  .button--secondary:active {
+    border-color: var(--text-strong);
+    background: var(--surface);
+    color: var(--text-strong);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .button { transition: background-color var(--duration-hover), border-color var(--duration-hover), color var(--duration-hover); }
+  }
 
   /* The hero keywords' teal underline, a §11 exception Richy asked for; thick
      and low, so not a link. */
