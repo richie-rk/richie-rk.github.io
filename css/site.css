@@ -307,7 +307,7 @@
   img, svg, picture, video { display: block; max-inline-size: 100%; }
   img { block-size: auto; }
 
-  code, kbd, samp, pre { font-family: var(--font-mono); font-size: 1em; }
+  code, pre { font-family: var(--font-mono); font-size: 1em; }
   button, input, select, textarea { font: inherit; color: inherit; }
   button { cursor: pointer; }
 
@@ -700,28 +700,20 @@
   :root[data-theme="dark"] .theme-toggle__sun { display: block; }
   :root[data-theme="dark"] .theme-toggle__moon { display: none; }
 
-  /* Code */
-  :not(pre) > code {
+  code {
     padding-inline: var(--space-1);
     border-radius: var(--radius-sm);
     background: var(--surface);
     overflow-wrap: anywhere;
   }
-  .card :not(pre) > code { background: var(--bg); }
-  /* No ch cap: ch would resolve in the 14px mono. */
+  .card code { background: var(--bg); }
   pre {
     padding: var(--space-4) var(--space-5);
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface);
-    font-size: var(--step--1);
-    line-height: var(--leading-body);
-    color: var(--text-muted);
     overflow-x: auto;
-    tab-size: 2;
   }
-  .code__key, .code__value { color: var(--text); }
-  .code__comment { color: var(--text-muted); }
 
   /* Copy buttons appear only once js/site.js can wire them. */
   .copy-button { display: none; }
@@ -904,7 +896,6 @@
   .diagram__label,
   .diagram__note { fill: var(--text-muted); }
   .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
-  .diagram__code { font-family: var(--font-mono); }
   /* Diagrams drawn twice: the stacked twin shows until the wide one fits, at
      59rem even beside a classic scrollbar. */
   .diagram--stacked {
@@ -1533,7 +1524,6 @@
     /* The diagrams' screen minimum width would make Chrome shrink the page. */
     .diagram { min-inline-size: 0; }
     .figure { break-inside: avoid; }
-    pre { white-space: pre-wrap; overflow: visible; }
     /* Entries split for phones run together on paper, keeping the CV to two
        pages. */
     .print-join > p,
