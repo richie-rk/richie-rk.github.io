@@ -194,7 +194,7 @@
     /* The single elevation level, for the letter scans. */
     --shadow-raised: 0 1px 2px var(--shadow-colour), 0 8px 24px var(--shadow-colour);
     --inline-icon: 0.85em;
-    --logo-size: 1.125em;
+    --logo-size: 1em;
 
     /* Motion */
     --ease-out: cubic-bezier(0.2, 0, 0, 1);
