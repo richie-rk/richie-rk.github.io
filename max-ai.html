@@ -277,7 +277,7 @@
         <li><a href="#problem">Why retrieval</a></li>
         <li><a href="#write-path">Ingestion pipeline</a></li>
         <li><a href="#read-path">Retrieve, ground, stream</a></li>
-        <li><a href="#decisions">Container and tenancy</a></li>
+        <li><a href="#decisions">Container, tenancy and caching</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#next">Next steps</a></li>
@@ -315,7 +315,6 @@
           <li>upsert in batches of 1,000, the API limit.</li>
         </ul>
       </li>
-      <li><b>Scanned documents:</b> Azure Document Intelligence extracts text with tables reconstructed as HTML, rows and column spans preserved. For mortgage rate matrices, losing the grid loses the meaning.</li>
       <li class="flow">
         <p><b>Idempotent by construction:</b> every file writes a success or failure row to a progress log, and each run starts by reading the successes back and skipping them.</p>
         <p>The progress log is the checkpoint; a crashed run is resumed by re-invoking the endpoint.</p>
@@ -361,12 +360,15 @@
   </section>
 
   <section id="decisions" class="case-study__section prose" aria-labelledby="decisions-title">
-    <h2 id="decisions-title">Two more choices, each with a reason</h2>
+    <h2 id="decisions-title">Three more choices, each with a reason</h2>
     <dl class="decisions card card--list">
-      <div><dt>A container because of OCR.</dt><dd class="flow"><p>Local PDF partitioning and table extraction in the activity function use the unstructured library, which needs two system installs: poppler to rasterize pages and Tesseract to read them.</p><p>A standard Function App cannot carry system packages, so the ingestion ships as a Docker image served from Azure Container Registry.</p></dd></div>
+      <div><dt>A container because of OCR.</dt><dd class="flow"><p>Local PDF partitioning and table extraction use the unstructured library, which needs two system packages: poppler to rasterize pages and Tesseract to read them.</p><p>Installed over SSH, they don’t last: the host keeps only <code>/home</code> across restarts, so they vanish on every redeploy or scale-out. Baking them into a Docker image served from Azure Container Registry makes every instance identical.</p></dd></div>
       <div><dt>One search index per project.</dt><dd>Multi-tenancy by physical isolation, with a project-to-index map in SQL. Simple to reason about, and nothing to filter at query time.</dd></div>
+      <div><dt>Caching built, then left off.</dt><dd>I built two cache layers and measured their hit rate, then kept caching off in production. A plausible but wrong cached answer to a mortgage-guideline question costs more than the tokens it saves.</dd></div>
     </dl>
   </section>
+
+  <p class="quote pull-quote case-study__section" aria-hidden="true">A plausible but wrong cached answer to a <span class="nowrap">mortgage-guideline</span> question costs more than the tokens it saves.</p>
 
   <section id="architecture" class="case-study__section prose" aria-labelledby="architecture-title">
     <h2 id="architecture-title">Two halves, opposite performance profiles, one shared contract</h2>
@@ -395,9 +397,10 @@
   </section>
 
   <section id="next" class="case-study__section prose" aria-labelledby="next-title">
-    <h2 id="next-title">What I’d do next: parallel ingestion, a retrieval evaluation harness, structured follow-ups</h2>
+    <h2 id="next-title">What I’d do next: parallel ingestion, shared indexes, automated evaluation</h2>
     <ul class="card card--list" role="list">
-      <li><b>Fan-out/fan-in ingestion:</b> list blobs in the orchestrator and schedule one activity per file with per-file retry, turning a serial hours-long run into parallel work.</li>
+      <li><b>Fan-out/fan-in ingestion:</b> list the files in the orchestrator and schedule one activity per file, each retried on its own, with changes detected by content rather than by file name, turning a serial hours-long run into parallel work.</li>
+      <li><b>Many-to-many links between projects and indexes</b>, so one document set can serve several teams without being indexed twice.</li>
       <li><b>An automated retrieval evaluation harness that runs on every change:</b> a labelled question set with recall@k tracking, so top-k and index parameters are tuned against measurement, not anecdote.</li>
       <li><b>Structured outputs for the follow-up channel:</b> replace in-band text delimiters with a tool call, so the transport stops depending on the model’s punctuation.</li>
     </ul>
