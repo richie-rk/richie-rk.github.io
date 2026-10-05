@@ -1031,10 +1031,24 @@
     color: inherit;
     text-decoration: none;
   }
+  /* The evidence: strong text, no pill or box. */
+  .door__proof {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
   /* A quiet cue, not a link; it takes the link colour with the card. */
   .door__cue {
     font-size: var(--step--1);
     color: var(--cue, var(--text-muted));
+  }
+  /* On phones the cue shares the title's first line, which is short in every
+     door, so the third door's name stays within one and a half screens. */
+  @media (max-width: 47.99rem) {
+    .door__layout { grid-template-columns: minmax(0, 1fr) auto; }
+    .door__layout > * { grid-column: 1 / -1; }
+    .door__layout > .project__title { grid-row: 1; }
+    .door__cue { grid-area: 1 / 2; padding-block-start: var(--space-2); }
   }
   @media (hover: hover) {
     .door:has(.card__link:hover) { --cue: var(--link); --thumb-line: var(--text-muted); }
