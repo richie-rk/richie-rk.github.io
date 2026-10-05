@@ -624,35 +624,6 @@
   .contact-link--muted { color: var(--text-muted); }
   .contact-link:is(:hover, :focus-visible) { color: var(--text-strong); }
 
-  /* Social links: the same teal hover glow as the header icons. */
-  .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5);
-    padding: 0;
-    list-style: none;
-  }
-  .social-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-block-size: var(--target);
-    color: var(--text);
-    font-weight: var(--weight-strong);
-    text-decoration: none;
-  }
-  .social-links svg {
-    inline-size: var(--icon-size);
-    block-size: var(--icon-size);
-    flex: none;
-    fill: currentColor;
-    color: var(--text-muted);
-  }
-  .social-links a:hover svg {
-    color: var(--text);
-    filter: drop-shadow(0 0 var(--glow-size) var(--accent));
-  }
-
   .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -1154,22 +1125,11 @@
   }
 
   /* ---------- Home: contact ---------- */
-  /* The intro leads into the address, so it is body text, not a muted caption. */
+  /* Richy's point of view, so body text, not a muted caption. */
   .contact .section__lede { color: var(--text); }
-  /* One size down on phones, so the address stays on one line at 320px. */
-  .contact__email {
-    margin-block-start: var(--space-5);
-    font-size: var(--step-1);
-    font-weight: var(--weight-strong);
-  }
-  @media (min-width: 30rem) {
-    .contact__email { font-size: var(--step-2); }
-  }
-  .contact .email-options { margin-block-start: var(--space-4); }
-  .contact .spec,
-  .contact__discord { margin-block-start: var(--space-6); }
-  .contact .social-links { margin-block-start: var(--space-3); }
-  .contact__discord { max-inline-size: var(--measure); }
+  .contact .email-options,
+  .contact__links { margin-block-start: var(--space-4); }
+  .contact .spec { margin-block-start: var(--space-6); }
 
   /* ---------- Deep dives ---------- */
   .case-study { padding-block-end: var(--section-space); }
