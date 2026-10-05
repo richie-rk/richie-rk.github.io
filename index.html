@@ -40,7 +40,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/plex-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
-<link rel="expect" href="#encompass-title" blocking="render">
+<link rel="expect" href="#encompass-name" blocking="render">
 <script src="js/site.js" defer></script>
 </head>
 <body>
@@ -87,22 +87,28 @@
   <p class="section__lede">End-to-end ownership for PRMI, a US mortgage originator: requirements, architecture, build, UAT, and production support.</p>
 
   <div class="doors">
-    <article class="project card" aria-labelledby="max-ai-title">
-      <h3 id="max-ai-title" class="project__title"><span class="project__name project__name--max-ai">MAX AI</span></h3>
-      <p class="project__outcome">PRMI’s primary knowledge retrieval tool: grounded, cited answers from the company’s own documents.</p>
-      <p class="project__actions"><a class="card__link" href="max-ai.html">Read the MAX AI deep dive</a></p>
+    <article class="card door door--featured" aria-labelledby="max-ai-name">
+      <div class="door__layout">
+        <h3 class="project__title"><a class="card__link" href="max-ai.html"><span id="max-ai-name" class="project__name project__name--max-ai">MAX AI</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">PRMI’s primary knowledge retrieval tool: grounded, cited answers from the company’s own documents.</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
 
-    <article class="project card" aria-labelledby="final-docs-title">
-      <h3 id="final-docs-title" class="project__title"><span class="project__name project__name--final-docs">Final Docs</span></h3>
-      <p class="project__outcome">Investor onboarding cut from <span class="nowrap">2-4 weeks</span> to days; 4&nbsp;investors integrated in one month.</p>
-      <p class="project__actions"><a class="card__link" href="final-docs.html">Read the Final Docs deep dive</a></p>
+    <article class="card door" aria-labelledby="final-docs-name">
+      <div class="door__layout">
+        <h3 class="project__title"><a class="card__link" href="final-docs.html"><span id="final-docs-name" class="project__name project__name--final-docs">Final Docs</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">Investor onboarding cut from <span class="nowrap">2-4 weeks</span> to days; 4&nbsp;investors integrated in one month.</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
 
-    <article class="project card" aria-labelledby="encompass-title">
-      <h3 id="encompass-title" class="project__title"><span class="project__name project__name--encompass">Encompass<br>loan automation</span></h3>
-      <p class="project__outcome">Unattended Encompass loan updates: direct API writes with a resource-lock protocol replaced an RPA-plus-manual-verify pipeline.</p>
-      <p class="project__actions"><a class="card__link" href="encompass-automation.html">Read the Encompass deep dive</a></p>
+    <article class="card door" aria-labelledby="encompass-name">
+      <div class="door__layout">
+        <h3 class="project__title"><a class="card__link" href="encompass-automation.html"><span id="encompass-name" class="project__name project__name--encompass">Encompass <br>loan automation</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">Unattended Encompass loan updates: direct API writes with a resource-lock protocol replaced an RPA-plus-manual-verify pipeline.</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
   </div>
 

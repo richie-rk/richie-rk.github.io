@@ -204,7 +204,6 @@
     --duration-fade-out: 150ms;
     --duration-fade-in: 250ms;
     --duration-hover: 150ms;
-    --lift: 0.125rem;
   }
 
   /* One declaration per token for both themes; color-scheme picks the branch. */
@@ -733,7 +732,7 @@
   .js .copy-button { display: inline-flex; }
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
-  :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+  :where(.doors, .door__layout, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
          .decisions > div, .letter-scans, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -833,18 +832,16 @@
     outline: var(--focus-width) solid var(--focus);
     outline-offset: var(--focus-offset);
   }
-  /* Hover turns the edge grey, never the accent, so it can't look focused. */
+  /* Hover turns the edge grey, never the accent, so it can't look focused.
+     Nothing moves. */
   @media (hover: hover) {
-    .card__link:hover { text-decoration-thickness: var(--rule-width); }
     .card__link:hover::after,
     .next-card:hover { border-color: var(--border-strong); }
   }
-  /* A small lift on hover: transform only, and off under reduced motion. */
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .card:has(.card__link),
-    .next-card { transition: transform var(--duration-hover) var(--ease-out); }
-    .card:has(.card__link:hover),
-    .next-card:hover { transform: translateY(calc(-1 * var(--lift))); }
+  @media (prefers-reduced-motion: no-preference) {
+    .card__link::after,
+    .next-card,
+    .door__cue { transition: border-color var(--duration-hover), color var(--duration-hover); }
   }
 
   /* Tags: outlined, no fill or hover, so never mistaken for buttons. */
@@ -1001,18 +998,8 @@
   @media (min-width: 64rem) {
     .doors {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: repeat(3, auto);
-      gap: 0 var(--space-5);
+      gap: var(--space-5);
     }
-    /* Each door spans its rows as a subgrid, so names, outcomes and links line
-       up. */
-    .doors > .project {
-      grid-row: span 3;
-      grid-template-rows: subgrid;
-      row-gap: var(--space-4);
-    }
-    /* Names sit on the row's floor, so the title rules line up. */
-    .doors .project__title { align-self: end; }
   }
   /* Side by side, names step down a size; the rule stays at least the rule
      width. */
@@ -1021,12 +1008,27 @@
     .doors .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
   }
 
-  .project {
+  .door__layout {
     display: grid;
     align-content: start;
     gap: var(--space-3);
   }
   .project__title { font-size: var(--step-3); }
+  /* The title is the link, so each door has a unique name; it reads as a
+     title, not a link. */
+  .project__title .card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* A quiet cue, not a link; it takes the link colour with the card. */
+  .door__cue {
+    font-size: var(--step--1);
+    color: var(--cue, var(--text-muted));
+  }
+  @media (hover: hover) {
+    .door:has(.card__link:hover) { --cue: var(--link); }
+  }
+  .door:has(.card__link:focus-visible) { --cue: var(--link); }
 
   /* The signature: the accent rule under a project name, carried by the view
      transition. */
@@ -1045,16 +1047,7 @@
   .case-study__name--encompass { view-transition-name: project-encompass; }
 
   .project__outcome { max-inline-size: var(--measure-outcome); }
-  .project__actions,
   .next-card__claim { text-wrap: balance; }
-  /* The card is the target, so its link needs no touch padding; the hairline is
-     desktop-only (ADR 0002). */
-  @media (min-width: 48rem) {
-    .project__actions {
-      padding-block-start: var(--space-3);
-      border-block-start: var(--border-width) solid var(--border);
-    }
-  }
 
   /* Testimonial card: quote in heading colour, marks in the accent. */
   .doors + .quote {
