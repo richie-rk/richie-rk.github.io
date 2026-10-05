@@ -987,34 +987,44 @@
   }
 
   /* ---------- Home: doors ----------
-     Tappable cards of equal weight (ADR 0001), side by side from 64rem. */
+     Tappable cards; MAX AI is the featured door, full width above the other
+     two (ADR 0006). Source, visual and tab order stay the same. */
   .doors {
     display: grid;
     gap: var(--space-4);
     margin-block-start: var(--space-4);
   }
   @media (min-width: 48rem) {
-    .doors { margin-block-start: var(--space-5); }
-  }
-  @media (min-width: 64rem) {
     .doors {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--space-5);
+      margin-block-start: var(--space-5);
     }
+    .door--featured { grid-column: 1 / -1; }
   }
-  /* Side by side, names step down a size; the rule stays at least the rule
-     width. */
-  @media (min-width: 64rem) {
-    .doors .project__title { font-size: var(--step-2); }
-    .doors .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
+  /* Each door places its miniature on its own width: beside the text once
+     half the card still shows the miniature's titles, above it otherwise. */
+  .door { container-type: inline-size; }
+  @container (min-width: 49rem) {
+    .door__layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: repeat(3, auto) 1fr;
+      column-gap: var(--space-6);
+    }
+    .door__thumb { grid-area: 1 / 1 / -1; }
+    .door__layout > :not(.door__thumb) { grid-column: 2; }
   }
+  /* The featured name is a step larger; smaller names keep the rule at least
+     the rule width. */
+  .door--featured .project__title { font-size: var(--step-3); }
+  .door:not(.door--featured) .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
 
   .door__layout {
     display: grid;
     align-content: start;
     gap: var(--space-3);
   }
-  .project__title { font-size: var(--step-3); }
+  .project__title { font-size: var(--step-2); }
   /* The title is the link, so each door has a unique name; it reads as a
      title, not a link. */
   .project__title .card__link {
