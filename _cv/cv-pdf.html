@@ -180,7 +180,7 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
 .side h2 { font-size: 10pt; margin-block-end: 2.2mm; }
 .group + .group { margin-block-start: 2.6mm; }
 .group__name { font-size: 8.4pt; font-weight: 600; }
-.group__list { margin-block-start: 0.6mm; font-size: 8pt; line-height: 1.45; color: var(--text-muted); }
+.group__list { margin-block-start: 0.6mm; font-size: 8pt; line-height: 1.45; color: var(--text-muted); text-wrap: pretty; }
 .side p { font-size: 8.3pt; }
 .side .muted { color: var(--text-muted); }
 .side ul { list-style: none; display: grid; gap: 1.6mm; }
@@ -295,7 +295,7 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
             <div class="quote"><p>“PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.”</p><span>Corban Wells, VP of Technology Product Management, PRMI</span></div>
           </li>
           <li class="item"><p><span class="item__lead">Loan origination API SDK.</span> Python SDK wrapping the Encompass Cloud APIs (ICE Mortgage Technology’s loan origination system): OAuth2 with token caching, concurrent paginated pipeline queries, safe loan updates (locks loans, skips active user-edit sessions), eFolder document CRUD, and disclosure tracking.</p></li>
-          <li class="item"><p><span class="item__lead">13 production RPA automations.</span> US mortgage / BFSI automations in Power Automate + Python, spanning ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend point-of-sale credit management, warehouse collateral, and suspense resolution across 9 investors. Includes 3 OCR pipelines (Tesseract + Azure AI Document Intelligence) extracting credit data from PDF reports.</p></li>
+          <li class="item"><p><span class="item__lead">13 production RPA automations.</span> US mortgage / BFSI automations in Power Automate + Python, spanning ECOA adverse action, TRID, HMDA, MERS sync, final docs, HFA exceptions, Blend point-of-sale credit management, warehouse collateral, and suspense resolution across 9 investors. Includes 3 OCR pipelines (Tesseract + Azure Document Intelligence) extracting credit data from PDF reports.</p></li>
           <li class="item"><p><span class="item__lead">Power BI data pipeline.</span> <span class="flow">Reporting DB → Blob Storage → Function App → SQL Server → Power BI dashboards</span></p></li>
           <li class="item"><p><span class="item__lead">Event-driven Smartsheet sync.</span> <span class="flow">Webhooks → Azure Service Bus → Function App → Smartsheet</span>, for branch partners.</p></li>
           <li class="item"><p><span class="item__lead">Delivery ownership.</span> Led BRD and PRD gathering, produced flow diagrams, secured first-call sign-offs, coordinated UAT, and documented every delivered automation.</p></li>
@@ -307,10 +307,13 @@ h2::after { content: ""; flex: 1; height: 0.25mm; background: var(--border); }
     <aside class="side">
       <section>
         <h2>Skills</h2>
-        <div class="group"><p class="group__name">GenAI and RAG</p><p class="group__list">Azure OpenAI, Azure AI Search, LangChain, agentic AI tooling (Agno), hybrid vector + semantic retrieval, HyDE query expansion, VLM-based prompt-injection detection, FAISS, BM25, chunking and ingestion pipelines, prompt engineering</p></div>
-        <div class="group"><p class="group__name">Backend</p><p class="group__list">Python, FastAPI, asyncio, multithreading, SQLAlchemy, Pydantic, REST API design, webhooks, OAuth2, pytest, Git</p></div>
-        <div class="group"><p class="group__name">Cloud and infrastructure</p><p class="group__list">Azure (Durable Functions, App Services, Container Apps, Service Bus, Container Registry, Blob/Table Storage, Key Vault, Managed Identity, Entra ID/MSAL, VNet integration, Bicep), Docker, SQL Server, PostgreSQL</p></div>
-        <div class="group"><p class="group__name">Automation</p><p class="group__list">Power Automate, Azure Logic Apps, RPA, Playwright and Selenium browser automation, Microsoft Graph (SharePoint, OneDrive), Smartsheet, Tesseract and Azure AI Document Intelligence OCR, Unstructured.io, Pandas</p></div>
+        <div class="group"><p class="group__name">Python and frameworks</p><p class="group__list">Python, FastAPI, asyncio, Multithreading, SQLAlchemy, Pydantic, pytest, Pandas</p></div>
+        <div class="group"><p class="group__name">GenAI and RAG</p><p class="group__list">Azure OpenAI, Azure AI Search, LangChain, LangGraph, Agno, Hybrid retrieval, Semantic ranking, HyDE, FAISS, BM25, Chunking and ingestion pipelines, Prompt engineering, RAG evaluation, VLM-based prompt-injection detection</p></div>
+        <div class="group"><p class="group__name">Azure</p><p class="group__list">Functions, Durable Functions, App Services, Container Apps, Container Registry, Service Bus, Blob / Table Storage, Key Vault, Managed Identity, Entra ID / MSAL, VNet integration, Bicep, Logic Apps</p></div>
+        <div class="group"><p class="group__name">Data and integration</p><p class="group__list">SQL Server, PostgreSQL, pyodbc, Encompass REST API, Blend API, Microsoft Graph (SharePoint, OneDrive), Smartsheet, Tesseract OCR, Azure Document Intelligence in Foundry Tools, Unstructured.io</p></div>
+        <div class="group"><p class="group__name">APIs</p><p class="group__list">REST API design, OAuth2, Webhooks, NDJSON streaming, Microservices</p></div>
+        <div class="group"><p class="group__name">Automation and tooling</p><p class="group__list">Power Automate, RPA, Playwright, Selenium, Docker, Git</p></div>
+        <div class="group"><p class="group__name">US mortgage domain</p><p class="group__list">ECOA, TRID, HMDA, MERS, Investor ops</p></div>
       </section>
 
     </aside>

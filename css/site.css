@@ -194,6 +194,7 @@
     /* The single elevation level, for the letter scans. */
     --shadow-raised: 0 1px 2px var(--shadow-colour), 0 8px 24px var(--shadow-colour);
     --inline-icon: 0.85em;
+    --logo-size: 1.125em;
 
     /* Motion */
     --ease-out: cubic-bezier(0.2, 0, 0, 1);
@@ -559,6 +560,7 @@
   /* Emails become copy buttons with JS; without it they stay mailto links. */
   .email-copy {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     min-block-size: var(--target);
@@ -577,24 +579,30 @@
     overflow-wrap: anywhere;
   }
   .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
-  .email-copy .copy-icon { display: none; }
-  .js .email-copy .copy-icon:not(.copy-icon--done) { display: inline; }
-  .js .email-copy[data-state="copied"] .copy-icon { display: none; }
-  .js .email-copy[data-state="copied"] .copy-icon--done { display: inline; }
-  /* The state label sits outside the text flow, so it never shifts the line. */
-  .email-copy { position: relative; }
-  .email-copy[data-state]::after {
-    position: absolute;
-    inset-block-end: 100%;
-    inset-inline-end: 0;
+  /* With JS, a visible "Copy" label, outlined like a control, not a tag. */
+  .email-copy__action { display: none; }
+  .js .email-copy__action {
+    display: inline-grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+    padding-inline: var(--space-2);
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
     font-size: var(--step--1);
     font-weight: var(--weight-regular);
-    line-height: var(--leading-snug);
-    white-space: nowrap;
-    color: var(--text-muted);
   }
-  .email-copy[data-state="copied"]::after { content: "Copied"; }
-  .email-copy[data-state="failed"]::after { content: "Copy failed"; }
+  .email-copy:hover .email-copy__action { border-color: var(--text); color: var(--text); }
+  /* A hidden "Copied" sets the width, so copying shifts nothing. */
+  .email-copy__action > svg { grid-area: 1 / 2; }
+  .email-copy .copy-label { grid-area: 1 / 3; margin-inline-start: var(--space-1); }
+  .email-copy__action::after {
+    content: "Copied";
+    grid-area: 1 / 1 / 2 / -1;
+    padding-inline-start: calc(var(--inline-icon) + var(--space-1));
+    block-size: 0;
+    visibility: hidden;
+  }
 
 
   /* Social links: the same teal hover glow as the header icons. */
@@ -703,7 +711,7 @@
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
   :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
-         .decisions > div, .letter-scans, .cv-grid, .site-footer__inner) {
+         .decisions > div, .letter-scans, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -825,6 +833,9 @@
     list-style: none;
   }
   .tags > li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     padding: var(--space-1) var(--space-2);
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-sm);
@@ -832,6 +843,13 @@
     line-height: var(--leading-snug);
   }
   .tags--muted > li { color: var(--text-muted); }
+  /* CV skill logos (Richy, 4 October 2026): text colour; width from the viewBox. */
+  .skills svg {
+    block-size: var(--logo-size);
+    overflow: visible;
+    flex: none;
+    fill: currentColor;
+  }
 
   /* Figures: wide content scrolls inside its own region. */
   .figure {
@@ -931,11 +949,6 @@
   }
   .hero .button-row { margin-block-start: var(--space-4); }
   .hero__email { margin-block-start: var(--space-3); }
-  /* Here the copy status shows under the address, clear of the buttons. */
-  .hero__email .email-copy[data-state]::after {
-    inset-block-start: 100%;
-    inset-block-end: auto;
-  }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
     .hero .button-row { margin-block-start: var(--space-6); }
@@ -1116,26 +1129,6 @@
   .repo__name {
     font-family: var(--font-mono);
     font-size: var(--step-0);
-  }
-
-  .skills {
-    display: grid;
-    gap: var(--space-5);
-    margin-block-start: var(--space-5);
-  }
-  .skills dt {
-    color: var(--text-strong);
-    font-weight: var(--weight-strong);
-  }
-  .skills dd { margin-block-start: var(--space-3); }
-  @media (min-width: 48rem) {
-    .skills {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--space-6);
-    }
-  }
-  @media (min-width: 64rem) {
-    .skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 
   /* ---------- Home: contact ---------- */
@@ -1388,12 +1381,19 @@
     margin-block-start: var(--space-2);
   }
   .cv-role .quote { margin-block-start: var(--space-5); }
-  .cv-grid { display: grid; gap: var(--space-6); }
-  .cv-grid h3 { font-size: var(--step-0); }
-  .cv-grid h3 + * { margin-block-start: var(--space-3); }
-  @media (min-width: 40rem) {
-    .cv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Skills: one group per row, its tags under the label. */
+  .skills {
+    display: grid;
+    gap: var(--space-5);
   }
+  .skills dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+  }
+  .skills dd { margin-block-start: var(--space-3); }
 
   /* ---------- Testimonial letter ---------- */
   .letter-page__head { max-inline-size: var(--measure); }
@@ -1490,7 +1490,8 @@
     .site-footer,
     .skip-link,
     .theme-toggle,
-    .copy-icon,
+    .email-copy__action,
+    .skills svg,
     .button,
     .email-options,
     .toc { display: none !important; }
@@ -1500,16 +1501,14 @@
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
-      /* Role lists flatten so entries never split; skills groups stay two-up
-         and whole. */
+    /* Role lists flatten so entries never split. */
     .cv-role > ul { display: block; }
     .cv-role > ul > li + li { margin-block-start: var(--space-4); }
-    .cv-grid > * { break-inside: avoid; }
     .cv-role__head,
     .cv-role li,
     .cv__section > ul > li,
-    .cv__section > div:not(.cv-grid),
-    .cv-grid .spec > div,
+    .cv__section > div,
+    .skills > div,
     .quote { break-inside: avoid; }
     h2,
     h3 { break-after: avoid; }
@@ -1523,8 +1522,13 @@
     .print-run-lead,
     .print-run,
     .print-run > li { display: inline; }
-    .print-run { padding: 0; }
+    .print-run,
+    .print-run > li { padding: 0; border: 0; font-size: inherit; }
     .print-run > li:not(:last-child)::after { content: ","; }
+    /* Skills groups print as one run each: "Label: a, b, c". */
+    .skills dt,
+    .skills dd { display: inline; }
+    .skills dt::after { content: ":"; }
     /* Inline, so the printed URL keeps its leading space. */
     .quote__link { display: inline; }
     /* External URLs print after their link text, unless the text is the URL. */
