@@ -495,8 +495,7 @@
 }
 
 @layer components {
-  /* Buttons: primary, secondary; a tertiary action is a text link. States
-     change colour only; nothing moves. */
+  /* Buttons: primary, secondary (tertiary is a text link); colour-only states. */
   .button {
     display: inline-flex;
     align-items: center;
@@ -511,8 +510,7 @@
     text-decoration: none;
     text-align: center;
   }
-  /* Trimmed to cap height and baseline, the label centres optically;
-     without text-box the symmetric padding still centres the line box. */
+  /* A cap-to-baseline trim centres the label; padding is the fallback. */
   .button__label { text-box: trim-both cap alphabetic; }
   @media (min-width: 22.5rem) {
     .button { white-space: nowrap; }
@@ -563,8 +561,7 @@
   [data-state="copied"] .copy-icon { display: none; }
   [data-state="copied"] .copy-icon--done { display: inline; }
 
-  /* Email contact links become copy buttons with JS; without it they stay
-     mailto links. */
+  /* Email links: copy buttons with JS, mailto links without. */
   .email-copy {
     flex-wrap: wrap;
     padding: 0;
@@ -599,8 +596,7 @@
     visibility: hidden;
   }
 
-  /* Contact links: a monochrome icon and label; the muted tone is the
-     footer's. Declared after .email-copy, so its weight wins over the reset. */
+  /* Contact links: monochrome icon and label; after .email-copy's reset. */
   .contact-link {
     display: inline-flex;
     align-items: center;
@@ -730,8 +726,7 @@
     font-size: var(--step--1);
     color: var(--text-muted);
   }
-  /* A pull quote repeats a line from the page, so it is aria-hidden; larger,
-     with the quote's neutral rule and space around it. */
+  /* A pull quote repeats a line from the page, so it is aria-hidden. */
   .pull-quote {
     max-inline-size: var(--measure-case-claim);
     font-size: var(--step-2);
@@ -778,8 +773,7 @@
     outline: var(--focus-width) solid var(--focus);
     outline-offset: var(--focus-offset);
   }
-  /* Hover turns the edge grey, never the accent, so it can't look focused.
-     Nothing moves. */
+  /* Hover greys the edge, never the accent, so it can't look focused. */
   @media (hover: hover) {
     .card__link:hover::after,
     .next-card:hover { border-color: var(--border-strong); }
@@ -826,7 +820,7 @@
   }
   /* Slim side padding on phones gives the stacked diagrams more width. */
   .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
-  /* Captions keep the reading measure; the end padding takes up the rest. */
+  /* Captions keep the measure; the end padding takes the rest. */
   @media (min-width: 48rem) {
     .figure__scroll { padding: var(--space-4); }
     .figure figcaption { padding-inline: var(--space-6) max(var(--space-6), 100% - var(--measure)); }
@@ -943,9 +937,7 @@
     color: var(--text-muted);
   }
 
-  /* ---------- Home: doors ----------
-     Tappable cards; MAX AI is the featured door, full width above the other
-     two (ADR 0006). Source, visual and tab order stay the same. */
+  /* ---------- Home: doors (ADR 0005, 0006) ---------- */
   .doors {
     display: grid;
     gap: var(--space-4);
@@ -959,8 +951,7 @@
     }
     .door--featured { grid-column: 1 / -1; }
   }
-  /* Each door places its miniature on its own width: beside the text once
-     half the card still shows the miniature's titles, above it otherwise. */
+  /* The miniature sits beside the text once half the card keeps its titles legible. */
   .door { container-type: inline-size; }
   @container (min-width: 49rem) {
     .door__layout {
@@ -971,8 +962,7 @@
     .door__thumb { grid-area: 1 / 1 / -1; }
     .door__layout > :not(.door__thumb) { grid-column: 2; }
   }
-  /* The featured name is a step larger; smaller names keep the rule at least
-     the rule width. */
+  /* Smaller names keep at least the rule width. */
   .door--featured .project__title { font-size: var(--step-3); }
   .door:not(.door--featured) .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
 
@@ -982,8 +972,7 @@
     gap: var(--space-3);
   }
   .project__title { font-size: var(--step-2); }
-  /* The title is the link, so each door has a unique name; it reads as a
-     title, not a link. */
+  /* The title is the link, styled as a title. */
   .project__title .card__link {
     color: inherit;
     text-decoration: none;
@@ -999,8 +988,7 @@
     font-size: var(--step--1);
     color: var(--cue, var(--text-muted));
   }
-  /* On phones the cue shares the title's first line, which is short in every
-     door, so the third door's name stays within one and a half screens. */
+  /* Phones: the cue shares the title's short first line, saving a row. */
   @media (max-width: 47.99rem) {
     .door__layout {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -1015,8 +1003,7 @@
   }
   .door:has(.card__link:focus-visible) { --cue: var(--link); --thumb-line: var(--text-muted); }
 
-  /* Door miniatures (ADR 0005): decorative, from 48rem. Titles drop out
-     where they would render under about 11px. */
+  /* Door miniatures: from 48rem; their titles drop out under about 11px. */
   .door__thumb {
     display: none;
     container-type: inline-size;
@@ -1081,8 +1068,7 @@
     .quote.card blockquote { font-size: var(--step-2); }
   }
 
-  /* ---------- Home: also shipped ----------
-     One card of rows in the door family (ADR 0006), led by the automations. */
+  /* ---------- Home: also shipped ---------- */
   .ledger { margin-block-start: var(--space-4); }
   .ledger > article {
     display: grid;
@@ -1161,7 +1147,6 @@
     .case-study__overview dd { margin-block-start: var(--space-1); }
     .case-study__overview > .spec__stack { grid-column: 1 / -1; }
   }
-  /* In brief: problem, approach, outcome, next, after the overview. */
   .case-study__brief { margin-block-start: var(--space-4); }
   .case-study__brief .spec { gap: var(--space-4); }
   .case-study__brief dd {
@@ -1254,9 +1239,7 @@
     border-inline-start: var(--border-width) solid var(--border);
   }
 
-  /* The Final Docs flow: plain HTML, the static, reduced-motion and JS-off
-     state of the later animation (ADR 0003). The dashed line marks where
-     preparing ends and reconciling begins. */
+  /* Final Docs flow: plain HTML, the animation's static state (ADR 0003). */
   .flow-figure {
     max-inline-size: var(--measure);
     margin-block-start: var(--space-6);
@@ -1270,8 +1253,7 @@
   @media (min-width: 48rem) {
     .flow-steps { padding: var(--space-5) var(--space-6); }
   }
-  /* Beside its prose once the container is at full width; narrower, the
-     steps would wrap at about 25 characters. */
+  /* Beside its prose once the container is at full width. */
   @media (min-width: 80rem) {
     .case-study__aside {
       display: grid;
