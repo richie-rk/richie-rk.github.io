@@ -563,28 +563,17 @@
   [data-state="copied"] .copy-icon { display: none; }
   [data-state="copied"] .copy-icon--done { display: inline; }
 
-  /* Emails become copy buttons with JS; without it they stay mailto links. */
+  /* Email contact links become copy buttons with JS; without it they stay
+     mailto links. */
   .email-copy {
-    display: inline-flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2);
-    min-block-size: var(--target);
     padding: 0;
     border: 0;
     background: none;
-    color: var(--link);
     font: inherit;
     text-align: start;
     cursor: pointer;
   }
-  .email-copy__text {
-    text-decoration-line: underline;
-    text-decoration-thickness: var(--border-width);
-    text-underline-offset: var(--underline-offset);
-    overflow-wrap: anywhere;
-  }
-  .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
   /* With JS, a visible "Copy" label, outlined like a control, not a tag. */
   .email-copy__action { display: none; }
   .js .email-copy__action {
@@ -611,7 +600,7 @@
   }
 
   /* Contact links: a monochrome icon and label; the muted tone is the
-     footer's. Declared after .email-copy, so its colour wins. */
+     footer's. Declared after .email-copy, so its weight wins over the reset. */
   .contact-link {
     display: inline-flex;
     align-items: center;
@@ -1456,13 +1445,14 @@
     .skip-link,
     .theme-toggle,
     .email-copy__action,
+    .cv__contact .icon,
     .skills svg,
     .button,
     .email-options,
     .toc { display: none !important; }
     a,
     .email-copy { color: inherit; text-decoration: none; }
-    .email-copy__text { text-decoration: none; }
+    .cv__contact .contact-link { font-weight: var(--weight-regular); }
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
