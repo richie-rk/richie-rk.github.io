@@ -93,17 +93,6 @@
     });
   });
 
-  // "Also shipped" folds on phones only. From 48rem the list is meant to be
-  // open, so open it whenever the window is or becomes that wide (a phone
-  // turned sideways, even before this script loaded).
-  var fold = document.querySelector('.ledger-fold');
-  var wide = window.matchMedia && window.matchMedia('(min-width: 48rem)');
-  if (fold && wide) {
-    var openIfWide = function () { if (wide.matches) fold.open = true; };
-    openIfWide();
-    if (wide.addEventListener) wide.addEventListener('change', openIfWide);
-  }
-
   // Theme. The inline <head> script applies any saved choice before first paint
   // and adds .js, which reveals the toggle through CSS. Without light-dark()
   // support the page is always dark.

@@ -721,7 +721,7 @@
   .js .copy-button { display: inline-flex; }
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
-  :where(.doors, .door__layout, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+  :where(.doors, .door__layout, .ledger > article, .ledger__body, .spec, .spec > div, .skills,
          .decisions > div, .letter-scans, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1031,7 +1031,7 @@
     text-decoration: none;
   }
   /* The evidence: strong text, no pill or box. */
-  .door__proof {
+  .proof {
     color: var(--text-strong);
     font-weight: var(--weight-strong);
     font-variant-numeric: tabular-nums;
@@ -1124,57 +1124,18 @@
   }
 
   /* ---------- Home: also shipped ----------
-     One card of rows, folded on phones by a head script before first paint;
-     open from 48rem and with JS off. */
-  .ledger-fold {
-    margin-block-start: var(--space-4);
-    padding: 0;
-  }
-  .ledger-fold > summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    min-block-size: var(--target);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
-    color: var(--link);
-    list-style: none;
-    cursor: pointer;
-  }
-  .ledger-fold > summary::-webkit-details-marker { display: none; }
-  /* A chevron in place of the triangle, pointing up while open. */
-  .ledger-fold > summary::after {
-    content: "";
-    flex: none;
-    inline-size: var(--space-2);
-    block-size: var(--space-2);
-    border-inline-end: var(--rule-width) solid currentColor;
-    border-block-end: var(--rule-width) solid currentColor;
-    transform: translateY(-25%) rotate(45deg);
-  }
-  .ledger-fold[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
-  @media (prefers-reduced-motion: no-preference) {
-    .ledger-fold > summary::after { transition: transform var(--duration-hover) var(--ease-out); }
-  }
-  .ledger-fold > summary:hover { text-decoration-line: underline; }
-  @media (min-width: 48rem) {
-    .ledger-fold { margin-block-start: var(--space-5); }
-    .ledger-fold[open] > summary { display: none; }
-  }
-
-  .ledger > * {
+     One card of rows in the door family (ADR 0006), led by the automations. */
+  .ledger { margin-block-start: var(--space-4); }
+  .ledger > article {
     display: grid;
     gap: var(--space-4);
-    padding: var(--space-5) var(--space-4);
-    border-block-start: var(--border-width) solid var(--border);
   }
   @media (min-width: 48rem) {
-    .ledger > * { padding: var(--space-6); }
-    /* With the summary hidden, the first row needs no rule. */
-    .ledger-fold[open] .ledger > :first-child { border-block-start: 0; }
+    .ledger { margin-block-start: var(--space-5); }
+    .ledger > * { padding-block: var(--space-5); }
   }
   .ledger__title { font-size: var(--step-0); }
+  .ledger__title--lead { font-size: var(--step-2); }
   .ledger__meta {
     margin-block-start: var(--space-1);
     font-size: var(--step--1);
@@ -1182,18 +1143,14 @@
   }
   .ledger__body { display: grid; gap: var(--space-4); }
   .ledger__body > * { max-inline-size: var(--measure); }
+  .ledger__note { font-size: var(--step--1); }
   @media (min-width: 64rem) {
-    .ledger > * {
+    .ledger > article {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--space-6);
     }
     .ledger__head { grid-column: 1 / 5; }
     .ledger__body { grid-column: 5 / -1; }
-  }
-
-  .repo__name {
-    font-family: var(--font-mono);
-    font-size: var(--step-0);
   }
 
   /* ---------- Home: contact ---------- */
