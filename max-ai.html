@@ -64,7 +64,7 @@
     </dl>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
-      <svg viewBox="0 0 940 640" role="img" aria-label="MAX AI architecture: a Durable Functions write path extracts, chunks, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search and HyDE, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON." class="diagram diagram--wide">
+      <svg viewBox="0 0 940 640" role="img" aria-label="MAX AI architecture: a Durable Functions write path reads, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search, retrying with HyDE when recall is low, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON." class="diagram diagram--wide">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -78,20 +78,20 @@
         <!-- write row connectors -->
         <path d="M170 78 H215" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
         <path d="M390 78 H435" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
-        <text x="412" y="38" font-size="10.5" text-anchor="middle" class="diagram__code diagram__label">start_new</text>
+        <text x="412" y="38" font-size="10.5" text-anchor="middle" class="diagram__label">starts</text>
         <path d="M610 78 H655" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
-        <text x="632" y="66" font-size="10.5" text-anchor="middle" class="diagram__code diagram__label">yield</text>
+        <text x="632" y="66" font-size="10.5" text-anchor="middle" class="diagram__label">calls</text>
 
         <!-- activity to pipeline strip -->
         <path d="M785 112 V150" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
 
-        <!-- strip to audit (dashed) -->
+        <!-- strip to progress log (dashed) -->
         <path d="M240 184 H196" stroke-width="1.3" marker-end="url(#arr)" class="diagram__edge diagram__edge--dashed"/>
-        <text x="218" y="172" font-size="10.5" text-anchor="middle" class="diagram__label">audit</text>
+        <text x="218" y="172" font-size="10.5" text-anchor="middle" class="diagram__label">log</text>
 
         <!-- strip to index -->
         <path d="M575 214 V266" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
-        <text x="662" y="244" font-size="10.5" text-anchor="middle" class="diagram__label">chunks + vectors ×1000</text>
+        <text x="662" y="244" font-size="10.5" text-anchor="middle" class="diagram__label">vectors, in batches</text>
 
         <!-- read row connectors -->
         <path d="M170 472 H215" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
@@ -100,11 +100,13 @@
         <path d="M610 472 H655" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
         <text x="632" y="460" font-size="10.5" text-anchor="middle" class="diagram__label">top-k</text>
 
-        <!-- retrieve to index, both directions -->
-        <path d="M510 438 V362" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
-        <text x="498" y="404" font-size="10.5" text-anchor="end" class="diagram__label">HyDE query</text>
-        <path d="M545 362 V438" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
-        <text x="558" y="404" font-size="10.5" class="diagram__label">chunks</text>
+        <!-- retrieve to index, both directions; the HyDE retry only on weak results -->
+        <path d="M480 438 V362" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
+        <text x="468" y="404" font-size="10.5" text-anchor="end" class="diagram__label">query</text>
+        <path d="M515 362 V438" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
+        <text x="528" y="404" font-size="10.5" class="diagram__label">chunks</text>
+        <path d="M585 438 V362" stroke-width="1.3" marker-end="url(#arr)" class="diagram__edge diagram__edge--dashed"/>
+        <text x="598" y="404" font-size="10.5" class="diagram__label">HyDE retry if recall is low</text>
 
         <!-- LLM down to stream strip -->
         <path d="M785 506 V546" stroke-width="1.4" marker-end="url(#arr)" class="diagram__edge"/>
@@ -130,15 +132,15 @@
         <text x="785" y="74" font-size="13" text-anchor="middle" class="diagram__title">Activity</text>
         <text x="785" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">all real work, no timeout</text>
 
-        <!-- audit box -->
+        <!-- progress log box -->
         <rect x="20" y="152" width="176" height="62" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="108" y="178" font-size="13" text-anchor="middle" class="diagram__title">SQL audit table</text>
+        <text x="108" y="178" font-size="13" text-anchor="middle" class="diagram__title">Progress log</text>
         <text x="108" y="196" font-size="10.5" text-anchor="middle" class="diagram__label">checkpoint per file</text>
 
         <!-- pipeline strip -->
         <rect x="240" y="152" width="675" height="62" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="577" y="178" font-size="11" text-anchor="middle" class="diagram__title">Per-file pipeline</text>
-        <text x="577" y="197" font-size="10.5" text-anchor="middle" class="diagram__label">skip if indexed &#10003; &#8594; extract &#8594; chunk 1000/100 &#8594; embed 1536-d &#8594; upsert ×1000</text>
+        <text x="577" y="197" font-size="10.5" text-anchor="middle" class="diagram__label">skip if indexed &#10003; &#8594; read pages &#8594; embed &#8594; upsert</text>
 
         <!-- INDEX -->
         <rect x="240" y="268" width="500" height="92" rx="10" stroke-width="1.3" class="diagram__node diagram__node--key"/>
@@ -153,7 +155,7 @@
         <text x="95" y="486" font-size="10.5" text-anchor="middle" class="diagram__label">reads the stream live</text>
 
         <rect x="215" y="440" width="175" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="302" y="468" font-size="13" text-anchor="middle" class="diagram__code diagram__title">POST /chat</text>
+        <text x="302" y="468" font-size="13" text-anchor="middle" class="diagram__title">Chat API</text>
         <text x="302" y="486" font-size="10.5" text-anchor="middle" class="diagram__label">validate, pick model</text>
 
         <rect x="435" y="440" width="175" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
@@ -169,7 +171,7 @@
         <text x="577" y="574" font-size="11" text-anchor="middle" class="diagram__title">NDJSON stream: one JSON object per line</text>
         <text x="577" y="593" font-size="10.5" text-anchor="middle" class="diagram__label">frame 0: citations + metadata &#8594; token frames &#8594; final frame: follow-up questions</text>
       </svg>
-      <svg viewBox="0 0 340 1016" width="340" height="1016" role="img" aria-label="MAX AI architecture: a Durable Functions write path extracts, chunks, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search and HyDE, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON." class="diagram diagram--stacked">
+      <svg viewBox="0 0 340 1016" width="340" height="1016" role="img" aria-label="MAX AI architecture: a Durable Functions write path reads, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search, retrying with HyDE when recall is low, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON." class="diagram diagram--stacked">
         <defs>
           <marker id="arr-stacked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -180,15 +182,15 @@
         <text x="8" y="16" font-size="12" class="diagram__lane">Write path: batch, Durable Functions</text>
         <path d="M150 74 V92" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
         <path d="M150 144 V162" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
-        <text x="160" y="157" font-size="12" class="diagram__code diagram__label">start_new</text>
+        <text x="160" y="157" font-size="12" class="diagram__label">starts</text>
         <path d="M150 214 V232" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
-        <text x="160" y="227" font-size="12" class="diagram__code diagram__label">yield</text>
+        <text x="160" y="227" font-size="12" class="diagram__label">calls</text>
         <path d="M150 284 V302" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
         <path d="M84 394 V414" stroke-width="1.3" marker-end="url(#arr-stacked)" class="diagram__edge diagram__edge--dashed"/>
-        <text x="94" y="409" font-size="12" class="diagram__label">audit</text>
+        <text x="94" y="409" font-size="12" class="diagram__label">log</text>
         <path d="M216 394 V486" stroke-width="1.4" marker-end="url(#arr-stacked)" class="diagram__edge"/>
-        <text x="226" y="434" font-size="12" class="diagram__label">chunks +</text>
-        <text x="226" y="449" font-size="12" class="diagram__label">vectors &#215;1000</text>
+        <text x="226" y="434" font-size="12" class="diagram__label">vectors,</text>
+        <text x="226" y="449" font-size="12" class="diagram__label">in batches</text>
 
         <rect x="24" y="26" width="252" height="48" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="150" y="46" font-size="14" text-anchor="middle" class="diagram__title">Blob container</text>
@@ -207,13 +209,12 @@
         <text x="150" y="273" font-size="12" text-anchor="middle" class="diagram__label">all real work, no timeout</text>
 
         <rect x="24" y="306" width="252" height="88" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="150" y="328" font-size="14" text-anchor="middle" class="diagram__title">Per-file pipeline</text>
-        <text x="150" y="346" font-size="12" text-anchor="middle" class="diagram__label">skip if indexed &#10003; &#8594; extract</text>
-        <text x="150" y="362" font-size="12" text-anchor="middle" class="diagram__label">&#8594; chunk 1000/100 &#8594; embed 1536-d</text>
-        <text x="150" y="378" font-size="12" text-anchor="middle" class="diagram__label">&#8594; upsert &#215;1000</text>
+        <text x="150" y="336" font-size="14" text-anchor="middle" class="diagram__title">Per-file pipeline</text>
+        <text x="150" y="356" font-size="12" text-anchor="middle" class="diagram__label">skip if indexed &#10003; &#8594; read pages</text>
+        <text x="150" y="372" font-size="12" text-anchor="middle" class="diagram__label">&#8594; embed &#8594; upsert</text>
 
         <rect x="24" y="418" width="120" height="48" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="84" y="438" font-size="13" text-anchor="middle" class="diagram__title">SQL audit table</text>
+        <text x="84" y="438" font-size="13" text-anchor="middle" class="diagram__title">Progress log</text>
         <text x="84" y="455" font-size="11" text-anchor="middle" class="diagram__label">checkpoint per file</text>
 
         <rect x="24" y="490" width="252" height="104" rx="10" stroke-width="1.3" class="diagram__node diagram__node--key"/>
@@ -240,12 +241,12 @@
         <text x="150" y="669" font-size="12" text-anchor="middle" class="diagram__label">reads the stream live</text>
 
         <rect x="24" y="702" width="252" height="48" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="150" y="722" font-size="14" text-anchor="middle" class="diagram__code diagram__title">POST /chat</text>
+        <text x="150" y="722" font-size="14" text-anchor="middle" class="diagram__title">Chat API</text>
         <text x="150" y="739" font-size="12" text-anchor="middle" class="diagram__label">validate, pick model</text>
 
         <rect x="24" y="772" width="252" height="64" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="150" y="792" font-size="14" text-anchor="middle" class="diagram__title">Hybrid retrieve</text>
-        <text x="150" y="810" font-size="12" text-anchor="middle" class="diagram__label">HyDE query up, chunks back</text>
+        <text x="150" y="810" font-size="12" text-anchor="middle" class="diagram__label">HyDE retry if recall is low</text>
         <text x="150" y="826" font-size="12" text-anchor="middle" class="diagram__label">rerank, top-k</text>
 
         <rect x="24" y="858" width="252" height="48" rx="10" stroke-width="1.2" class="diagram__node"/>
@@ -300,15 +301,15 @@
         <ul>
           <li>download and detect encoding</li>
           <li>dispatch by file type to the right loader</li>
-          <li>split into 1,000-character chunks with 100-character overlap that hunt for a clean sentence boundary and keep page provenance</li>
+          <li>read page by page, keeping each passage’s file and page for citations</li>
           <li>embed with ada-002 into 1,536-dimension vectors</li>
           <li>upsert in batches of 1,000, the API limit.</li>
         </ul>
       </li>
       <li><b>Scanned documents:</b> Azure Document Intelligence extracts text with tables reconstructed as HTML, rows and column spans preserved. For mortgage rate matrices, losing the grid loses the meaning.</li>
       <li class="flow">
-        <p><b>Idempotent by construction:</b> every file writes a success or failure row to an audit table, and each run starts by reading the successes back and skipping them.</p>
-        <p>The audit table is the checkpoint; a crashed run is resumed by re-invoking the endpoint.</p>
+        <p><b>Idempotent by construction:</b> every file writes a success or failure row to a progress log, and each run starts by reading the successes back and skipping them.</p>
+        <p>The progress log is the checkpoint; a crashed run is resumed by re-invoking the endpoint.</p>
       </li>
       <li><b>Per-file failure isolation:</b> the unit of failure is one document, not the batch. One bad PDF cannot abort a five-thousand-file run, and the exception text is persisted so triage means a query, not grepping logs.</li>
       <li class="flow">
@@ -332,7 +333,7 @@
         <p>Queries and documents sit in different regions of embedding space, not because they differ in meaning but because they differ in register and length: eight words of telegraphic shorthand versus a thousand characters of formal prose.</p>
         <p>So instead of embedding the question, an LLM drafts a plausible answer and <em>that</em> gets embedded.</p>
         <p>The draft is wrong on facts but right on form, so its vector lands in the document neighborhood and retrieves the real chunks the fake one imitates.</p>
-        <p>The fabricated text is thrown away; only its position in space is used. It costs one extra completion per question, which is why it is enabled per index rather than globally.</p>
+        <p>The fabricated text is thrown away; only its position in space is used. It costs one extra completion, so it runs only as a fallback: when the first hybrid pass comes back weak, the question is retried with HyDE, and easy questions never pay for it.</p>
       </div>
       <div class="flow">
         <h3>Grounding is a data-formatting decision as much as a prompting one</h3>
@@ -372,7 +373,7 @@
       <ul>
         <li>the HyDE retrieval path</li>
         <li>the per-project prompt and index registry</li>
-        <li>the audit-driven incremental re-index</li>
+        <li>the incremental re-index driven by the progress log</li>
         <li>the multimodal loaders</li>
         <li>the NDJSON streaming protocol with in-band follow-up questions.</li>
       </ul>
@@ -388,7 +389,7 @@
     <h2 id="next-title">What I’d do next: parallel ingestion, a retrieval evaluation harness, structured follow-ups</h2>
     <ul class="card card--list" role="list">
       <li><b>Fan-out/fan-in ingestion:</b> list blobs in the orchestrator and schedule one activity per file with per-file retry, turning a serial hours-long run into parallel work.</li>
-      <li><b>A retrieval evaluation harness:</b> a labelled question set with recall@k tracking, so chunk size, top-k and HNSW parameters get tuned against measurement instead of anecdote.</li>
+      <li><b>An automated retrieval evaluation harness that runs on every change:</b> a labelled question set with recall@k tracking, so top-k and index parameters are tuned against measurement, not anecdote.</li>
       <li><b>Structured outputs for the follow-up channel:</b> replace in-band text delimiters with a tool call, so the transport stops depending on the model’s punctuation.</li>
     </ul>
   </section>
