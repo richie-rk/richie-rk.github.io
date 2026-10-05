@@ -84,7 +84,7 @@ Targets from the brief. Words, height, long blocks and the first screen are judg
 - 8 lines: Loan identity. Some investors report only their own loan number. A resolver queries Encomp
 - 10 lines: Document vocabulary. Free-text comments are inspected for known keywords to infer a standa
 - 12 lines: The consolidated investor data is compared with First American custodian data, joined on t
-- 7 lines: The output is an Excel workbook with Missing_Defect, Mismatch and the consolidated investo
+- 7 lines: The output is an Excel workbook with Missing/Defect, Mismatch and the consolidated investo
 - 18 lines: The system separates four responsibilities. Batch orchestration decides which investors to
 - 11 lines: Onboarding a new investor fell from 2-4 weeks of bespoke coding to a configuration exercis
 
