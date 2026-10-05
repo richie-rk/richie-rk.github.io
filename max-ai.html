@@ -65,8 +65,8 @@
     <section class="case-study__brief card" aria-labelledby="brief-title">
       <h2 id="brief-title" class="visually-hidden">In brief</h2>
       <dl class="spec">
-        <div><dt>Problem</dt><dd>A regulated lender can’t act on an answer it can’t trace. A model’s own knowledge goes stale the day a guideline changes, can’t point to a source, and invents fluent answers when it doesn’t know. And staff and partners may each see only the documents meant for them.</dd></div>
-        <div><dt>Approach</dt><dd>Retrieval instead of fine-tuning: documents live in a search index, one per project, and every answer is grounded in retrieved passages that carry their file and page. Search is hybrid, keyword and vector together, then reranked; when a question’s first results come back weak, it is retried with HyDE. The models run on Azure OpenAI inside PRMI’s own Azure tenant, and Entra ID groups decide which projects each role can query. I built the loan-matrix dataset with PRMI’s domain experts and tuned retrieval and model settings with Azure’s RAG evaluation tooling.</dd></div>
+        <div><dt>Problem</dt><dd class="flow"><p>A regulated lender can’t act on an answer it can’t trace. A model’s own knowledge goes stale the day a guideline changes, can’t point to a source, and invents fluent answers when it doesn’t know.</p><p>And staff and partners may each see only the documents meant for them.</p></dd></div>
+        <div><dt>Approach</dt><dd class="flow"><p>Retrieval instead of fine-tuning: documents live in a search index, one per project, and every answer is grounded in retrieved passages that carry their file and page.</p><p>Search is hybrid, keyword and vector together, then reranked; when a question’s first results come back weak, it is retried with HyDE.</p><p>The models run on Azure OpenAI inside PRMI’s own Azure tenant, and Entra ID groups decide which projects each role can query.</p><p>I built the loan-matrix dataset with PRMI’s domain experts and tuned retrieval and model settings with Azure’s RAG evaluation tooling.</p></dd></div>
         <div><dt>Outcome</dt><dd>Shipped as PRMI’s primary knowledge retrieval tool: grounded, cited answers over the company’s own documents, for internal staff and external partners.</dd></div>
         <div><dt>Next</dt><dd>Parallel ingestion, one task per file with its own retries and change detection by content; many-to-many links between projects and indexes; and an automated evaluation harness that runs on every change.</dd></div>
       </dl>
@@ -362,9 +362,9 @@
   <section id="decisions" class="case-study__section prose" aria-labelledby="decisions-title">
     <h2 id="decisions-title">Three more choices, each with a reason</h2>
     <dl class="decisions card card--list">
-      <div><dt>A container because of OCR.</dt><dd class="flow"><p>Local PDF partitioning and table extraction use the unstructured library, which needs two system packages: poppler to rasterize pages and Tesseract to read them.</p><p>Installed over SSH, they don’t last: the host keeps only <code>/home</code> across restarts, so they vanish on every redeploy or scale-out. Baking them into a Docker image served from Azure Container Registry makes every instance identical.</p></dd></div>
+      <div><dt>A container because of OCR.</dt><dd class="flow"><p>Local PDF partitioning and table extraction use the unstructured library, which needs two system packages: poppler to rasterize pages and Tesseract to read them.</p><p>Installed over SSH, they don’t last: the host keeps only <code>/home</code> across restarts, so they vanish on every redeploy or scale-out.</p><p>Baking them into a Docker image served from Azure Container Registry makes every instance identical.</p></dd></div>
       <div><dt>One search index per project.</dt><dd>Multi-tenancy by physical isolation, with a project-to-index map in SQL. Simple to reason about, and nothing to filter at query time.</dd></div>
-      <div><dt>Caching built, then left off.</dt><dd>I built two cache layers and measured their hit rate, then kept caching off in production. A plausible but wrong cached answer to a mortgage-guideline question costs more than the tokens it saves.</dd></div>
+      <div><dt>Caching built, then left off.</dt><dd class="flow"><p>I built two cache layers and measured their hit rate, then kept caching off in production.</p><p>A plausible but wrong cached answer to a mortgage-guideline question costs more than the tokens it saves.</p></dd></div>
     </dl>
   </section>
 

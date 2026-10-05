@@ -66,8 +66,8 @@
       <h2 id="brief-title" class="visually-hidden">In brief</h2>
       <dl class="spec">
         <div><dt>Problem</dt><dd>Every new investor meant bespoke code, tests, a test environment in the loan system, UAT and a release: two sprints before its first report. Growth of the investor network was capped by engineering capacity, not by the business.</dd></div>
-        <div><dt>Approach</dt><dd>One reconciliation engine, with each investor described in YAML: where its report lives, how its columns map to a shared schema, and whether loan numbers need recovering. The few investors that need custom logic name a registered handler instead of adding a branch. All investors run through the same pipeline into one table, so several can be onboarded and tested together.</dd></div>
-        <div><dt>Outcome</dt><dd>Onboarding a new investor fell from 2 to 4 weeks to days, about 75% less. Four new investors were integrated in the month after the refactor, work that previously took a full quarter of engineering capacity, and two other automation initiatives adopted the design as their template.</dd></div>
+        <div><dt>Approach</dt><dd class="flow"><p>One reconciliation engine, with each investor described in YAML: where its report lives, how its columns map to a shared schema, and whether loan numbers need recovering.</p><p>The few investors that need custom logic name a registered handler instead of adding a branch.</p><p>All investors run through the same pipeline into one table, so several can be onboarded and tested together.</p></dd></div>
+        <div><dt>Outcome</dt><dd class="flow"><p>Onboarding a new investor fell from 2 to 4 weeks to days, about 75% less.</p><p>Four new investors were integrated in the month after the refactor, work that previously took a full quarter of engineering capacity, and two other automation initiatives adopted the design as their template.</p></dd></div>
         <div><dt>Next</dt><dd>Batch the loan-number lookups instead of calling the loan system once per row, and report a record with neither a loan number nor a document type once, not twice.</dd></div>
       </dl>
     </section>

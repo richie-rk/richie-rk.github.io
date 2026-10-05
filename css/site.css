@@ -826,12 +826,13 @@
   }
   /* Slim side padding on phones gives the stacked diagrams more width. */
   .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
+  /* Captions keep the reading measure; the end padding takes up the rest. */
   @media (min-width: 48rem) {
     .figure__scroll { padding: var(--space-4); }
-    .figure figcaption { padding-inline: var(--space-6); }
+    .figure figcaption { padding-inline: var(--space-6) max(var(--space-6), 100% - var(--measure)); }
   }
   .figure figcaption {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-3) max(var(--space-4), 100% - var(--measure)) var(--space-3) var(--space-4);
     border-block-start: var(--border-width) solid var(--border);
     font-size: var(--step--1);
     color: var(--text-muted);
@@ -1162,7 +1163,11 @@
   }
   /* In brief: problem, approach, outcome, next, after the overview. */
   .case-study__brief { margin-block-start: var(--space-4); }
-  .case-study__brief dd { max-inline-size: var(--measure); }
+  .case-study__brief .spec { gap: var(--space-4); }
+  .case-study__brief dd {
+    --flow-space: var(--space-2);
+    max-inline-size: var(--measure);
+  }
   .case-study__figure { margin-block-start: var(--space-6); }
   .toc {
     max-inline-size: var(--measure);

@@ -78,7 +78,7 @@
       <h2 id="brief-title" class="visually-hidden">In brief</h2>
       <dl class="spec">
         <div><dt>Problem</dt><dd>Loan attribute updates went through a vendor’s Excel-driven batch tool, pushed by RPA, and a person checked every batch on a status page that didn’t load reliably. Nothing checked Encompass itself, so the job could never run unattended.</dd></div>
-        <div><dt>Approach</dt><dd>Write straight to Encompass through its REST API, loan by loan: take a resource lock, write the fields, read them back, release the lock. If someone has the loan open, the lock is refused and the loan is retried in a later batch. Each run records its input and every field’s value before and after the write.</dd></div>
+        <div><dt>Approach</dt><dd class="flow"><p>Write straight to Encompass through its REST API, loan by loan: take a resource lock, write the fields, read them back, release the lock.</p><p>If someone has the loan open, the lock is refused and the loan is retried in a later batch.</p><p>Each run records its input and every field’s value before and after the write.</p></dd></div>
         <div><dt>Outcome</dt><dd>Around 90% less manual effort. Every loan ends with a status from Encompass itself, so the check after each batch is gone and the job runs unattended.</dd></div>
       </dl>
     </section>
