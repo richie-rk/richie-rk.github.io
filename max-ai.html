@@ -55,13 +55,22 @@
 <article class="case-study container" aria-labelledby="case-title">
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--max-ai">MAX AI</span><span class="visually-hidden">: </span><span class="case-study__claim">Grounded answers from the company’s own documents, with citations.</span></h1>
-    <p class="case-study__summary">Mortgage staff ask questions of guidelines, training and marketing material, and get strictly grounded answers, cited to the source page. I owned the <strong>Python backend</strong>: the streaming chat API, the document-ingestion pipeline, and the utility Function App.</p>
+    <p class="case-study__summary">PRMI’s mortgage staff and its branch partners’ loan officers ask questions of the company’s guidelines, training and marketing material. MAX AI answers from those documents alone, cites the page, and says so when they don’t hold the answer. I owned the Python backend.</p>
     <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Full technical ownership, including the Python backend across all three services</dd></div>
       <div><dt>Team</dt><dd>A front-end developer built the React console</dd></div>
       <div><dt>Impact</dt><dd>PRMI’s primary knowledge retrieval tool</dd></div>
       <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>FastAPI</li><li>Azure OpenAI</li><li>Azure AI Search</li><li>Durable Functions</li><li>LangChain</li><li>tiktoken</li><li>SQL Server</li><li>Docker</li><li>Azure Container Registry</li></ul></dd></div>
     </dl>
+    <section class="case-study__brief card" aria-labelledby="brief-title">
+      <h2 id="brief-title" class="visually-hidden">In brief</h2>
+      <dl class="spec">
+        <div><dt>Problem</dt><dd>A regulated lender can’t act on an answer it can’t trace. A model’s own knowledge goes stale the day a guideline changes, can’t point to a source, and invents fluent answers when it doesn’t know. And staff and partners may each see only the documents meant for them.</dd></div>
+        <div><dt>Approach</dt><dd>Retrieval instead of fine-tuning: documents live in a search index, one per project, and every answer is grounded in retrieved passages that carry their file and page. Search is hybrid, keyword and vector together, then reranked; when a question’s first results come back weak, it is retried with HyDE. The models run on Azure OpenAI inside PRMI’s own Azure tenant, and Entra ID groups decide which projects each role can query. I built the loan-matrix dataset with PRMI’s domain experts and tuned retrieval and model settings with Azure’s RAG evaluation tooling.</dd></div>
+        <div><dt>Outcome</dt><dd>Shipped as PRMI’s primary knowledge retrieval tool: grounded, cited answers over the company’s own documents, for internal staff and external partners.</dd></div>
+        <div><dt>Next</dt><dd>Parallel ingestion, one task per file with its own retries and change detection by content; many-to-many links between projects and indexes; and an automated evaluation harness that runs on every change.</dd></div>
+      </dl>
+    </section>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
       <svg viewBox="0 0 940 640" role="img" aria-label="MAX AI architecture: a Durable Functions write path reads, embeds and upserts documents into an Azure AI Search index; a FastAPI read path retrieves from the same index with hybrid search, retrying with HyDE when recall is low, builds a grounded prompt, and streams GPT-4o tokens back to the React console as NDJSON." class="diagram diagram--wide">

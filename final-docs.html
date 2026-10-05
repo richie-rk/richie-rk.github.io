@@ -55,13 +55,22 @@
 <article class="case-study container" aria-labelledby="case-title">
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--final-docs">Final Docs</span><span class="visually-hidden">: </span><span class="case-study__claim">Treat an investor as data, not code.</span></h1>
-    <p class="case-study__summary">Every investor reports exceptions in its own format. Final Docs turns them into one consistent picture, reconciled against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
+    <p class="case-study__summary">Investors that buy PRMI’s loans need their final documents; First American ships them. Each investor reports exceptions its own way, and Final Docs reconciles them against First American’s records to show what is missing, where. I owned the architecture and build.</p>
     <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Architecture and build, end to end</dd></div>
       <div><dt>Team</dt><dd>With PRMI’s closing, compliance and development teams</dd></div>
       <div><dt>Impact</dt><dd>4 investors in one month; onboarding cut from <span class="nowrap">2-4 weeks</span> to days</dd></div>
       <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>Pandas</li><li>SQLAlchemy</li><li>YAML config</li><li>OpenPyXL</li><li>Encompass API</li><li>Strategy pattern</li></ul></dd></div>
     </dl>
+    <section class="case-study__brief card" aria-labelledby="brief-title">
+      <h2 id="brief-title" class="visually-hidden">In brief</h2>
+      <dl class="spec">
+        <div><dt>Problem</dt><dd>Every new investor meant bespoke code, tests, a test environment in the loan system, UAT and a release: two sprints before its first report. Growth of the investor network was capped by engineering capacity, not by the business.</dd></div>
+        <div><dt>Approach</dt><dd>One reconciliation engine, with each investor described in YAML: where its report lives, how its columns map to a shared schema, and whether loan numbers need recovering. The few investors that need custom logic name a registered handler instead of adding a branch. All investors run through the same pipeline into one table, so several can be onboarded and tested together.</dd></div>
+        <div><dt>Outcome</dt><dd>Onboarding a new investor fell from 2 to 4 weeks to days, about 75% less. Four new investors were integrated in the month after the refactor, work that previously took a full quarter of engineering capacity, and two other automation initiatives adopted the design as their template.</dd></div>
+        <div><dt>Next</dt><dd>Batch the loan-number lookups instead of calling the loan system once per row, and report a record with neither a loan number nor a document type once, not twice.</dd></div>
+      </dl>
+    </section>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
       <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: an investor batch runner reads YAML configuration and starts one run per investor; each run loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">

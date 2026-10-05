@@ -1152,6 +1152,9 @@
     .case-study__overview dd { margin-block-start: var(--space-1); }
     .case-study__overview > .spec__stack { grid-column: 1 / -1; }
   }
+  /* In brief: problem, approach, outcome, next, after the overview. */
+  .case-study__brief { margin-block-start: var(--space-4); }
+  .case-study__brief dd { max-inline-size: var(--measure); }
   .case-study__figure { margin-block-start: var(--space-6); }
   .toc {
     max-inline-size: var(--measure);

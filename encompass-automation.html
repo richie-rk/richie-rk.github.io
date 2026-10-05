@@ -74,6 +74,14 @@
       <div><dt>Impact</dt><dd>Loan updates run unattended, with no manual check after each batch</dd></div>
       <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>requests</li><li>ThreadPoolExecutor</li><li>OAuth2</li><li>Encompass REST API</li></ul></dd></div>
     </dl>
+    <section class="case-study__brief card" aria-labelledby="brief-title">
+      <h2 id="brief-title" class="visually-hidden">In brief</h2>
+      <dl class="spec">
+        <div><dt>Problem</dt><dd>Loan attribute updates went through a vendor’s Excel-driven batch tool, pushed by RPA, and a person checked every batch on a status page that didn’t load reliably. Nothing checked Encompass itself, so the job could never run unattended.</dd></div>
+        <div><dt>Approach</dt><dd>Write straight to Encompass through its REST API, loan by loan: take a resource lock, write the fields, read them back, release the lock. If someone has the loan open, the lock is refused and the loan is retried in a later batch. Each run records its input and every field’s value before and after the write.</dd></div>
+        <div><dt>Outcome</dt><dd>Around 90% less manual effort. Every loan ends with a status from Encompass itself, so the check after each batch is gone and the job runs unattended.</dd></div>
+      </dl>
+    </section>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="diagram-caption">
       <svg viewBox="0 0 940 400" role="img" aria-label="Before and after. Before: RPA pushed loan attribute updates through a vendor’s Excel-driven batch tool into Encompass, and a person checked every batch on the vendor’s status page, which didn’t load reliably; nothing checked Encompass itself. After: an update job takes an exclusive resource lock on each loan. If the lock is refused because the loan is in use, the loan is skipped with the status locked and retried in a later batch. Otherwise the job writes the fields with the Field Writer, reads them back with the Field Reader and releases the lock in a finally block, recording the status updated with the values read back." class="diagram diagram--wide">
