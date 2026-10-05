@@ -117,7 +117,7 @@
     --accent-hover: #83E3C6;
     --accent-pressed: #A3EAD5;      /* a step past hover in the same hue */
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
-    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
+    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule */
     /* Links take the accent's lighter tint: Lc 78, where #5FD4B0 is Lc 68,
        under the 75 floor. */
     --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
@@ -181,8 +181,6 @@
     --focus-offset: 3px;
     --underline-offset: 0.2em;
     --underline-offset-current: 0.35em;
-    --keyword-underline: 0.11em;
-    --keyword-underline-offset: 0.16em;
     /* The signature title rule, em-based so both view-transition snapshots
        scale together. */
     --title-rule: 0.0625em;
@@ -543,15 +541,6 @@
   @media (prefers-reduced-motion: no-preference) {
     .button,
     .contact-link { transition: background-color var(--duration-hover), border-color var(--duration-hover), color var(--duration-hover); }
-  }
-
-  /* The hero keywords' teal underline, a §11 exception Richy asked for; thick
-     and low, so not a link. */
-  .hero__keyword {
-    text-decoration-line: underline;
-    text-decoration-color: var(--rule-accent);
-    text-decoration-thickness: var(--keyword-underline);
-    text-underline-offset: var(--keyword-underline-offset);
   }
 
   /* Icons come from images/icons.svg and take the text colour. */
@@ -922,8 +911,8 @@
 
   /* ---------- Home: hero ---------- */
   /* The hero runs tight so a phone's first screen reaches the first door. */
-  .hero { padding-block-start: var(--space-5); }
-  .hero + .section { padding-block-start: var(--space-7); }
+  .hero { padding-block-start: var(--space-3); }
+  .hero + .section { padding-block-start: var(--space-6); }
   @media (min-width: 48rem) {
     .hero { padding-block-start: var(--space-6); }
     .hero + .section { padding-block-start: var(--space-8); }
@@ -965,13 +954,23 @@
   }
   .hero__proof {
     max-inline-size: var(--measure-standfirst);
-    margin-block-start: var(--space-5);
+    margin-block-start: var(--space-4);
   }
-  .hero .button-row { margin-block-start: var(--space-4); }
-  .hero__email { margin-block-start: var(--space-3); }
+  .hero__personal {
+    max-inline-size: var(--measure-standfirst);
+    margin-block-start: var(--space-3);
+  }
+  .hero .button-row {
+    gap: var(--space-2);
+    margin-block-start: var(--space-3);
+  }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
-    .hero .button-row { margin-block-start: var(--space-6); }
+    .hero__proof { margin-block-start: var(--space-5); }
+    .hero .button-row {
+      gap: var(--space-3);
+      margin-block-start: var(--space-6);
+    }
   }
 
   /* ---------- Home: sections ---------- */
@@ -992,7 +991,7 @@
   .doors {
     display: grid;
     gap: var(--space-4);
-    margin-block-start: var(--space-4);
+    margin-block-start: var(--space-3);
   }
   @media (min-width: 48rem) {
     .doors {
@@ -1045,7 +1044,10 @@
   /* On phones the cue shares the title's first line, which is short in every
      door, so the third door's name stays within one and a half screens. */
   @media (max-width: 47.99rem) {
-    .door__layout { grid-template-columns: minmax(0, 1fr) auto; }
+    .door__layout {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: var(--space-2);
+    }
     .door__layout > * { grid-column: 1 / -1; }
     .door__layout > .project__title { grid-row: 1; }
     .door__cue { grid-area: 1 / 2; padding-block-start: var(--space-2); }
