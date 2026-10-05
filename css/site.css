@@ -841,7 +841,8 @@
   @media (prefers-reduced-motion: no-preference) {
     .card__link::after,
     .next-card,
-    .door__cue { transition: border-color var(--duration-hover), color var(--duration-hover); }
+    .door__cue,
+    .door__thumb * { transition: border-color var(--duration-hover), color var(--duration-hover), stroke var(--duration-hover), fill var(--duration-hover); }
   }
 
   /* Tags: outlined, no fill or hover, so never mistaken for buttons. */
@@ -1026,9 +1027,32 @@
     color: var(--cue, var(--text-muted));
   }
   @media (hover: hover) {
-    .door:has(.card__link:hover) { --cue: var(--link); }
+    .door:has(.card__link:hover) { --cue: var(--link); --thumb-line: var(--text-muted); }
   }
-  .door:has(.card__link:focus-visible) { --cue: var(--link); }
+  .door:has(.card__link:focus-visible) { --cue: var(--link); --thumb-line: var(--text-muted); }
+
+  /* Door miniatures (ADR 0005): decorative, from 48rem. Titles drop out
+     where they would render under about 11px. */
+  .door__thumb {
+    display: none;
+    container-type: inline-size;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+  @media (min-width: 48rem) {
+    .door__thumb { display: block; }
+  }
+  .door__thumb svg {
+    inline-size: 100%;
+    block-size: auto;
+    font-family: var(--font-sans);
+  }
+  .door__thumb :is(.diagram__node:not(.diagram__node--key), .diagram__edge) { stroke: var(--thumb-line, var(--border-strong)); }
+  .door__thumb .diagram__arrow { fill: var(--thumb-line, var(--border-strong)); }
+  @container (max-width: 22rem) {
+    .door__thumb text { display: none; }
+  }
 
   /* The signature: the accent rule under a project name, carried by the view
      transition. */
