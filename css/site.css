@@ -844,7 +844,7 @@
   }
   .tags--muted > li { color: var(--text-muted); }
   /* CV skill logos (Richy, 4 October 2026): text colour; width from the viewBox. */
-  .tags svg {
+  .skills svg {
     block-size: var(--logo-size);
     overflow: visible;
     flex: none;
@@ -1387,6 +1387,9 @@
     gap: var(--space-5);
   }
   .skills dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     color: var(--text-strong);
     font-weight: var(--weight-strong);
   }
@@ -1488,7 +1491,7 @@
     .skip-link,
     .theme-toggle,
     .email-copy__action,
-    .tags svg,
+    .skills svg,
     .button,
     .email-options,
     .toc { display: none !important; }
