@@ -64,7 +64,7 @@
     </dl>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
-      <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: a batch orchestrator reads YAML configuration and creates one data processor per investor; each processor loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">
+      <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: an investor batch runner reads YAML configuration and starts one run per investor; each run loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -112,12 +112,12 @@
         <text x="120" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">one file per investor</text>
 
         <rect x="265" y="46" width="235" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="382" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor Batch Orchestrator</text>
-        <text x="382" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">iterates the requested investors</text>
+        <text x="382" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor batch runner</text>
+        <text x="382" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">runs the requested investors together</text>
 
         <rect x="545" y="46" width="370" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="732" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor Data Processor</text>
-        <text x="732" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">same pipeline for every investor</text>
+        <text x="732" y="74" font-size="13" text-anchor="middle" class="diagram__title">One run per investor</text>
+        <text x="732" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">same steps for every investor</text>
 
         <!-- reports box -->
         <rect x="20" y="152" width="176" height="62" rx="10" stroke-width="1.2" class="diagram__node"/>
@@ -158,9 +158,9 @@
 
         <rect x="530" y="542" width="260" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="660" y="570" font-size="13" text-anchor="middle" class="diagram__title">Mismatch report</text>
-        <text x="660" y="588" font-size="10.5" text-anchor="middle" class="diagram__label">unmatched, duplicates, unresolved ids</text>
+        <text x="660" y="588" font-size="10.5" text-anchor="middle" class="diagram__label">no loan number, not at First American, duplicates</text>
       </svg>
-      <svg viewBox="0 0 340 830" width="340" height="830" role="img" aria-label="Final Docs architecture: a batch orchestrator reads YAML configuration and creates one data processor per investor; each processor loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--stacked">
+      <svg viewBox="0 0 340 844" width="340" height="844" role="img" aria-label="Final Docs architecture: an investor batch runner reads YAML configuration and starts one run per investor; each run loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--stacked">
         <defs>
           <marker id="arr-stacked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -185,12 +185,12 @@
         <text x="170" y="68" font-size="12" text-anchor="middle" class="diagram__label">one file per investor</text>
 
         <rect x="8" y="104" width="324" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="170" y="126" font-size="14" text-anchor="middle" class="diagram__title">Investor Batch Orchestrator</text>
-        <text x="170" y="144" font-size="12" text-anchor="middle" class="diagram__label">iterates the requested investors</text>
+        <text x="170" y="126" font-size="14" text-anchor="middle" class="diagram__title">Investor batch runner</text>
+        <text x="170" y="144" font-size="12" text-anchor="middle" class="diagram__label">runs the requested investors together</text>
 
         <rect x="8" y="180" width="324" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="170" y="202" font-size="14" text-anchor="middle" class="diagram__title">Investor Data Processor</text>
-        <text x="170" y="220" font-size="12" text-anchor="middle" class="diagram__label">same pipeline for every investor</text>
+        <text x="170" y="202" font-size="14" text-anchor="middle" class="diagram__title">One run per investor</text>
+        <text x="170" y="220" font-size="12" text-anchor="middle" class="diagram__label">same steps for every investor</text>
 
         <rect x="8" y="256" width="156" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="86" y="278" font-size="13" text-anchor="middle" class="diagram__title">Investor reports</text>
@@ -229,15 +229,16 @@
         <text x="170" y="698" font-size="12" text-anchor="middle" class="diagram__label">merge on PRMI Loan Number</text>
         <text x="170" y="714" font-size="12" text-anchor="middle" class="diagram__label">rerun-safe, nothing silently dropped</text>
 
-        <rect x="8" y="750" width="156" height="72" rx="10" stroke-width="1.2" class="diagram__node"/>
+        <rect x="8" y="750" width="156" height="86" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="86" y="772" font-size="13" text-anchor="middle" class="diagram__title">Missing / Defect report</text>
         <text x="86" y="790" font-size="11" text-anchor="middle" class="diagram__label">Excel sheet +</text>
         <text x="86" y="805" font-size="11" text-anchor="middle" class="diagram__label">database table</text>
 
-        <rect x="176" y="750" width="156" height="72" rx="10" stroke-width="1.2" class="diagram__node"/>
+        <rect x="176" y="750" width="156" height="86" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="254" y="772" font-size="13" text-anchor="middle" class="diagram__title">Mismatch report</text>
-        <text x="254" y="790" font-size="11" text-anchor="middle" class="diagram__label">unmatched, duplicates,</text>
-        <text x="254" y="805" font-size="11" text-anchor="middle" class="diagram__label">unresolved ids</text>
+        <text x="254" y="790" font-size="11" text-anchor="middle" class="diagram__label">no loan number,</text>
+        <text x="254" y="805" font-size="11" text-anchor="middle" class="diagram__label">not at First American,</text>
+        <text x="254" y="820" font-size="11" text-anchor="middle" class="diagram__label">duplicates</text>
       </svg>
       </div>
       <figcaption id="architecture-caption">Configuration decides how each investor is processed; the database is the boundary between preparation and reconciliation.</figcaption>
@@ -278,23 +279,11 @@
     <p>Each investor is described by one YAML file:</p>
     <ul>
       <li>source directory and report name</li>
-      <li>a <code>column_map</code> that translates the investor’s column names into the common schema</li>
+      <li>a column map that translates the investor’s column names into the common schema</li>
       <li>whether loan-number resolution is required</li>
       <li>document-type mappings</li>
       <li>where needed, the name of a custom processing hook.</li>
     </ul>
-    <p>Illustrative shape, names generalized:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative investor configuration in YAML"><code><span class="code__comment"># one file per investor: source, mapping, hooks</span>
-<span class="code__key">Investor-A</span>:
-  <span class="code__key">project_directories</span>:
-    <span class="code__key">report_folders</span>: <span class="code__value">investor-a/reports</span>
-    <span class="code__key">report_name</span>: <span class="code__value">exception-report.xlsx</span>
-  <span class="code__key">get_PRMI_loan_number</span>: <span class="code__value">true</span>
-  <span class="code__key">column_map</span>:
-    <span class="code__key">PRMI Loan Number</span>: <span class="code__value">Seller Loan Number</span>
-    <span class="code__key">LOAN NUMBER</span>: <span class="code__value">Investor Loan Number</span>
-    <span class="code__key">BORROWER FIRST</span>: <span class="code__value">Borrower Name</span>
-    <span class="code__key">Document Type</span>: <span class="code__value">Document</span></code></pre>
     <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape.</p>
     <p>The core modules treat an investor as data, not as hard-wired branches.</p>
   </section>
@@ -302,15 +291,7 @@
   <section id="dispatch" class="case-study__section prose" aria-labelledby="dispatch-title">
     <h2 id="dispatch-title">Custom paths without touching the core</h2>
     <p>Not every investor can be processed by reading a file. Some need custom data generation: one path builds a second-liens dataset by querying the loan origination system (Encompass) directly and filtering loans on their milestone history.</p>
-    <p>Those paths live in a <strong>dispatch table</strong>: the YAML names a key, the processor looks up the callable. Illustrative shape:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative dispatch table in Python"><code><span class="code__key">FD_DATA_FUNCTION_MAP</span> = {
-    <span class="code__value">"Second-Liens"</span>: generate_second_liens_data,
-    <span class="code__value">"Investor-B-Document-Types"</span>: investor_b_document_types,
-    <span class="code__value">"Investor-C-Document-Types"</span>: investor_c_document_types,
-}
-<span class="code__comment"># config names the key</span>
-handler = FD_DATA_FUNCTION_MAP[config_key]
-data = handler()</code></pre>
+    <p>Those paths live in a <strong>dispatch table</strong>: the configuration names a handler, and the processor looks it up and calls it.</p>
     <p>The alternative is the familiar failure mode: <code>if investor A</code>, <code>elif investor B</code>, and a central workflow that grows a branch per counterparty.</p>
     <p>The registry keeps the central processor stable; adding a custom path means registering a function and naming it in configuration, never editing the dispatch core. Open for extension, closed for modification.</p>
   </section>
@@ -324,7 +305,7 @@ data = handler()</code></pre>
       </li>
       <li class="flow">
         <p><b>Document vocabulary.</b> Free-text comments are inspected for known keywords to infer a standardized document type.</p>
-        <p>Existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become <code>Final Title Insurance</code>.</p>
+        <p>Existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become one standard name.</p>
         <p>Reconciliation then operates on standardized business terminology, not investor-specific variations.</p>
       </li>
     </ul>
@@ -334,10 +315,8 @@ data = handler()</code></pre>
     <h2 id="reconciliation-title">Every record lands in a category</h2>
     <p>The consolidated investor data is compared with First American custodian data, joined on the PRMI Loan Number. Findings separate into business categories, and nothing is silently dropped:</p>
     <ul>
-      <li>matched records produce the <strong>Missing/Defect</strong> findings</li>
-      <li>investor records whose loan number is absent from the custodian data are reported as <strong>mismatches</strong></li>
-      <li>records whose PRMI Loan Number could not be resolved are called out separately</li>
-      <li>duplicate loan-and-document-type combinations are detected and reported.</li>
+      <li><strong>Missing/Defect</strong>, the action list: every record that matches First American’s data, plus records First American doesn’t hold that still carry a document type.</li>
+      <li><strong>Mismatch</strong>, each with its reason: no PRMI Loan Number, not at First American and no document type, or a duplicate loan-and-document-type combination.</li>
     </ul>
     <ul class="card card--list" role="list">
       <li><b>Rerun-safe:</b> same-day duplicates from re-runs are collapsed before reconciliation, earliest record wins, so reprocessing is idempotent.</li>
@@ -347,7 +326,7 @@ data = handler()</code></pre>
     </ul>
     <p>The output is:</p>
     <ul>
-      <li>an Excel workbook with <code>Missing_Defect</code>, <code>Mismatch</code> and the consolidated investor report plus a summary sheet</li>
+      <li>an Excel workbook with a Missing/Defect sheet, a Mismatch sheet and the consolidated investor report, plus a summary sheet</li>
       <li>the same findings persisted to the database so downstream systems can consume the results without touching the spreadsheet.</li>
     </ul>
   </section>
@@ -361,7 +340,7 @@ data = handler()</code></pre>
       <li><strong>Reconciliation</strong> decides what is missing or inconsistent.</li>
       <li><strong>Reporting</strong> decides what the business sees.</li>
     </ul>
-    <p>An Investor Batch Orchestrator loads the YAML configuration and creates one Investor Data Processor per requested investor; every processor runs the same pipeline:</p>
+    <p>An investor batch runner loads the YAML configuration and starts one run per requested investor, so several investors can be processed and tested together. Every run goes through the same pipeline:</p>
     <ol class="steps" role="list">
       <li>Load</li>
       <li>Normalize columns</li>
