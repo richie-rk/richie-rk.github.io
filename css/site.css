@@ -305,7 +305,7 @@
   img, svg, picture, video { display: block; max-inline-size: 100%; }
   img { block-size: auto; }
 
-  code, pre { font-family: var(--font-mono); font-size: 1em; }
+  code { font-family: var(--font-mono); font-size: 1em; }
   button, input, select, textarea { font: inherit; color: inherit; }
   button { cursor: pointer; }
 
@@ -679,17 +679,6 @@
     overflow-wrap: anywhere;
   }
   .card code { background: var(--bg); }
-  pre {
-    padding: var(--space-4) var(--space-5);
-    border: var(--border-width) solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    overflow-x: auto;
-  }
-
-  /* Copy buttons appear only once js/site.js can wire them. */
-  .copy-button { display: none; }
-  .js .copy-button { display: inline-flex; }
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
   :where(.doors, .door__layout, .ledger > article, .ledger__body, .spec, .spec > div, .skills,
@@ -1401,12 +1390,6 @@
     margin-block-start: var(--space-8);
   }
   .letter-request > * + * { margin-block-start: var(--space-4); }
-  .letter-template {
-    font-family: var(--font-sans);
-    font-size: var(--step-0);
-    color: var(--text);
-    white-space: pre-wrap;
-  }
 }
 
 @layer utilities {

@@ -13,8 +13,8 @@
     }).observe(header);
   }
 
-  // Copying. data-copy holds the text, or data-copy-from points at an element to
-  // copy. One shared live region announces the result to screen readers.
+  // Copying. data-copy holds the text; one shared live region announces the
+  // result to screen readers.
   var status = document.createElement('div');
   status.className = 'visually-hidden';
   status.setAttribute('role', 'status');
@@ -61,7 +61,7 @@
     }
     return legacyCopy(text);
   };
-  document.querySelectorAll('button[data-copy], button[data-copy-from]').forEach(function (button) {
+  document.querySelectorAll('button[data-copy]').forEach(function (button) {
     // A .copy-label shows the state in words; data-state swaps the icons in CSS.
     var labelEl = button.querySelector('.copy-label');
     var label = labelEl && labelEl.textContent;
@@ -78,13 +78,10 @@
       }, 1600);
     };
     button.addEventListener('click', function () {
-      var from = button.getAttribute('data-copy-from');
-      var source = from && document.querySelector(from);
-      var text = source ? source.innerText : button.getAttribute('data-copy');
+      var text = button.getAttribute('data-copy');
       copyText(text).then(function () {
         report('copied', 'Copied', 'Copied to the clipboard');
       }, function () {
-        if (from) return report('failed', 'Copy failed', 'Copying failed. Select the text and copy it instead.');
         // Most labels don't show the address, so a failed copy opens a draft
         // instead. An email label keeps the width of "Copied", which "Failed" fits.
         report('failed', 'Failed', 'Copying failed, so your email app opens instead. The address is ' + text);
