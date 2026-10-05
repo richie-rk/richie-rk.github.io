@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}/* Skip the title morph when the title is off-screen on either page, so it never flies in from outside the viewport. */(function(){function g(e){if(!e.viewTransition)return;document.querySelectorAll(".project__name,.case-study__name").forEach(function(n){n.style.viewTransitionName="";var r=n.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)n.style.viewTransitionName="none"})}addEventListener("pageswap",g);addEventListener("pagereveal",g)})()</script>
 <title>Richy Koshy CV: Python engineer for GenAI and automation</title>
-<meta name="description" content="CV of Richy Koshy, Python engineer: 5+ years building GenAI, backend and automation systems for a US mortgage originator, from Azure RAG to 13 automations.">
+<meta name="description" content="CV of Richy Koshy, Python engineer with 5+ years of experience: GenAI, backend and automation for a US mortgage originator, from Azure RAG to 13 automations.">
 <link rel="canonical" href="https://richie-rk.github.io/cv.html">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Richy Koshy">
 <meta property="og:title" content="Richy Koshy CV: Python engineer for GenAI and automation">
-<meta property="og:description" content="CV of Richy Koshy, Python engineer: 5+ years building GenAI, backend and automation systems for a US mortgage originator, from Azure RAG to 13 automations.">
+<meta property="og:description" content="CV of Richy Koshy, Python engineer with 5+ years of experience: GenAI, backend and automation for a US mortgage originator, from Azure RAG to 13 automations.">
 <meta property="og:url" content="https://richie-rk.github.io/cv.html">
 <meta property="og:image" content="https://richie-rk.github.io/images/og-home.png">
 <meta property="og:image:width" content="1200">
@@ -62,7 +62,7 @@
     <li><a href="https://linkedin.com/in/richy-koshy" data-no-print-url target="_blank" rel="noopener">linkedin.com/in/richy-koshy<span class="visually-hidden"> (opens in a new tab)</span></a></li>
   </ul>
   <div class="cv__summary flow print-join">
-    <p><b>5+ years of Python development</b>, plus <b>a year of industrial automation</b>.</p>
+    <p><b>5+ years of Python</b>, including a year in industrial automation.</p>
     <p>Shipped production GenAI, backend, and automation systems for a US mortgage originator: an enterprise Azure RAG platform, a custom Encompass REST API SDK, and 13 production automations across compliance and investor operations.</p>
   </div>
   <a class="button button--primary" href="Richy_Koshy_CV.pdf" download>Download CV (PDF)</a>
@@ -82,12 +82,12 @@
         <p><a href="max-ai.html" data-no-print-url><b>MAX AI, enterprise RAG platform</b></a>. Owned the full Python backend across three Azure services; now PRMI’s primary knowledge-retrieval tool <b>organization-wide</b>.</p>
         <ul>
           <li class="flow print-join">
-            <p><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE query expansion; Azure OpenAI GPT-4o with ada-002 embeddings.</p>
-            <p>One index per project, with multi-tenant access mapping in SQL Server behind Azure AD auth.</p>
+            <p><b>Retrieval:</b> hybrid vector + semantic ranking on Azure AI Search with HyDE as a fallback when recall is low; Azure OpenAI GPT-4o with ada-002 embeddings.</p>
+            <p>One index per project, with multi-tenant access mapping in SQL Server behind Entra ID auth.</p>
           </li>
           <li class="flow print-join">
-            <p><b>Ingestion:</b> Durable Functions pipeline, idempotent via audit-table checkpointing with per-file failure isolation.</p>
-            <p>Local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry; Azure Document Intelligence for scans.</p>
+            <p><b>Ingestion:</b> Durable Functions pipeline, idempotent via progress-log checkpointing with per-file failure isolation.</p>
+            <p>Local PDF partitioning and table extraction with unstructured (poppler + Tesseract), shipped as a Docker image on Azure Container Registry.</p>
           </li>
           <li><b>Chat:</b> FastAPI service streaming NDJSON with metadata-first framing, so citations render before the first token.</li>
           <li><b>Utility APIs:</b> a Function App for auth, projects, users, session history and feedback.</li>
@@ -97,7 +97,7 @@
       <li class="flow">
         <p><a href="final-docs.html" data-no-print-url><b>Final Docs refactor</b></a>. The automation governs how PRMI assembles and delivers post-closing packages to its investor banks, where delays put funding lines and regulatory standing at risk.</p>
         <ul>
-          <li><b>Approach:</b> rebuilt a monolithic automation into config-driven dynamic dispatch: one YAML config per investor and a dispatch table that maps each investor to its handler functions, treating each investor as data, not code.</li>
+          <li><b>Approach:</b> rebuilt a monolithic automation into config-driven dynamic dispatch: one YAML config per investor, and a dispatch table for the few investors that need custom handlers, treating each investor as data, not code.</li>
           <li><b>Result:</b> <b>4 new investors onboarded in 1 month</b> vs. a full quarter before; onboarding cut from <b><span class="nowrap">2-4 weeks</span> to days</b>; adopted as the template for 2 other initiatives.</li>
         </ul>
         <p><a href="final-docs.html" data-print-url="richie-rk.github.io/final-docs.html">Read the Final Docs deep dive</a></p>
@@ -142,14 +142,14 @@
 
   <article class="cv-role">
     <header class="cv-role__head">
-      <h3>Industrial Automation Engineer</h3>
+      <h3>Graduate Engineer Trainee</h3>
       <p class="cv-role__org">Goodyear South Asia Tyres</p>
       <p class="cv-role__meta">Tyre manufacturing: PLCs, drives and controls</p>
     </header>
     <ul>
-      <li>Programmed and maintained PLCs and variable-frequency drives across tyre-curing and material-handling lines.</li>
-      <li>Led breakdown troubleshooting on production-critical electrical systems, minimizing line downtime.</li>
-      <li>Commissioned CTMS &amp; BMS systems alongside Rockwell and Honeywell engineers.</li>
+      <li>Commissioned the Cut Tyre Measurement System (CTMS) and Bead Measurement System (BMS) alongside Rockwell and Honeywell engineers.</li>
+      <li>Programmed and troubleshot PLCs and variable-frequency drives, and worked with SCADA and HMIs, including sensor calibration.</li>
+      <li>Wrote Python scripts (pylogix) to pull drive and parameter data from Rockwell PLCs, analyzed with pandas.</li>
     </ul>
   </article>
 </section>
@@ -171,9 +171,9 @@
 <section class="cv__section flow" aria-labelledby="repos-title">
   <h2 id="repos-title">GitHub repositories</h2>
   <ul>
-    <li><a href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a>: full-stack Azure RAG</li>
-    <li><a href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">EncompassRest-RAG-Assistant<span class="visually-hidden"> (opens in a new tab)</span></a>: hybrid FAISS + BM25</li>
-    <li><a href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">PyTeslaCoil<span class="visually-hidden"> (opens in a new tab)</span></a>: physics calculator, 73 tests</li>
+    <li><a href="https://github.com/richie-rk/rag-app-azure" data-print-url="github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a>: full-stack Azure RAG</li>
+    <li><a href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" data-print-url="github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">EncompassRest-RAG-Assistant<span class="visually-hidden"> (opens in a new tab)</span></a>: hybrid FAISS + BM25</li>
+    <li><a href="https://github.com/richie-rk/PyTeslaCoil" data-print-url="github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">PyTeslaCoil<span class="visually-hidden"> (opens in a new tab)</span></a>: physics calculator, 73 tests</li>
   </ul>
 </section>
 
