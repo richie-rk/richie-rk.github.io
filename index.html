@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}/* Skip the title morph when the title is off-screen on either page, so it never flies in from outside the viewport. */(function(){function g(e){if(!e.viewTransition)return;document.querySelectorAll(".project__name,.case-study__name").forEach(function(n){n.style.viewTransitionName="";var r=n.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)n.style.viewTransitionName="none"})}addEventListener("pageswap",g);addEventListener("pagereveal",g)})()</script>
-<script>/* "Also shipped" folds on phones: close it before first paint. With JS off it stays open. */(function(){if(matchMedia("(min-width:48rem)").matches)return;var o=new MutationObserver(function(){var d=document.querySelector(".ledger-fold");if(d){d.open=false;o.disconnect()}});o.observe(document,{childList:true,subtree:true});addEventListener("DOMContentLoaded",function(){o.disconnect()})})()</script>
 <title>Richy Koshy: Python and GenAI engineer, RAG and automation</title>
-<meta name="description" content="Python and GenAI engineer with 5+ years of production work for a US mortgage originator: an Azure RAG platform, an Encompass REST API SDK and 13 automations.">
+<meta name="description" content="Python and GenAI engineer with 5+ years of experience. For a US mortgage originator: an Azure RAG platform, an Encompass REST API SDK and 13 automations.">
 <link rel="canonical" href="https://richie-rk.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Richy Koshy">
 <meta property="og:title" content="Richy Koshy: Python and GenAI engineer, RAG and automation">
-<meta property="og:description" content="Python and GenAI engineer with 5+ years of production work for a US mortgage originator: an Azure RAG platform, an Encompass REST API SDK and 13 automations.">
+<meta property="og:description" content="Python and GenAI engineer with 5+ years of experience. For a US mortgage originator: an Azure RAG platform, an Encompass REST API SDK and 13 automations.">
 <meta property="og:url" content="https://richie-rk.github.io/">
 <meta property="og:image" content="https://richie-rk.github.io/images/og-home.png">
 <meta property="og:image:width" content="1200">
@@ -40,7 +39,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/plex-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
-<link rel="expect" href="#encompass-title" blocking="render">
+<link rel="expect" href="#encompass-name" blocking="render">
 <script src="js/site.js" defer></script>
 </head>
 <body>
@@ -57,8 +56,8 @@
       </ul>
     </nav>
     <ul class="site-header__social" role="list">
-      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="visually-hidden">GitHub (opens in a new tab)</span></a></li>
-      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg><span class="visually-hidden">LinkedIn (opens in a new tab)</span></a></li>
+      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-github"/></svg><span class="visually-hidden">GitHub (opens in a new tab)</span></a></li>
+      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-linkedin"/></svg><span class="visually-hidden">LinkedIn (opens in a new tab)</span></a></li>
     </ul>
     <button class="theme-toggle" type="button" aria-pressed="false">
       <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg><svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -76,10 +75,9 @@
   </h1>
   <p class="hero__proof"><strong>5+ years of Python</strong>. For a <strong>US mortgage originator</strong> I shipped an enterprise Azure RAG platform, a custom <strong>Encompass REST API SDK</strong> and <strong>13 production automations</strong>.</p>
   <div class="button-row">
-    <a class="button button--primary" href="max-ai.html">Read the MAX AI deep dive</a>
-    <a class="button button--secondary" href="cv.html">View CV</a>
+    <a class="button button--primary" href="max-ai.html"><span class="button__label">Read the MAX AI deep dive</span></a>
+    <a class="button button--secondary" href="cv.html"><span class="button__label">View CV</span></a>
   </div>
-  <p class="hero__email"><a class="email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><span class="email-copy__text">richycode.dev@gmail.com</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="copy-icon copy-icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span class="copy-label">Copy</span></span></a></p>
 </section>
 
 <section id="work" class="section container" aria-labelledby="work-title">
@@ -87,22 +85,94 @@
   <p class="section__lede">End-to-end ownership for PRMI, a US mortgage originator: requirements, architecture, build, UAT, and production support.</p>
 
   <div class="doors">
-    <article class="project card" aria-labelledby="max-ai-title">
-      <h3 id="max-ai-title" class="project__title"><span class="project__name project__name--max-ai">MAX AI</span></h3>
-      <p class="project__outcome">PRMI’s primary knowledge retrieval tool: grounded, cited answers from the company’s own documents.</p>
-      <p class="project__actions"><a class="card__link" href="max-ai.html">Read the MAX AI deep dive</a></p>
+    <article class="card door door--featured" aria-labelledby="max-ai-name">
+      <div class="door__layout">
+        <div class="door__thumb" aria-hidden="true">
+          <svg viewBox="0 0 640 360" focusable="false">
+            <defs><marker id="arr-max-ai-thumb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/></marker></defs>
+            <path d="M126 184 H156" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M220 154 V92" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M256 92 V150" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M300 154 V92" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge diagram__edge--dashed"/>
+            <path d="M332 184 H362" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M462 184 H492" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M560 214 V266" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <path d="M160 300 H71 V218" stroke-width="2" marker-end="url(#arr-max-ai-thumb)" class="diagram__edge"/>
+            <rect x="196" y="28" width="240" height="60" rx="10" stroke-width="2" class="diagram__node diagram__node--key"/>
+            <rect x="16" y="154" width="110" height="60" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="160" y="154" width="172" height="60" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="366" y="154" width="96" height="60" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="496" y="154" width="128" height="60" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="160" y="270" width="464" height="60" rx="10" stroke-width="2" class="diagram__node"/>
+            <text x="316" y="65" font-size="20" text-anchor="middle" class="diagram__title">Azure AI Search</text>
+            <text x="71" y="191" font-size="20" text-anchor="middle" class="diagram__title">Question</text>
+            <text x="246" y="191" font-size="20" text-anchor="middle" class="diagram__title">Hybrid retrieve</text>
+            <text x="414" y="191" font-size="20" text-anchor="middle" class="diagram__title">Rerank</text>
+            <text x="560" y="191" font-size="20" text-anchor="middle" class="diagram__title">GPT-4o</text>
+            <text x="392" y="307" font-size="20" text-anchor="middle" class="diagram__title">NDJSON stream</text>
+          </svg>
+        </div>
+        <h3 class="project__title"><a class="card__link" href="max-ai.html"><span id="max-ai-name" class="project__name project__name--max-ai">MAX AI</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">PRMI’s primary knowledge retrieval tool: grounded, cited answers from the company’s own documents.</p>
+        <p class="proof">Multi-tenant by design: each role sees only its own documents.</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
 
-    <article class="project card" aria-labelledby="final-docs-title">
-      <h3 id="final-docs-title" class="project__title"><span class="project__name project__name--final-docs">Final Docs</span></h3>
-      <p class="project__outcome">Investor onboarding cut from <span class="nowrap">2-4 weeks</span> to days; 4&nbsp;investors integrated in one month.</p>
-      <p class="project__actions"><a class="card__link" href="final-docs.html">Read the Final Docs deep dive</a></p>
+    <article class="card door" aria-labelledby="final-docs-name">
+      <div class="door__layout">
+        <div class="door__thumb" aria-hidden="true">
+          <svg viewBox="0 0 640 320" focusable="false">
+            <defs><marker id="arr-final-docs-thumb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/></marker></defs>
+            <path d="M296 76 H340" stroke-width="2" marker-end="url(#arr-final-docs-thumb)" class="diagram__edge"/>
+            <path d="M484 108 V156 H164 V192" stroke-width="2" marker-end="url(#arr-final-docs-thumb)" class="diagram__edge"/>
+            <path d="M312 244 H340" stroke-width="2" marker-end="url(#arr-final-docs-thumb)" class="diagram__edge"/>
+            <rect x="16" y="44" width="280" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="344" y="44" width="280" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="32" y="196" width="280" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="24" y="204" width="280" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="16" y="212" width="280" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="344" y="212" width="280" height="64" rx="10" stroke-width="2" class="diagram__node diagram__node--key"/>
+            <text x="156" y="83" font-size="20" text-anchor="middle" class="diagram__title">YAML configuration</text>
+            <text x="484" y="83" font-size="20" text-anchor="middle" class="diagram__title">Investor batch runner</text>
+            <text x="156" y="251" font-size="20" text-anchor="middle" class="diagram__title">Per-investor pipeline</text>
+            <text x="484" y="251" font-size="20" text-anchor="middle" class="diagram__title">Database</text>
+          </svg>
+        </div>
+        <h3 class="project__title"><a class="card__link" href="final-docs.html"><span id="final-docs-name" class="project__name project__name--final-docs">Final Docs</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">Per-investor code became configuration: a new investor is a YAML change, not a code release.</p>
+        <p class="proof">Investor onboarding cut by ~75%</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
 
-    <article class="project card" aria-labelledby="encompass-title">
-      <h3 id="encompass-title" class="project__title"><span class="project__name project__name--encompass">Encompass<br>loan automation</span></h3>
-      <p class="project__outcome">Unattended Encompass loan updates: direct API writes with a resource-lock protocol replaced an RPA-plus-manual-verify pipeline.</p>
-      <p class="project__actions"><a class="card__link" href="encompass-automation.html">Read the Encompass deep dive</a></p>
+    <article class="card door" aria-labelledby="encompass-name">
+      <div class="door__layout">
+        <div class="door__thumb" aria-hidden="true">
+          <svg viewBox="0 0 640 320" focusable="false">
+            <defs><marker id="arr-encompass-thumb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/></marker></defs>
+            <path d="M196 80 H226" stroke-width="2" marker-end="url(#arr-encompass-thumb)" class="diagram__edge"/>
+            <path d="M410 80 H440" stroke-width="2" marker-end="url(#arr-encompass-thumb)" class="diagram__edge"/>
+            <path d="M320 112 V204" stroke-width="2" marker-end="url(#arr-encompass-thumb)" class="diagram__edge"/>
+            <path d="M534 112 V204" stroke-width="2" marker-end="url(#arr-encompass-thumb)" class="diagram__edge"/>
+            <path d="M230 240 H106 V116" stroke-width="2" marker-end="url(#arr-encompass-thumb)" class="diagram__edge diagram__edge--dashed"/>
+            <rect x="16" y="48" width="180" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="230" y="48" width="180" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="444" y="48" width="180" height="64" rx="10" stroke-width="2" class="diagram__node diagram__node--key"/>
+            <rect x="230" y="208" width="180" height="64" rx="10" stroke-width="2" class="diagram__node"/>
+            <rect x="444" y="208" width="180" height="64" rx="10" stroke-width="2" class="diagram__node diagram__node--external"/>
+            <text x="106" y="87" font-size="20" text-anchor="middle" class="diagram__title">Update job</text>
+            <text x="320" y="87" font-size="20" text-anchor="middle" class="diagram__title">Exclusive lock</text>
+            <text x="534" y="87" font-size="20" text-anchor="middle" class="diagram__title">Write, read back</text>
+            <text x="320" y="247" font-size="20" text-anchor="middle" class="diagram__title">Skip the loan</text>
+            <text x="534" y="247" font-size="20" text-anchor="middle" class="diagram__title">Encompass</text>
+          </svg>
+        </div>
+        <h3 class="project__title"><a class="card__link" href="encompass-automation.html"><span id="encompass-name" class="project__name project__name--encompass">Encompass <br>loan automation</span><span class="visually-hidden">: read the deep dive</span></a></h3>
+        <p class="project__outcome">Loan updates written straight through the Encompass API, never over a loan someone has open.</p>
+        <p class="proof">Around 90% less manual effort</p>
+        <p class="door__cue" aria-hidden="true">Deep dive</p>
+      </div>
     </article>
   </div>
 
@@ -113,87 +183,65 @@
 </section>
 
 <section id="also-shipped" class="section container" aria-labelledby="also-shipped-title">
-  <h2 id="also-shipped-title" class="section__label">Also shipped</h2>
-  <details class="ledger-fold card" open>
-    <summary>The SDK, 13 automations, HydroQ&nbsp;API and open source</summary>
-    <div class="ledger">
-      <article aria-labelledby="sdk-title">
-        <header class="ledger__head">
-          <h3 id="sdk-title" class="ledger__title">Encompass REST API SDK</h3>
-          <p class="ledger__meta">PRMI</p>
-        </header>
-        <div class="ledger__body">
-          <p>The custom Python SDK under the automations is covered in the <a href="encompass-automation.html#sdk">Encompass loan automation deep dive</a>.</p>
-        </div>
-      </article>
+  <div class="also card">
+    <h2 id="also-shipped-title" class="project__title"><span class="project__name">Also shipped</span></h2>
+    <details class="also__fold">
+      <summary class="also__summary">More systems in production, from mortgage compliance to IoT.</summary>
+      <div class="ledger">
+        <article aria-labelledby="automations-title">
+          <header class="ledger__head">
+            <h3 id="automations-title" class="ledger__title ledger__title--lead">13 production automations</h3>
+          </header>
+          <div class="ledger__body">
+            <p>Compliance and investor operations for PRMI across 9 investors: ECOA adverse action, TRID, HMDA, MERS sync, final documents, HFA exceptions, Blend credit management, warehouse collateral and suspense resolution.</p>
+            <p>Three use OCR to read credit data from PDF reports.</p>
+            <p class="proof">Every run records its input and each field’s value before and after the change, and reports mask loan numbers.</p>
+            <dl class="spec">
+              <div><dt>Role</dt><dd>Sole engineer, from requirements through UAT and documentation</dd></div>
+              <div class="spec__stack"><dt>Stack</dt><dd>Python, Power Automate, SQL Server, Tesseract, Azure Document Intelligence</dd></div>
+            </dl>
+          </div>
+        </article>
 
-      <article aria-labelledby="rpa-title">
-        <header class="ledger__head">
-          <h3 id="rpa-title" class="ledger__title">13 production RPA automations</h3>
-          <p class="ledger__meta">PRMI</p>
-        </header>
-        <div class="ledger__body">
-          <p>A portfolio of automations running in production across regulatory compliance and investor operations.</p>
-          <dl class="spec">
-            <div><dt>Role</dt><dd>Sole engineer, from requirements through UAT and documentation, for every automation</dd></div>
-            <div class="spec__stack"><dt>Stack</dt><dd>Python, Power Automate, Tesseract, Azure Document Intelligence, SQL Server</dd></div>
-          </dl>
-        </div>
-      </article>
+        <article aria-labelledby="hydroq-title">
+          <header class="ledger__head">
+            <h3 id="hydroq-title" class="ledger__title">HydroQ API</h3>
+            <p class="ledger__meta">Antz AI, for client TechSpan Engineering (IoT remote monitoring)</p>
+          </header>
+          <div class="ledger__body">
+            <p>REST API for a multi-tenant remote water-quality monitoring platform. Replaced <span class="nowrap">2-4 hours</span> of manual onboarding setup per site with API-driven workflows.</p>
+            <dl class="spec">
+              <div><dt>Role</dt><dd>Designed the FastAPI interface for the database CRUD operations</dd></div>
+              <div class="spec__stack"><dt>Stack</dt><dd>FastAPI, SQLAlchemy, Pydantic, PostgreSQL, MSSQL, pytest</dd></div>
+            </dl>
+          </div>
+        </article>
 
-      <article aria-labelledby="hydroq-title">
-        <header class="ledger__head">
-          <h3 id="hydroq-title" class="ledger__title">HydroQ API</h3>
-          <p class="ledger__meta">Antz AI, for client TechSpan Engineering (IoT remote monitoring)</p>
-        </header>
-        <div class="ledger__body">
-          <p>REST API for TechSpan Engineering’s multi-tenant remote water-quality monitoring platform, replacing <span class="nowrap">2-4 hours</span> of manual onboarding setup with API-driven workflows.</p>
-          <dl class="spec">
-            <div><dt>Role</dt><dd>Designed the FastAPI interface for the database CRUD operations</dd></div>
-            <div class="spec__stack"><dt>Stack</dt><dd>FastAPI, SQLAlchemy, Pydantic, PostgreSQL, MSSQL, pytest</dd></div>
-          </dl>
-        </div>
-      </article>
-
-      <article aria-labelledby="open-source-title">
-        <header class="ledger__head">
-          <h3 id="open-source-title" class="ledger__title">Open source</h3>
-        </header>
-        <div class="ledger__body">
-          <p>Original repos with full READMEs, built to learn in the open: RAG references, retrieval experiments, and one physics calculator.</p>
-          <ul class="inline-links" role="list">
-            <li><a class="repo__name" href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-            <li><a class="repo__name" href="https://github.com/richie-rk/EncompassRest-RAG-Assistant" target="_blank" rel="noopener">EncompassRest-RAG-Assistant<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-            <li><a class="repo__name" href="https://github.com/richie-rk/PyTeslaCoil" target="_blank" rel="noopener">PyTeslaCoil<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-            <li><a class="repo__name" href="https://github.com/richie-rk/Bible-VerseFinder-AI" target="_blank" rel="noopener">Bible-VerseFinder-AI<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-          </ul>
-          <dl class="spec">
-            <div class="spec__stack"><dt>Stack</dt><dd>Python, TypeScript</dd></div>
-          </dl>
-        </div>
-      </article>
-    </div>
-  </details>
+        <p class="ledger__note"><a href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener noreferrer">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a>, my open-source full-stack RAG app on Azure.</p>
+      </div>
+    </details>
+    <ul class="also__highlights" role="list">
+      <li>13 compliance and automation systems across 9 mortgage investors, as sole engineer.</li>
+      <li>HydroQ: a FastAPI service that replaced <span class="nowrap">2-4 hours</span> of manual onboarding per site.</li>
+    </ul>
+  </div>
 </section>
 
 <section id="contact" class="section container contact" aria-labelledby="contact-title">
-  <h2 id="contact-title" class="section__label">Let’s connect</h2>
+  <h2 id="contact-title" class="section__label">Ping me</h2>
   <p class="section__lede">Feel free to reach out if there’s anything you think we could do together; I’m always open to new opportunities and connections. The fastest way to reach me:</p>
-  <p class="contact__email"><a class="email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><span class="email-copy__text">richycode.dev@gmail.com</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="copy-icon copy-icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span class="copy-label">Copy</span></span></a></p>
   <div class="email-options">
-    <div class="button-row email-options__app"><a class="button button--primary" href="mailto:richycode.dev@gmail.com">Email me</a></div>
-    <div class="button-row email-options__web"><a class="button button--secondary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=richycode.dev%40gmail.com" target="_blank" rel="noopener">Open in Gmail<span class="visually-hidden"> (opens in a new tab)</span></a><a class="button button--secondary" href="https://outlook.live.com/mail/0/deeplink/compose?to=richycode.dev%40gmail.com" target="_blank" rel="noopener">Open in Outlook<span class="visually-hidden"> (opens in a new tab)</span></a></div>
+    <div class="button-row email-options__app"><a class="button button--primary" href="mailto:richycode.dev@gmail.com"><span class="button__label">Email me</span></a></div>
+    <div class="button-row email-options__web"><a class="button button--secondary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=richycode.dev%40gmail.com" target="_blank" rel="noopener"><span class="button__label">Open in Gmail</span><span class="visually-hidden"> (opens in a new tab)</span></a><a class="button button--secondary" href="https://outlook.live.com/mail/0/deeplink/compose?to=richycode.dev%40gmail.com" target="_blank" rel="noopener"><span class="button__label">Open in Outlook</span><span class="visually-hidden"> (opens in a new tab)</span></a></div>
   </div>
+  <ul class="inline-links contact__links" role="list">
+    <li><a class="contact-link" href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-discord"/></svg><span class="contact-link__label">Message me on Discord</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="contact-link" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-linkedin"/></svg><span class="contact-link__label">Message me on LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+  </ul>
   <dl class="spec">
     <div><dt>Location</dt><dd>Mumbai, India</dd></div>
     <div><dt>Time zone</dt><dd>IST (UTC+5:30)</dd></div>
   </dl>
-  <p class="contact__discord">For open-source collaborations and anything else, message me on Discord.</p>
-  <ul class="social-links" role="list">
-    <li><a href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/></svg>Discord<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-  </ul>
 </section>
 
 </main>
@@ -201,14 +249,14 @@
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <ul class="site-footer__links" role="list">
-      <li><a class="email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><span class="email-copy__text">richycode.dev@gmail.com</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="copy-icon copy-icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span class="copy-label">Copy</span></span></a></li>
-      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener">Discord<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="Richy_Koshy_CV.pdf" download>Download CV (PDF)</a></li>
-      <li><a href="letter.html">Testimonial letter</a></li>
+      <li><a class="contact-link contact-link--muted email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-mail"/></svg><span class="contact-link__label">Email</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-copy"/></svg><svg class="copy-icon copy-icon--done" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-check"/></svg><span class="copy-label">Copy</span></span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-linkedin"/></svg><span class="contact-link__label">LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://github.com/richie-rk" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-github"/></svg><span class="contact-link__label">GitHub</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-discord"/></svg><span class="contact-link__label">Discord</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="Richy_Koshy_CV.pdf" download><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-download"/></svg><span class="contact-link__label">CV</span><span class="visually-hidden"> (PDF)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="letter.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-letter"/></svg><span class="contact-link__label">Testimonial</span></a></li>
     </ul>
-    <p class="site-footer__meta">Last updated 5 October 2026. &copy; 2026 Richy Koshy. Built by hand, hosted on GitHub Pages, no trackers.</p>
+    <p class="site-footer__meta">Last updated 6 October 2026. &copy; 2026 Richy Koshy. Built by hand, hosted on GitHub Pages, no trackers.</p>
   </div>
 </footer>
 </body>

@@ -13,17 +13,17 @@
     }).observe(header);
   }
 
-  // Copying. data-copy holds the text, or data-copy-from points at an element to
-  // copy. One shared live region announces the result to screen readers.
+  // Copying. data-copy holds the text; one shared live region announces the
+  // result to screen readers.
   var status = document.createElement('div');
   status.className = 'visually-hidden';
   status.setAttribute('role', 'status');
   document.body.appendChild(status);
 
-  // Email addresses are mailto links without JS. With JS they become real
-  // buttons that copy the address; the "Open in…" buttons still open a draft.
-  // The name is the visible address, then a hidden "Copy email address", so it
-  // starts with the visible text; the visible "Copy" label is aria-hidden.
+  // Email links are mailto links without JS. With JS they become real buttons
+  // that copy the address; the "Open in…" buttons still open a draft. The name
+  // is the visible label, then a hidden ", copy the address", so it starts with
+  // the visible text; the visible "Copy" label is aria-hidden.
   document.querySelectorAll('a.email-copy').forEach(function (link) {
     var button = document.createElement('button');
     button.type = 'button';
@@ -32,7 +32,7 @@
     while (link.firstChild) button.appendChild(link.firstChild);
     var hint = document.createElement('span');
     hint.className = 'visually-hidden';
-    hint.textContent = ' Copy email address';
+    hint.textContent = ', copy the address';
     button.appendChild(hint);
     link.parentNode.replaceChild(button, link);
   });
@@ -61,7 +61,7 @@
     }
     return legacyCopy(text);
   };
-  document.querySelectorAll('button[data-copy], button[data-copy-from]').forEach(function (button) {
+  document.querySelectorAll('button[data-copy]').forEach(function (button) {
     // A .copy-label shows the state in words; data-state swaps the icons in CSS.
     var labelEl = button.querySelector('.copy-label');
     var label = labelEl && labelEl.textContent;
@@ -78,28 +78,17 @@
       }, 1600);
     };
     button.addEventListener('click', function () {
-      var from = button.getAttribute('data-copy-from');
-      var source = from && document.querySelector(from);
-      var text = source ? source.innerText : button.getAttribute('data-copy');
+      var text = button.getAttribute('data-copy');
       copyText(text).then(function () {
         report('copied', 'Copied', 'Copied to the clipboard');
       }, function () {
-        // An email label keeps the width of "Copied", which "Failed" fits.
-        report('failed', from ? 'Copy failed' : 'Failed', from ? 'Copying failed. Select the text and copy it instead.' : 'Copying failed. The address is ' + text);
+        // Most labels don't show the address, so a failed copy opens a draft
+        // instead. An email label keeps the width of "Copied", which "Failed" fits.
+        report('failed', 'Failed', 'Copying failed, so your email app opens instead. The address is ' + text);
+        window.location.href = 'mailto:' + text;
       });
     });
   });
-
-  // "Also shipped" folds on phones only. From 48rem the list is meant to be
-  // open, so open it whenever the window is or becomes that wide (a phone
-  // turned sideways, even before this script loaded).
-  var fold = document.querySelector('.ledger-fold');
-  var wide = window.matchMedia && window.matchMedia('(min-width: 48rem)');
-  if (fold && wide) {
-    var openIfWide = function () { if (wide.matches) fold.open = true; };
-    openIfWide();
-    if (wide.addEventListener) wide.addEventListener('change', openIfWide);
-  }
 
   // Theme. The inline <head> script applies any saved choice before first paint
   // and adds .js, which reveals the toggle through CSS. Without light-dark()

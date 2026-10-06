@@ -37,12 +37,12 @@
       <ul class="site-nav__list">
         <li><a href="index.html#work" aria-current="true">Work</a></li>
         <li><a href="cv.html">CV</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </nav>
     <ul class="site-header__social" role="list">
-      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="visually-hidden">GitHub (opens in a new tab)</span></a></li>
-      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg><span class="visually-hidden">LinkedIn (opens in a new tab)</span></a></li>
+      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-github"/></svg><span class="visually-hidden">GitHub (opens in a new tab)</span></a></li>
+      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-linkedin"/></svg><span class="visually-hidden">LinkedIn (opens in a new tab)</span></a></li>
     </ul>
     <button class="theme-toggle" type="button" aria-pressed="false">
       <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg><svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -55,16 +55,25 @@
 <article class="case-study container" aria-labelledby="case-title">
   <header class="case-study__head">
     <h1 id="case-title" class="case-study__title"><span class="case-study__name case-study__name--final-docs">Final Docs</span><span class="visually-hidden">: </span><span class="case-study__claim">Treat an investor as data, not code.</span></h1>
-    <p class="case-study__summary">Every investor reports exceptions in its own format. Final Docs turns them into one consistent picture, reconciled against custodian records, so the business knows exactly what is missing, where. I owned the <strong>architecture and the build</strong> end to end.</p>
+    <p class="case-study__summary">Investors that buy PRMI’s loans need their final documents; First American ships them. Each investor reports exceptions its own way, and Final Docs reconciles them against First American’s records to show what is missing, where. I owned the architecture and build.</p>
     <dl class="case-study__overview card">
       <div><dt>Role</dt><dd>Architecture and build, end to end</dd></div>
       <div><dt>Team</dt><dd>With PRMI’s closing, compliance and development teams</dd></div>
       <div><dt>Impact</dt><dd>4 investors in one month; onboarding cut from <span class="nowrap">2-4 weeks</span> to days</dd></div>
       <div class="spec__stack"><dt>Stack</dt><dd><ul class="tags tags--muted" role="list"><li>Python</li><li>Pandas</li><li>SQLAlchemy</li><li>YAML config</li><li>OpenPyXL</li><li>Encompass API</li><li>Strategy pattern</li></ul></dd></div>
     </dl>
+    <section class="case-study__brief card" aria-labelledby="brief-title">
+      <h2 id="brief-title" class="visually-hidden">In brief</h2>
+      <dl class="spec">
+        <div><dt>Problem</dt><dd>Every new investor meant bespoke code, tests, a test environment in the loan system, UAT and a release: two sprints before its first report. Growth of the investor network was capped by engineering capacity, not by the business.</dd></div>
+        <div><dt>Approach</dt><dd class="flow"><p>One reconciliation engine, with each investor described in YAML: where its report lives, how its columns map to a shared schema, and whether loan numbers need recovering.</p><p>The few investors that need custom logic name a registered handler instead of adding a branch.</p><p>All investors run through the same pipeline into one table, so several can be onboarded and tested together.</p></dd></div>
+        <div><dt>Outcome</dt><dd class="flow"><p>Onboarding a new investor fell from 2 to 4 weeks to days, about 75% less.</p><p>Four new investors were integrated in the month after the refactor, work that previously took a full quarter of engineering capacity, and two other automation initiatives adopted the design as their template.</p></dd></div>
+        <div><dt>Next</dt><dd>Batch the loan-number lookups instead of calling the loan system once per row, and report a record with neither a loan number nor a document type once, not twice.</dd></div>
+      </dl>
+    </section>
     <figure class="figure case-study__figure" id="diagram">
       <div class="figure__scroll" role="region" tabindex="0" aria-labelledby="architecture-caption">
-      <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: a batch orchestrator reads YAML configuration and creates one data processor per investor; each processor loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">
+      <svg viewBox="0 0 940 640" role="img" aria-label="Final Docs architecture: an investor batch runner reads YAML configuration and starts one run per investor; each run loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--wide">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -112,12 +121,12 @@
         <text x="120" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">one file per investor</text>
 
         <rect x="265" y="46" width="235" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="382" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor Batch Orchestrator</text>
-        <text x="382" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">iterates the requested investors</text>
+        <text x="382" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor batch runner</text>
+        <text x="382" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">runs the requested investors together</text>
 
         <rect x="545" y="46" width="370" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="732" y="74" font-size="13" text-anchor="middle" class="diagram__title">Investor Data Processor</text>
-        <text x="732" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">same pipeline for every investor</text>
+        <text x="732" y="74" font-size="13" text-anchor="middle" class="diagram__title">One run per investor</text>
+        <text x="732" y="92" font-size="10.5" text-anchor="middle" class="diagram__label">same steps for every investor</text>
 
         <!-- reports box -->
         <rect x="20" y="152" width="176" height="62" rx="10" stroke-width="1.2" class="diagram__node"/>
@@ -158,9 +167,9 @@
 
         <rect x="530" y="542" width="260" height="66" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="660" y="570" font-size="13" text-anchor="middle" class="diagram__title">Mismatch report</text>
-        <text x="660" y="588" font-size="10.5" text-anchor="middle" class="diagram__label">unmatched, duplicates, unresolved ids</text>
+        <text x="660" y="588" font-size="10.5" text-anchor="middle" class="diagram__label">no loan number, not at First American, duplicates</text>
       </svg>
-      <svg viewBox="0 0 340 830" width="340" height="830" role="img" aria-label="Final Docs architecture: a batch orchestrator reads YAML configuration and creates one data processor per investor; each processor loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--stacked">
+      <svg viewBox="0 0 340 844" width="340" height="844" role="img" aria-label="Final Docs architecture: an investor batch runner reads YAML configuration and starts one run per investor; each run loads reports, normalizes columns, resolves the PRMI Loan Number via Encompass, standardizes document types and persists to the database; a reconciliation stage merges the consolidated data with First American custodian data on the PRMI Loan Number and produces Missing/Defect and Mismatch reports." class="diagram diagram--stacked">
         <defs>
           <marker id="arr-stacked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" class="diagram__arrow"/>
@@ -185,12 +194,12 @@
         <text x="170" y="68" font-size="12" text-anchor="middle" class="diagram__label">one file per investor</text>
 
         <rect x="8" y="104" width="324" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="170" y="126" font-size="14" text-anchor="middle" class="diagram__title">Investor Batch Orchestrator</text>
-        <text x="170" y="144" font-size="12" text-anchor="middle" class="diagram__label">iterates the requested investors</text>
+        <text x="170" y="126" font-size="14" text-anchor="middle" class="diagram__title">Investor batch runner</text>
+        <text x="170" y="144" font-size="12" text-anchor="middle" class="diagram__label">runs the requested investors together</text>
 
         <rect x="8" y="180" width="324" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
-        <text x="170" y="202" font-size="14" text-anchor="middle" class="diagram__title">Investor Data Processor</text>
-        <text x="170" y="220" font-size="12" text-anchor="middle" class="diagram__label">same pipeline for every investor</text>
+        <text x="170" y="202" font-size="14" text-anchor="middle" class="diagram__title">One run per investor</text>
+        <text x="170" y="220" font-size="12" text-anchor="middle" class="diagram__label">same steps for every investor</text>
 
         <rect x="8" y="256" width="156" height="52" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="86" y="278" font-size="13" text-anchor="middle" class="diagram__title">Investor reports</text>
@@ -229,15 +238,16 @@
         <text x="170" y="698" font-size="12" text-anchor="middle" class="diagram__label">merge on PRMI Loan Number</text>
         <text x="170" y="714" font-size="12" text-anchor="middle" class="diagram__label">rerun-safe, nothing silently dropped</text>
 
-        <rect x="8" y="750" width="156" height="72" rx="10" stroke-width="1.2" class="diagram__node"/>
+        <rect x="8" y="750" width="156" height="86" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="86" y="772" font-size="13" text-anchor="middle" class="diagram__title">Missing / Defect report</text>
         <text x="86" y="790" font-size="11" text-anchor="middle" class="diagram__label">Excel sheet +</text>
         <text x="86" y="805" font-size="11" text-anchor="middle" class="diagram__label">database table</text>
 
-        <rect x="176" y="750" width="156" height="72" rx="10" stroke-width="1.2" class="diagram__node"/>
+        <rect x="176" y="750" width="156" height="86" rx="10" stroke-width="1.2" class="diagram__node"/>
         <text x="254" y="772" font-size="13" text-anchor="middle" class="diagram__title">Mismatch report</text>
-        <text x="254" y="790" font-size="11" text-anchor="middle" class="diagram__label">unmatched, duplicates,</text>
-        <text x="254" y="805" font-size="11" text-anchor="middle" class="diagram__label">unresolved ids</text>
+        <text x="254" y="790" font-size="11" text-anchor="middle" class="diagram__label">no loan number,</text>
+        <text x="254" y="805" font-size="11" text-anchor="middle" class="diagram__label">not at First American,</text>
+        <text x="254" y="820" font-size="11" text-anchor="middle" class="diagram__label">duplicates</text>
       </svg>
       </div>
       <figcaption id="architecture-caption">Configuration decides how each investor is processed; the database is the boundary between preparation and reconciliation.</figcaption>
@@ -252,6 +262,7 @@
         <li><a href="#reconciliation">Reconciliation</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#results">Results</a></li>
+        <li><a href="#next">Next steps</a></li>
       </ul>
     </nav>
   </header>
@@ -273,44 +284,46 @@
     <p>So there were two problems to solve, not one: <strong>convert heterogeneous investor data into a unified internal representation</strong>, and <strong>reconcile it against First American custodian data</strong> to identify missing documents and discrepancies.</p>
   </section>
 
-  <section id="configuration" class="case-study__section prose" aria-labelledby="configuration-title">
-    <h2 id="configuration-title">What used to be code became configuration</h2>
-    <p>Each investor is described by one YAML file:</p>
-    <ul>
-      <li>source directory and report name</li>
-      <li>a <code>column_map</code> that translates the investor’s column names into the common schema</li>
-      <li>whether loan-number resolution is required</li>
-      <li>document-type mappings</li>
-      <li>where needed, the name of a custom processing hook.</li>
-    </ul>
-    <p>Illustrative shape, names generalized:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative investor configuration in YAML"><code><span class="code__comment"># one file per investor: source, mapping, hooks</span>
-<span class="code__key">Investor-A</span>:
-  <span class="code__key">project_directories</span>:
-    <span class="code__key">report_folders</span>: <span class="code__value">investor-a/reports</span>
-    <span class="code__key">report_name</span>: <span class="code__value">exception-report.xlsx</span>
-  <span class="code__key">get_PRMI_loan_number</span>: <span class="code__value">true</span>
-  <span class="code__key">column_map</span>:
-    <span class="code__key">PRMI Loan Number</span>: <span class="code__value">Seller Loan Number</span>
-    <span class="code__key">LOAN NUMBER</span>: <span class="code__value">Investor Loan Number</span>
-    <span class="code__key">BORROWER FIRST</span>: <span class="code__value">Borrower Name</span>
-    <span class="code__key">Document Type</span>: <span class="code__value">Document</span></code></pre>
-    <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape.</p>
-    <p>The core modules treat an investor as data, not as hard-wired branches.</p>
+  <section id="configuration" class="case-study__section case-study__aside" aria-labelledby="configuration-title">
+    <div class="prose">
+      <h2 id="configuration-title">What used to be code became configuration</h2>
+      <p>Each investor is described by one YAML file:</p>
+      <ul>
+        <li>source directory and report name</li>
+        <li>a column map that translates the investor’s column names into the common schema</li>
+        <li>whether loan-number resolution is required</li>
+        <li>document-type mappings</li>
+        <li>where needed, the name of a custom processing hook.</li>
+      </ul>
+      <p>The processor reverses the configured mapping, renames the incoming DataFrame into the standardized field names, and adds any missing columns as nulls, so the output structure is identical regardless of the input shape.</p>
+      <p>The core modules treat an investor as data, not as hard-wired branches.</p>
+    </div>
+    <figure class="figure flow-figure">
+      <ol class="steps flow-steps" role="list">
+        <li>Bots fetch each investor’s exception report into a dated folder. A few investors need a custom handler instead, such as a second-liens list built from the loan system.</li>
+        <li>Map the investor’s columns onto one shared schema.</li>
+        <li>Recover PRMI’s loan number from the loan system when the investor gives only its own.</li>
+        <li>Read the document type out of free-text comments.</li>
+        <li>Standardize document names, so a dozen spellings become one.</li>
+        <li class="flow-steps__boundary">Store the day’s investor records: the line between preparing and reconciling.</li>
+        <li>Bring in First American’s imaged-not-shipped list, falling back to the previous Monday’s.</li>
+        <li>Keep the earliest copy of each record, so reruns are safe.</li>
+        <li>Match on PRMI loan number and sort every record:
+          <ul>
+            <li>Missing/Defect: the action list.</li>
+            <li>Mismatch, with a reason: no loan number, not at First American with no document type, or a duplicate.</li>
+          </ul>
+        </li>
+        <li>Publish an Excel feedback report with a summary sheet, and keep the history in the database.</li>
+      </ol>
+      <figcaption>From investor report to action list. Steps 2 to 5 follow each investor’s configuration; step 6 is the line between preparing and reconciling.</figcaption>
+    </figure>
   </section>
 
   <section id="dispatch" class="case-study__section prose" aria-labelledby="dispatch-title">
     <h2 id="dispatch-title">Custom paths without touching the core</h2>
     <p>Not every investor can be processed by reading a file. Some need custom data generation: one path builds a second-liens dataset by querying the loan origination system (Encompass) directly and filtering loans on their milestone history.</p>
-    <p>Those paths live in a <strong>dispatch table</strong>: the YAML names a key, the processor looks up the callable. Illustrative shape:</p>
-    <pre tabindex="0" role="region" aria-label="Illustrative dispatch table in Python"><code><span class="code__key">FD_DATA_FUNCTION_MAP</span> = {
-    <span class="code__value">"Second-Liens"</span>: generate_second_liens_data,
-    <span class="code__value">"Investor-B-Document-Types"</span>: investor_b_document_types,
-    <span class="code__value">"Investor-C-Document-Types"</span>: investor_c_document_types,
-}
-<span class="code__comment"># config names the key</span>
-handler = FD_DATA_FUNCTION_MAP[config_key]
-data = handler()</code></pre>
+    <p>Those paths live in a <strong>dispatch table</strong>: the configuration names a handler, and the processor looks it up and calls it.</p>
     <p>The alternative is the familiar failure mode: <code>if investor A</code>, <code>elif investor B</code>, and a central workflow that grows a branch per counterparty.</p>
     <p>The registry keeps the central processor stable; adding a custom path means registering a function and naming it in configuration, never editing the dispatch core. Open for extension, closed for modification.</p>
   </section>
@@ -324,7 +337,7 @@ data = handler()</code></pre>
       </li>
       <li class="flow">
         <p><b>Document vocabulary.</b> Free-text comments are inspected for known keywords to infer a standardized document type.</p>
-        <p>Existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become <code>Final Title Insurance</code>.</p>
+        <p>Existing document-type values are normalized through a second mapping, so a dozen spellings of a title policy all become one standard name.</p>
         <p>Reconciliation then operates on standardized business terminology, not investor-specific variations.</p>
       </li>
     </ul>
@@ -334,10 +347,8 @@ data = handler()</code></pre>
     <h2 id="reconciliation-title">Every record lands in a category</h2>
     <p>The consolidated investor data is compared with First American custodian data, joined on the PRMI Loan Number. Findings separate into business categories, and nothing is silently dropped:</p>
     <ul>
-      <li>matched records produce the <strong>Missing/Defect</strong> findings</li>
-      <li>investor records whose loan number is absent from the custodian data are reported as <strong>mismatches</strong></li>
-      <li>records whose PRMI Loan Number could not be resolved are called out separately</li>
-      <li>duplicate loan-and-document-type combinations are detected and reported.</li>
+      <li><strong>Missing/Defect</strong>, the action list: every record that matches First American’s data, plus records First American doesn’t hold that still carry a document type.</li>
+      <li><strong>Mismatch</strong>, each with its reason: no PRMI Loan Number, not at First American and no document type, or a duplicate loan-and-document-type combination.</li>
     </ul>
     <ul class="card card--list" role="list">
       <li><b>Rerun-safe:</b> same-day duplicates from re-runs are collapsed before reconciliation, earliest record wins, so reprocessing is idempotent.</li>
@@ -347,7 +358,7 @@ data = handler()</code></pre>
     </ul>
     <p>The output is:</p>
     <ul>
-      <li>an Excel workbook with <code>Missing_Defect</code>, <code>Mismatch</code> and the consolidated investor report plus a summary sheet</li>
+      <li>an Excel workbook with a Missing/Defect sheet, a Mismatch sheet and the consolidated investor report, plus a summary sheet</li>
       <li>the same findings persisted to the database so downstream systems can consume the results without touching the spreadsheet.</li>
     </ul>
   </section>
@@ -361,7 +372,7 @@ data = handler()</code></pre>
       <li><strong>Reconciliation</strong> decides what is missing or inconsistent.</li>
       <li><strong>Reporting</strong> decides what the business sees.</li>
     </ul>
-    <p>An Investor Batch Orchestrator loads the YAML configuration and creates one Investor Data Processor per requested investor; every processor runs the same pipeline:</p>
+    <p>An investor batch runner loads the YAML configuration and starts one run per requested investor, so several investors can be processed and tested together. Every run goes through the same pipeline:</p>
     <ol class="steps" role="list">
       <li>Load</li>
       <li>Normalize columns</li>
@@ -378,7 +389,7 @@ data = handler()</code></pre>
   <section id="results" class="case-study__section prose" aria-labelledby="results-title">
     <h2 id="results-title">Investor expansion at deal speed</h2>
     <ul class="stats card card--list" role="list">
-      <li><span class="stats__value">Days</span> <span class="stats__label">to onboard a new investor, down from <span class="nowrap">2-4 weeks</span>: a YAML change, not a code release.</span></li>
+      <li><span class="stats__value">Days</span> <span class="stats__label">to onboard a new investor, down from <span class="nowrap">2-4 weeks</span> (about 75% less): a YAML change, not a code release.</span></li>
       <li><span class="stats__value">4</span> <span class="stats__label">new investors integrated in the month after the refactor.</span></li>
       <li><span class="stats__value">2</span> <span class="stats__label">other automation initiatives adopted the architecture as their template.</span></li>
     </ul>
@@ -388,6 +399,14 @@ data = handler()</code></pre>
       <blockquote><p><span class="quote__mark">“</span>PRMI now treats investor expansion as a business decision, not a dev-capacity constraint.<span class="quote__mark">”</span></p></blockquote>
       <figcaption>Corban Wells, VP of Technology Product Management, PRMI<br><a class="quote__link" href="letter.html">Read Corban Wells’s full letter</a></figcaption>
     </figure>
+  </section>
+
+  <section id="next" class="case-study__section prose" aria-labelledby="next-title">
+    <h2 id="next-title">What I’d do next: faster lookups, cleaner exceptions</h2>
+    <ul class="card card--list" role="list">
+      <li><b>Batch the loan-number lookups.</b> Recovery calls the loan system once per row, one at a time; batching them, or running them concurrently, would cut run time on large reports.</li>
+      <li><b>Report every unresolved record once.</b> In the version I shipped, a record with neither a loan number nor a document type lands in the Mismatch report twice.</li>
+    </ul>
   </section>
 
   <footer class="case-study__end">
@@ -401,17 +420,17 @@ data = handler()</code></pre>
 </article>
 </main>
 
-<footer class="site-footer" id="contact">
+<footer class="site-footer">
   <div class="container site-footer__inner">
     <ul class="site-footer__links" role="list">
-      <li><a class="email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><span class="email-copy__text">richycode.dev@gmail.com</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="copy-icon copy-icon--done" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span class="copy-label">Copy</span></span></a></li>
-      <li><a href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="https://github.com/richie-rk" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener">Discord<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      <li><a href="Richy_Koshy_CV.pdf" download>Download CV (PDF)</a></li>
-      <li><a href="letter.html">Testimonial letter</a></li>
+      <li><a class="contact-link contact-link--muted email-copy" href="mailto:richycode.dev@gmail.com" data-copy="richycode.dev@gmail.com"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-mail"/></svg><span class="contact-link__label">Email</span><span class="email-copy__action" aria-hidden="true"><svg class="copy-icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-copy"/></svg><svg class="copy-icon copy-icon--done" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-check"/></svg><span class="copy-label">Copy</span></span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://linkedin.com/in/richy-koshy" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-linkedin"/></svg><span class="contact-link__label">LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://github.com/richie-rk" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-github"/></svg><span class="contact-link__label">GitHub</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="https://discord.com/users/1087427486054371399" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-discord"/></svg><span class="contact-link__label">Discord</span><span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="Richy_Koshy_CV.pdf" download><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-download"/></svg><span class="contact-link__label">CV</span><span class="visually-hidden"> (PDF)</span></a></li>
+      <li><a class="contact-link contact-link--muted" href="letter.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="images/icons.svg#i-letter"/></svg><span class="contact-link__label">Testimonial</span></a></li>
     </ul>
-    <p class="site-footer__meta">Last updated 5 October 2026. &copy; 2026 Richy Koshy. Built by hand, hosted on GitHub Pages, no trackers.</p>
+    <p class="site-footer__meta">Last updated 6 October 2026. &copy; 2026 Richy Koshy. Built by hand, hosted on GitHub Pages, no trackers.</p>
   </div>
 </footer>
 </body>

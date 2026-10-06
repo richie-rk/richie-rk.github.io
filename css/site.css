@@ -1,8 +1,7 @@
 /* Richy Koshy portfolio: the one shared stylesheet. Governed by DESIGN_RULES.md. */
 @layer tokens, base, layout, components, utilities;
 
-/* Fonts: one variable Plex Sans for 400 and 600, Latin subset; arrows and the
-   check mark fall back per glyph. */
+/* Plex Sans (variable) for 400 and 600, Latin subset. */
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("../fonts/plex-sans.woff2") format("woff2");
@@ -59,7 +58,7 @@
   descent-override: 28.36%;
   line-gap-override: 0%;
 }
-/* Android has neither Arial nor Liberation, so Roboto gets its own tuned family. */
+/* Android: Roboto, tuned on its own. */
 @font-face {
   font-family: "Plex Sans Fallback Android";
   src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular");
@@ -80,7 +79,7 @@
   descent-override: 26.66%;
   line-gap-override: 0%;
 }
-/* Every mono candidate advances 0.6em like Plex Mono: one override set fits all. */
+/* Mono candidates all advance 0.6em, so one override set fits. */
 @font-face {
   font-family: "Plex Mono Fallback";
   src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("Cousine"), local("Droid Sans Mono"), local("DroidSansMono"), local("Roboto Mono");
@@ -92,8 +91,7 @@
   line-gap-override: 0%;
 }
 
-/* Signature moment: cross-document view transitions, only without reduced
-   motion. */
+/* Cross-document view transitions, only without reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
@@ -106,8 +104,6 @@
     color-scheme: dark;
     --bg: #0B0E1C;
     --surface: #141A2E;
-    /* Dark text: white for headings and keywords; body off-white with a faint
-       teal cast (APCA Lc 90); muted 0.12 darker in that hue. */
     --text: #DDE7E4;                /* 15.20:1 on bg, 13.66:1 on surface; APCA Lc 90 */
     --text-strong: #FFFFFF;         /* headings and bold keywords only */
     --text-muted: #AEC3BE;          /* 10.38:1 on bg, 9.33:1 on surface; APCA Lc 67 */
@@ -115,10 +111,10 @@
     --border-strong: #6A7391;       /* UI borders; fails as small text, so never used for text */
     --accent: #5FD4B0;
     --accent-hover: #83E3C6;
+    --accent-pressed: #A3EAD5;      /* a step past hover in the same hue */
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
     --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
-    /* Links take the accent's lighter tint: Lc 78, where #5FD4B0 is Lc 68,
-       under the 75 floor. */
+    /* Links: the accent's lighter tint (Lc 78; #5FD4B0 is Lc 68). */
     --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
     --focus: #5FD4B0;
     --shadow-colour: rgb(4 6 14 / 0.55);
@@ -182,11 +178,11 @@
     --underline-offset-current: 0.35em;
     --keyword-underline: 0.11em;
     --keyword-underline-offset: 0.16em;
-    /* The signature title rule, em-based so both view-transition snapshots
-       scale together. */
+    /* em-based, so both view-transition snapshots scale together. */
     --title-rule: 0.0625em;
     --title-rule-gap: 0.125em;
     --icon-size: 1.25rem;
+    --icon-size-sm: 1.125rem;
     --glow-size: 0.375rem;
     --icon-stroke: 1.75;
     --z-header: 50;
@@ -202,7 +198,6 @@
     --duration-fade-out: 150ms;
     --duration-fade-in: 250ms;
     --duration-hover: 150ms;
-    --lift: 0.125rem;
   }
 
   /* One declaration per token for both themes; color-scheme picks the branch. */
@@ -218,6 +213,7 @@
       --border-strong: light-dark(#6A7391, #6A7391);  /* light: 4.35:1 on bg */
       --accent: light-dark(#0A7C5F, #5FD4B0);         /* teal fails on light (1.69:1); #0A7C5F is 4.79:1 */
       --accent-hover: light-dark(#086A51, #83E3C6);
+      --accent-pressed: light-dark(#065541, #A3EAD5);
       --accent-contrast: light-dark(#FFFFFF, #04241A);
       /* Non-text teal in light mode: 3.12:1 on bg, 3.37:1 on surface. */
       --rule-accent: light-dark(#1F9E7A, #5FD4B0);
@@ -267,8 +263,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Headings and bold keywords take the strongest colour, so skimmers can
-     follow them. */
   h1, h2, h3, h4 {
     color: var(--text-strong);
     font-weight: var(--weight-strong);
@@ -305,7 +299,7 @@
   img, svg, picture, video { display: block; max-inline-size: 100%; }
   img { block-size: auto; }
 
-  code, kbd, samp, pre { font-family: var(--font-mono); font-size: 1em; }
+  code { font-family: var(--font-mono); font-size: 1em; }
   button, input, select, textarea { font: inherit; color: inherit; }
   button { cursor: pointer; }
 
@@ -352,7 +346,7 @@
   }
 
   .section { padding-block: var(--section-space); }
-  /* Adjacent sections share one gap rather than doubling their padding. */
+  /* Adjacent sections share one gap. */
   .section + .section { padding-block-start: 0; }
 
   .prose {
@@ -380,8 +374,7 @@
   }
   .skip-link:focus { transform: none; }
 
-  /* Header: sticky and identical on every page, so it holds still in view
-     transitions. */
+  /* Sticky and identical on every page, so it holds still in view transitions. */
   .site-header {
     position: sticky;
     inset-block-start: 0;
@@ -435,7 +428,7 @@
   }
   .site-nav__list a:hover { color: var(--text); }
 
-  /* Header marks with the teal hover glow Richy asked for (§11), from 30rem. */
+  /* Header marks with Richy's teal hover glow, from 30rem. */
   .site-header__social {
     display: none;
     gap: var(--space-1);
@@ -448,11 +441,6 @@
     inline-size: var(--target);
     block-size: var(--target);
     color: var(--text-muted);
-  }
-  .site-header__social svg {
-    inline-size: var(--icon-size);
-    block-size: var(--icon-size);
-    fill: currentColor;
   }
   .site-header__social a:hover { color: var(--text); }
   .site-header__social a:hover svg { filter: drop-shadow(0 0 var(--glow-size) var(--accent)); }
@@ -482,17 +470,13 @@
     padding: 0;
     list-style: none;
   }
-  .site-footer__links a {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--target);
-  }
+  /* The footer stays monochrome, its focus ring included. */
+  .site-footer :focus-visible { outline-color: var(--text-strong); }
   .site-footer__meta {
     font-size: var(--step--1);
     max-inline-size: var(--measure);
   }
 
-  /* Full-size links from 360px; compact gaps until 48rem keep the row whole. */
   @media (min-width: 22.5rem) {
     .site-nav__list a { font-size: inherit; padding-inline: var(--space-1); }
   }
@@ -503,8 +487,7 @@
 }
 
 @layer components {
-  /* Buttons: primary, secondary, tertiary (a link). Hover changes colour;
-     nothing moves. */
+  /* Buttons: colour-only states; tertiary is a text link. */
   .button {
     display: inline-flex;
     align-items: center;
@@ -518,68 +501,74 @@
     line-height: var(--leading-snug);
     text-decoration: none;
     text-align: center;
-    text-wrap: balance;
+  }
+  /* A cap-to-baseline trim centres the label; padding is the fallback. */
+  .button__label { text-box: trim-both cap alphabetic; }
+  @media (min-width: 22.5rem) {
+    .button { white-space: nowrap; }
   }
   .button--primary {
     background: var(--accent);
     color: var(--accent-contrast);
   }
-  .button--primary:hover { background: var(--accent-hover); }
-  /* A surface-fill hover would be invisible (1.1:1), so the outline takes the
-     text colour. */
   .button--secondary {
     border-color: var(--border-strong);
     background: transparent;
     color: var(--text);
   }
-  .button--secondary:hover { border-color: var(--text); }
-
-  /* The hero keywords' teal underline, a §11 exception Richy asked for; thick
-     and low, so not a link. */
-  .hero__keyword {
-    text-decoration-line: underline;
-    text-decoration-color: var(--rule-accent);
-    text-decoration-thickness: var(--keyword-underline);
-    text-underline-offset: var(--keyword-underline-offset);
+  @media (hover: hover) {
+    .button--primary:hover { background: var(--accent-hover); }
+    .button--secondary:hover { border-color: var(--text-strong); color: var(--text-strong); }
+  }
+  .button--primary:active { background: var(--accent-pressed); }
+  .button--secondary:active {
+    border-color: var(--text-strong);
+    background: var(--surface);
+    color: var(--text-strong);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .button,
+    .contact-link { transition: background-color var(--duration-hover), border-color var(--duration-hover), color var(--duration-hover); }
   }
 
+  /* Icons come from images/icons.svg and take the text colour. */
+  .icon {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    flex: none;
+    fill: currentColor;
+  }
+  .button .icon {
+    inline-size: var(--icon-size-sm);
+    block-size: var(--icon-size-sm);
+  }
   .copy-icon {
     inline-size: var(--inline-icon);
     block-size: var(--inline-icon);
     flex: none;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: var(--icon-stroke);
-    stroke-linecap: round;
-    stroke-linejoin: round;
   }
   .copy-icon--done,
   [data-state="copied"] .copy-icon { display: none; }
   [data-state="copied"] .copy-icon--done { display: inline; }
 
-  /* Emails become copy buttons with JS; without it they stay mailto links. */
-  .email-copy {
+  /* Email links: copy buttons with JS, mailto links without. */
+  .email-copy,
+  .contact-link {
     display: inline-flex;
-    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     min-block-size: var(--target);
+  }
+  .email-copy {
+    flex-wrap: wrap;
     padding: 0;
     border: 0;
     background: none;
-    color: var(--link);
     font: inherit;
     text-align: start;
     cursor: pointer;
   }
-  .email-copy__text {
-    text-decoration-line: underline;
-    text-decoration-thickness: var(--border-width);
-    text-underline-offset: var(--underline-offset);
-    overflow-wrap: anywhere;
-  }
-  .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
-  /* With JS, a visible "Copy" label, outlined like a control, not a tag. */
+  /* With JS, a visible "Copy" label outlined like a control. */
   .email-copy__action { display: none; }
   .js .email-copy__action {
     display: inline-grid;
@@ -604,35 +593,14 @@
     visibility: hidden;
   }
 
-
-  /* Social links: the same teal hover glow as the header icons. */
-  .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5);
-    padding: 0;
-    list-style: none;
-  }
-  .social-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-block-size: var(--target);
+  /* Contact links: monochrome icon and label; after .email-copy's reset. */
+  .contact-link {
     color: var(--text);
     font-weight: var(--weight-strong);
     text-decoration: none;
   }
-  .social-links svg {
-    inline-size: var(--icon-size);
-    block-size: var(--icon-size);
-    flex: none;
-    fill: currentColor;
-    color: var(--text-muted);
-  }
-  .social-links a:hover svg {
-    color: var(--text);
-    filter: drop-shadow(0 0 var(--glow-size) var(--accent));
-  }
+  .contact-link--muted { color: var(--text-muted); }
+  .contact-link:is(:hover, :focus-visible) { color: var(--text-strong); }
 
   .button-row {
     display: flex;
@@ -647,8 +615,7 @@
     .email-options__web { display: flex; }
   }
 
-  /* Theme toggle: shows the theme a click switches to. .js is set before first
-     paint, so nothing shifts. */
+  /* Theme toggle: shows the theme a click switches to. */
   .theme-toggle { display: none; }
   @supports (color: light-dark(#000, #fff)) {
     .js .theme-toggle { display: inline-grid; }
@@ -682,35 +649,16 @@
   :root[data-theme="dark"] .theme-toggle__sun { display: block; }
   :root[data-theme="dark"] .theme-toggle__moon { display: none; }
 
-  /* Code */
-  :not(pre) > code {
+  code {
     padding-inline: var(--space-1);
     border-radius: var(--radius-sm);
     background: var(--surface);
     overflow-wrap: anywhere;
   }
-  .card :not(pre) > code { background: var(--bg); }
-  /* No ch cap: ch would resolve in the 14px mono. */
-  pre {
-    padding: var(--space-4) var(--space-5);
-    border: var(--border-width) solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    font-size: var(--step--1);
-    line-height: var(--leading-body);
-    color: var(--text-muted);
-    overflow-x: auto;
-    tab-size: 2;
-  }
-  .code__key, .code__value { color: var(--text); }
-  .code__comment { color: var(--text-muted); }
-
-  /* Copy buttons appear only once js/site.js can wire them. */
-  .copy-button { display: none; }
-  .js .copy-button { display: inline-flex; }
+  .card code { background: var(--bg); }
 
   /* minmax(0, 1fr) single columns, so wide content can't widen the page at 320px. */
-  :where(.doors, .project, .ledger > *, .ledger__body, .spec, .spec > div, .skills,
+  :where(.doors, .door__layout, .ledger > article, .ledger__body, .spec, .spec > div, .skills,
          .decisions > div, .letter-scans, .site-footer__inner) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -729,7 +677,7 @@
     min-block-size: var(--target);
   }
 
-  /* Spec list: switches layout on its own width, as its slots vary. */
+  /* Spec list: switches layout on its own width. */
   .spec {
     display: grid;
     gap: var(--space-3);
@@ -738,7 +686,6 @@
   .spec > div { display: grid; gap: var(--space-1); }
   .spec dt { font-size: var(--step--1); color: var(--text-muted); }
   .spec dd { color: var(--text); font-variant-numeric: tabular-nums; }
-  /* DESIGN_RULES §4: stack labels are small, muted and text-only. */
   .spec__stack dd { font-size: var(--step--1); color: var(--text-muted); }
   @container (min-width: 30rem) {
     .spec > div {
@@ -748,7 +695,6 @@
     }
   }
 
-  /* Quotes: a neutral rule at the start. */
   .quote {
     max-inline-size: var(--measure);
     padding-inline-start: var(--space-5);
@@ -770,11 +716,16 @@
     font-size: var(--step--1);
     color: var(--text-muted);
   }
-  /* Asides: muted text in a card. */
+  /* A pull quote repeats a line from the page, so it is aria-hidden. */
+  .pull-quote {
+    max-inline-size: var(--measure-case-claim);
+    font-size: var(--step-2);
+    line-height: var(--leading-snug);
+    color: var(--text-strong);
+  }
   .note { color: var(--text-muted); }
 
-  /* Cards (Richy's request, 2 October 2026; a §11 exception): flat, no shadow.
-     Declared after .quote and .note so a card wins. */
+  /* After .quote and .note, so a card wins. */
   .card {
     position: relative;
     padding: var(--space-4);
@@ -785,7 +736,6 @@
   @media (min-width: 48rem) {
     .card { padding: var(--space-5) var(--space-6); }
   }
-  /* A card of rows: the rows carry the padding and the hairlines. */
   .card--list {
     padding: 0;
     list-style: none;
@@ -796,8 +746,7 @@
     .card--list > * { padding: var(--space-4) var(--space-6); }
   }
 
-  /* One link per tappable card, stretched over it by ::after; the focus ring
-     and hover edge are drawn on that overlay. */
+  /* One link per card, stretched by ::after; focus ring and hover edge draw on it. */
   .card__link::after {
     content: "";
     position: absolute;
@@ -810,21 +759,19 @@
     outline: var(--focus-width) solid var(--focus);
     outline-offset: var(--focus-offset);
   }
-  /* Hover turns the edge grey, never the accent, so it can't look focused. */
+  /* Hover greys the edge, never the accent, so it can't look focused. */
   @media (hover: hover) {
-    .card__link:hover { text-decoration-thickness: var(--rule-width); }
     .card__link:hover::after,
     .next-card:hover { border-color: var(--border-strong); }
   }
-  /* A small lift on hover: transform only, and off under reduced motion. */
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .card:has(.card__link),
-    .next-card { transition: transform var(--duration-hover) var(--ease-out); }
-    .card:has(.card__link:hover),
-    .next-card:hover { transform: translateY(calc(-1 * var(--lift))); }
+  @media (prefers-reduced-motion: no-preference) {
+    .card__link::after,
+    .next-card,
+    .door__cue,
+    .door__thumb * { transition: border-color var(--duration-hover), color var(--duration-hover), stroke var(--duration-hover), fill var(--duration-hover); }
   }
 
-  /* Tags: outlined, no fill or hover, so never mistaken for buttons. */
+  /* Tags: outlined, never mistaken for buttons. */
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -843,7 +790,7 @@
     line-height: var(--leading-snug);
   }
   .tags--muted > li { color: var(--text-muted); }
-  /* CV skill logos (Richy, 4 October 2026): text colour; width from the viewBox. */
+  /* CV skill logos: text colour; width from the viewBox. */
   .skills svg {
     block-size: var(--logo-size);
     overflow: visible;
@@ -851,20 +798,19 @@
     fill: currentColor;
   }
 
-  /* Figures: wide content scrolls inside its own region. */
   .figure {
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface);
   }
-  /* Slim side padding on phones gives the stacked diagrams more width. */
   .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
+  /* Captions keep the measure; the end padding takes the rest. */
   @media (min-width: 48rem) {
     .figure__scroll { padding: var(--space-4); }
-    .figure figcaption { padding-inline: var(--space-6); }
+    .figure figcaption { padding-inline: var(--space-6) max(var(--space-6), 100% - var(--measure)); }
   }
   .figure figcaption {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-3) max(var(--space-4), 100% - var(--measure)) var(--space-3) var(--space-4);
     border-block-start: var(--border-width) solid var(--border);
     font-size: var(--step--1);
     color: var(--text-muted);
@@ -886,9 +832,7 @@
   .diagram__label,
   .diagram__note { fill: var(--text-muted); }
   .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
-  .diagram__code { font-family: var(--font-mono); }
-  /* Diagrams drawn twice: the stacked twin shows until the wide one fits, at
-     59rem even beside a classic scrollbar. */
+  /* The stacked twin shows until the wide one fits, even beside a scrollbar. */
   .diagram--stacked {
     inline-size: auto;
     min-inline-size: 0;
@@ -948,10 +892,16 @@
     margin-block-start: var(--space-5);
   }
   .hero .button-row { margin-block-start: var(--space-4); }
-  .hero__email { margin-block-start: var(--space-3); }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
     .hero .button-row { margin-block-start: var(--space-6); }
+  }
+  /* Hero keywords: mint, thick and low, so not a link. */
+  .hero__keyword {
+    text-decoration-line: underline;
+    text-decoration-color: var(--rule-accent);
+    text-decoration-thickness: var(--keyword-underline);
+    text-underline-offset: var(--keyword-underline-offset);
   }
 
   /* ---------- Home: sections ---------- */
@@ -966,48 +916,94 @@
     color: var(--text-muted);
   }
 
-  /* ---------- Home: doors ----------
-     Tappable cards of equal weight (ADR 0001), side by side from 64rem. */
+  /* ---------- Home: doors (ADR 0005, 0006) ---------- */
   .doors {
     display: grid;
     gap: var(--space-4);
-    margin-block-start: var(--space-4);
+    margin-block-start: var(--space-3);
   }
   @media (min-width: 48rem) {
-    .doors { margin-block-start: var(--space-5); }
-  }
-  @media (min-width: 64rem) {
     .doors {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: repeat(3, auto);
-      gap: 0 var(--space-5);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+      margin-block-start: var(--space-5);
     }
-    /* Each door spans its rows as a subgrid, so names, outcomes and links line
-       up. */
-    .doors > .project {
-      grid-row: span 3;
-      grid-template-rows: subgrid;
-      row-gap: var(--space-4);
+    .door--featured { grid-column: 1 / -1; }
+  }
+  /* Miniature beside the text once half the card keeps its titles legible. */
+  .door { container-type: inline-size; }
+  @container (min-width: 49rem) {
+    .door__layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: repeat(3, auto) 1fr;
+      column-gap: var(--space-6);
     }
-    /* Names sit on the row's floor, so the title rules line up. */
-    .doors .project__title { align-self: end; }
+    .door__thumb { grid-area: 1 / 1 / -1; }
+    .door__layout > :not(.door__thumb) { grid-column: 2; }
   }
-  /* Side by side, names step down a size; the rule stays at least the rule
-     width. */
-  @media (min-width: 64rem) {
-    .doors .project__title { font-size: var(--step-2); }
-    .doors .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
-  }
+  /* Smaller names keep at least the rule width. */
+  .door--featured .project__title { font-size: var(--step-3); }
+  :is(.door:not(.door--featured), .also) .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
 
-  .project {
+  .door__layout {
     display: grid;
     align-content: start;
     gap: var(--space-3);
   }
-  .project__title { font-size: var(--step-3); }
+  .project__title { font-size: var(--step-2); }
+  /* The title is the link, styled as a title. */
+  .project__title .card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* The evidence: strong text, no pill or box. */
+  .proof {
+    color: var(--text-strong);
+    font-weight: var(--weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .door__cue {
+    font-size: var(--step--1);
+    color: var(--cue, var(--text-muted));
+  }
+  /* Phones: the cue shares the title's short first line, saving a row. */
+  @media (max-width: 47.99rem) {
+    .door__layout {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: var(--space-2);
+    }
+    .door__layout > * { grid-column: 1 / -1; }
+    .door__layout > .project__title { grid-row: 1; }
+    .door__cue { grid-area: 1 / 2; padding-block-start: var(--space-2); }
+  }
+  @media (hover: hover) {
+    .door:has(.card__link:hover) { --cue: var(--link); --thumb-line: var(--text-muted); }
+  }
+  .door:has(.card__link:focus-visible) { --cue: var(--link); --thumb-line: var(--text-muted); }
 
-  /* The signature: the accent rule under a project name, carried by the view
-     transition. */
+  /* Door miniatures: from 48rem; their titles drop out under about 11px. */
+  .door__thumb {
+    display: none;
+    container-type: inline-size;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+  @media (min-width: 48rem) {
+    .door__thumb { display: block; }
+  }
+  .door__thumb svg {
+    inline-size: 100%;
+    block-size: auto;
+    font-family: var(--font-sans);
+  }
+  .door__thumb :is(.diagram__node:not(.diagram__node--key), .diagram__edge) { stroke: var(--thumb-line, var(--border-strong)); }
+  .door__thumb .diagram__arrow { fill: var(--thumb-line, var(--border-strong)); }
+  @container (max-width: 22rem) {
+    .door__thumb text { display: none; }
+  }
+
+  /* The signature title rule, carried by the view transition. */
   .project__name,
   .case-study__name {
     display: inline-block;
@@ -1023,18 +1019,8 @@
   .case-study__name--encompass { view-transition-name: project-encompass; }
 
   .project__outcome { max-inline-size: var(--measure-outcome); }
-  .project__actions,
   .next-card__claim { text-wrap: balance; }
-  /* The card is the target, so its link needs no touch padding; the hairline is
-     desktop-only (ADR 0002). */
-  @media (min-width: 48rem) {
-    .project__actions {
-      padding-block-start: var(--space-3);
-      border-block-start: var(--border-width) solid var(--border);
-    }
-  }
 
-  /* Testimonial card: quote in heading colour, marks in the accent. */
   .doors + .quote {
     max-inline-size: none;
     margin-block-start: var(--space-4);
@@ -1058,28 +1044,21 @@
     .quote.card blockquote { font-size: var(--step-2); }
   }
 
-  /* ---------- Home: also shipped ----------
-     One card of rows, folded on phones by a head script before first paint;
-     open from 48rem and with JS off. */
-  .ledger-fold {
-    margin-block-start: var(--space-4);
-    padding: 0;
-  }
-  .ledger-fold > summary {
+  /* ---------- Home: also shipped (ADR 0007) ---------- */
+  .also__fold { margin-block-start: var(--space-3); }
+  .also__summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
     min-block-size: var(--target);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
-    color: var(--link);
+    color: var(--text-muted);
     list-style: none;
     cursor: pointer;
   }
-  .ledger-fold > summary::-webkit-details-marker { display: none; }
+  .also__summary::-webkit-details-marker { display: none; }
   /* A chevron in place of the triangle, pointing up while open. */
-  .ledger-fold > summary::after {
+  .also__summary::after {
     content: "";
     flex: none;
     inline-size: var(--space-2);
@@ -1088,28 +1067,35 @@
     border-block-end: var(--rule-width) solid currentColor;
     transform: translateY(-25%) rotate(45deg);
   }
-  .ledger-fold[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+  .also__fold[open] > .also__summary::after { transform: translateY(25%) rotate(-135deg); }
+  @media (hover: hover) {
+    .also__summary:hover { color: var(--link); }
+  }
+  .also__summary:focus-visible { color: var(--link); }
   @media (prefers-reduced-motion: no-preference) {
-    .ledger-fold > summary::after { transition: transform var(--duration-hover) var(--ease-out); }
+    .also__summary,
+    .also__summary::after { transition: color var(--duration-hover), transform var(--duration-hover) var(--ease-out); }
   }
-  .ledger-fold > summary:hover { text-decoration-line: underline; }
-  @media (min-width: 48rem) {
-    .ledger-fold { margin-block-start: var(--space-5); }
-    .ledger-fold[open] > summary { display: none; }
-  }
-
-  .ledger > * {
+  .also__highlights {
     display: grid;
-    gap: var(--space-4);
-    padding: var(--space-5) var(--space-4);
+    gap: var(--space-2);
+    margin-block-start: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  /* Open, the rows say the same in full. */
+  .also__fold[open] + .also__highlights { display: none; }
+  .ledger > * {
+    padding-block: var(--space-5);
     border-block-start: var(--border-width) solid var(--border);
   }
-  @media (min-width: 48rem) {
-    .ledger > * { padding: var(--space-6); }
-    /* With the summary hidden, the first row needs no rule. */
-    .ledger-fold[open] .ledger > :first-child { border-block-start: 0; }
+  .ledger > :last-child { padding-block-end: 0; }
+  .ledger > article {
+    display: grid;
+    gap: var(--space-4);
   }
   .ledger__title { font-size: var(--step-0); }
+  .ledger__title--lead { font-size: var(--step-2); }
   .ledger__meta {
     margin-block-start: var(--space-1);
     font-size: var(--step--1);
@@ -1117,8 +1103,9 @@
   }
   .ledger__body { display: grid; gap: var(--space-4); }
   .ledger__body > * { max-inline-size: var(--measure); }
+  .ledger__note { font-size: var(--step--1); }
   @media (min-width: 64rem) {
-    .ledger > * {
+    .ledger > article {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--space-6);
     }
@@ -1126,32 +1113,15 @@
     .ledger__body { grid-column: 5 / -1; }
   }
 
-  .repo__name {
-    font-family: var(--font-mono);
-    font-size: var(--step-0);
-  }
-
   /* ---------- Home: contact ---------- */
-  /* The intro leads into the address, so it is body text, not a muted caption. */
+  /* The intro leads into the email options, so it is body text. */
   .contact .section__lede { color: var(--text); }
-  /* One size down on phones, so the address stays on one line at 320px. */
-  .contact__email {
-    margin-block-start: var(--space-5);
-    font-size: var(--step-1);
-    font-weight: var(--weight-strong);
-  }
-  @media (min-width: 30rem) {
-    .contact__email { font-size: var(--step-2); }
-  }
-  .contact .email-options { margin-block-start: var(--space-4); }
-  .contact .spec,
-  .contact__discord { margin-block-start: var(--space-6); }
-  .contact .social-links { margin-block-start: var(--space-3); }
-  .contact__discord { max-inline-size: var(--measure); }
+  .contact .email-options,
+  .contact__links { margin-block-start: var(--space-4); }
+  .contact .spec { margin-block-start: var(--space-6); }
 
   /* ---------- Deep dives ---------- */
   .case-study { padding-block-end: var(--section-space); }
-  /* On phones the head runs tight, so the overview shares the first screen. */
   .case-study__head { padding-block-start: var(--space-6); }
   .case-study__title { font-size: var(--step-3); }
   .case-study__claim {
@@ -1172,7 +1142,6 @@
     gap: var(--space-3) var(--space-6);
     margin-block-start: var(--space-4);
   }
-  /* Tighter tag rows keep the overview in a phone's first screen. */
   .case-study__overview .tags { row-gap: var(--space-1); }
   .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
   .case-study__overview > div {
@@ -1181,7 +1150,6 @@
     column-gap: var(--space-3);
     align-items: baseline;
   }
-  /* Role, Team and Impact share a row; Stack runs full width under them. */
   @media (min-width: 48rem) {
     .case-study__overview {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1191,6 +1159,12 @@
     .case-study__overview > div { display: block; }
     .case-study__overview dd { margin-block-start: var(--space-1); }
     .case-study__overview > .spec__stack { grid-column: 1 / -1; }
+  }
+  .case-study__brief { margin-block-start: var(--space-4); }
+  .case-study__brief .spec { gap: var(--space-4); }
+  .case-study__brief dd {
+    --flow-space: var(--space-2);
+    max-inline-size: var(--measure);
   }
   .case-study__figure { margin-block-start: var(--space-6); }
   .toc {
@@ -1222,8 +1196,7 @@
   }
   .case-study__section { margin-block-start: var(--space-7); }
 
-  /* Before and after panels, side by side from 64rem; the after panel has the
-     accent edge. */
+  /* Before and after panels, side by side from 64rem. */
   .compare {
     display: grid;
     gap: var(--space-4);
@@ -1241,7 +1214,7 @@
     }
   }
 
-  /* A real sequence, so numbered (§11): accent numerals in rings on a rail. */
+  /* A real sequence, so numbered. */
   .steps {
     display: grid;
     gap: var(--space-4);
@@ -1278,7 +1251,37 @@
     border-inline-start: var(--border-width) solid var(--border);
   }
 
-  /* Results: one row per figure; a subgrid sizes the number column. */
+  /* Final Docs flow: plain HTML, the animation's static state (ADR 0003). */
+  .flow-figure {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--space-6);
+  }
+  .flow-steps { padding: var(--space-4); }
+  .flow-steps ul { margin-block-start: var(--space-2); }
+  .flow-steps__boundary {
+    padding-block-end: var(--space-4);
+    border-block-end: var(--border-width) dashed var(--border-strong);
+  }
+  @media (min-width: 48rem) {
+    .flow-steps { padding: var(--space-5) var(--space-6); }
+  }
+  /* Beside its prose once the container is at full width. */
+  @media (min-width: 80rem) {
+    .case-study__aside {
+      display: grid;
+      grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+    .flow-figure {
+      position: sticky;
+      inset-block-start: calc(var(--header-offset, var(--header-size)) + var(--space-4));
+      max-inline-size: none;
+      margin-block-start: 0;
+    }
+  }
+
+  /* A subgrid sizes the number column. */
   .stats {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
@@ -1297,8 +1300,7 @@
     line-height: var(--leading-tight);
   }
 
-  /* The next deep dive as one block link whose name morphs into that page's
-     title. */
+  /* The next deep dive; its name morphs into that page's title. */
   .case-study__end {
     display: grid;
     gap: var(--space-4);
@@ -1327,7 +1329,6 @@
     font-weight: var(--weight-strong);
     line-height: var(--leading-heading);
   }
-  /* Rows padded and ruled by the list card. */
   .decisions > div {
     display: grid;
     gap: var(--space-1);
@@ -1419,12 +1420,6 @@
     margin-block-start: var(--space-8);
   }
   .letter-request > * + * { margin-block-start: var(--space-4); }
-  .letter-template {
-    font-family: var(--font-sans);
-    font-size: var(--step-0);
-    color: var(--text);
-    white-space: pre-wrap;
-  }
 }
 
 @layer utilities {
@@ -1491,13 +1486,14 @@
     .skip-link,
     .theme-toggle,
     .email-copy__action,
+    .cv__contact .icon,
     .skills svg,
     .button,
     .email-options,
     .toc { display: none !important; }
     a,
     .email-copy { color: inherit; text-decoration: none; }
-    .email-copy__text { text-decoration: none; }
+    .cv__contact .contact-link { font-weight: var(--weight-regular); }
     .cv__head,
     .cv__head > *,
     .cv__section { max-inline-size: none; }
@@ -1515,7 +1511,6 @@
     /* The diagrams' screen minimum width would make Chrome shrink the page. */
     .diagram { min-inline-size: 0; }
     .figure { break-inside: avoid; }
-    pre { white-space: pre-wrap; overflow: visible; }
     /* Entries split for phones run together on paper, keeping the CV to two
        pages. */
     .print-join > p,

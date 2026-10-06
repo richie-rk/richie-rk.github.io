@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>og-home</title>
+<!--
+  Source for images/og-home.png, the home page's 1200x630 link preview. The folder starts
+  with an underscore, so GitHub Pages never publishes it. Regenerate from the repo root:
+    chrome --headless=new --allow-file-access-from-files --hide-scrollbars --window-size=1200,630 --screenshot=images/og-home.png file:///<repo>/_og/og-home.html
+-->
+<style>
+@font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans.woff2") format("woff2"); font-weight: 100 700; }
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 74px 89px 78px;
+  background: #0B0E1C;
+  color: #E9EBF5;
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.role { font-size: 28px; line-height: 1.2; color: #9AA3C0; }
+.claim {
+  max-width: 940px;
+  margin-top: 18px;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+.kw {
+  text-decoration-line: underline;
+  text-decoration-color: #5FD4B0;
+  text-decoration-thickness: 0.11em;
+  text-underline-offset: 0.16em;
+}
+.foot { display: flex; justify-content: space-between; font-size: 28px; line-height: 1.2; }
+.name { font-weight: 600; }
+.url { color: #9AA3C0; }
+</style>
+</head>
+<body>
+  <div>
+    <p class="role">Python engineer: GenAI, backend and automation</p>
+    <p class="claim">I build <span class="kw">RAG systems</span> and <span class="kw">automations</span> that hold up in production.</p>
+  </div>
+  <div></div>
+  <div class="foot"><p class="name">Richy Koshy</p><p class="url">richie-rk.github.io</p></div>
+</body>
+</html>
