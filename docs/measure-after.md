@@ -1,13 +1,13 @@
 # Measurements
 
-Commit 3ee2637, measured 2026-10-06 by `python tools/measure.py` in headless Chromium 140.0.7339.16.
+Commit 8fc4051, measured 2026-10-06 by `python tools/measure.py` in headless Chromium 140.0.7339.16.
 
 | Page | Viewport | Scheme | Words in main | Height (px) | Blocks over 6 lines | Muted share | First-screen elements | Horizontal overflow |
 | --- | --- | --- | ---: | ---: | --- | ---: | --- | --- |
-| index | 390x844 | dark | 290 | 2,922 | 0 of 18 (longest 4) | 0.12 | header, role, claim, proof, buttons, first door name | none |
-| index | 390x844 | light | 290 | 2,922 | 0 of 18 (longest 4) | 0.12 | header, role, claim, proof, buttons, first door name | none |
-| index | 1440x900 | dark | 304 | 3,013 | 0 of 18 (longest 6) | 0.12 | header, role, claim, proof, buttons, first door name | none |
-| index | 1440x900 | light | 304 | 3,013 | 0 of 18 (longest 6) | 0.12 | header, role, claim, proof, buttons, first door name | none |
+| index | 390x844 | dark | 285 | 2,918 | 0 of 18 (longest 4) | 0.13 | header, role, claim, proof, buttons, email, first door name | none |
+| index | 390x844 | light | 285 | 2,918 | 0 of 18 (longest 4) | 0.13 | header, role, claim, proof, buttons, email, first door name | none |
+| index | 1440x900 | dark | 299 | 2,965 | 0 of 18 (longest 6) | 0.13 | header, role, claim, proof, buttons, email, first door name | none |
+| index | 1440x900 | light | 299 | 2,965 | 0 of 18 (longest 6) | 0.13 | header, role, claim, proof, buttons, email, first door name | none |
 | max-ai | 390x844 | dark | 1,624 | 12,540 | 0 of 84 (longest 6) | 0.05 | header, name, claim, summary, at-a-glance | none |
 | max-ai | 390x844 | light | 1,624 | 12,540 | 0 of 84 (longest 6) | 0.05 | header, name, claim, summary, at-a-glance | none |
 | max-ai | 1440x900 | dark | 1,624 | 10,157 | 0 of 84 (longest 5) | 0.05 | header, name, claim, summary, at-a-glance | none |
@@ -39,7 +39,7 @@ Targets from the brief. Words, height, long blocks and the first screen are judg
 
 | Page | Words in main | Height at 390 | Blocks over 6 lines | Muted share | First screen at 390 | Horizontal overflow | Result |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| index | pass 290 (max 500) | pass 2,922 px (max 4,500) | pass 0 | pass 0.12 (max 0.20) | pass all in | pass none | pass |
+| index | pass 285 (max 500) | pass 2,918 px (max 4,500) | pass 0 | pass 0.13 (max 0.20) | pass all in | pass none | pass |
 | max-ai | FAIL 1,624 (baseline 1,387 +/- 10%) | FAIL 12,540 px (max 7,000) | pass 0 | pass 0.05 (max 0.20) | pass all in | pass none | FAIL |
 | final-docs | FAIL 1,494 (baseline 1,116 +/- 10%) | FAIL 12,220 px (max 7,000) | pass 0 | pass 0.01 (max 0.20) | pass all in | pass none | FAIL |
 | encompass-automation | n/a 822 | pass 6,490 px (max 7,000) | pass 0 | pass 0.13 (max 0.20) | pass all in | pass none | pass |
@@ -51,8 +51,8 @@ Targets from the brief. Words, height, long blocks and the first screen are judg
 
 ### index
 
-- Project names: MAX AI at 787 px, Final Docs at 1,038 px, Encompass loan automation at 1,252 px
-- Share of body text not in --text (muted plus links): 0.36
+- Project names: MAX AI at 783 px, Final Docs at 1,034 px, Encompass loan automation at 1,248 px
+- Share of body text not in --text (muted plus links): 0.39
 
 ### max-ai
 
