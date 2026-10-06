@@ -61,6 +61,7 @@ PAGES = [
         "claim": ".hero__claim",
         "proof": ".hero__proof",
         "buttons": ".hero .button-row",
+        "email": ".hero .email-copy",
         "first door name": ".project__name",
     }),
     ("max-ai", "max-ai.html", DEEP_DIVE_FIRST_SCREEN),

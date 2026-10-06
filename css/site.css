@@ -113,7 +113,7 @@
     --accent-hover: #83E3C6;
     --accent-pressed: #A3EAD5;      /* a step past hover in the same hue */
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
-    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule */
+    --rule-accent: #5FD4B0;         /* non-text accents only: the title rule and keyword underline */
     /* Links: the accent's lighter tint (Lc 78; #5FD4B0 is Lc 68). */
     --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
     --focus: #5FD4B0;
@@ -176,6 +176,8 @@
     --focus-offset: 3px;
     --underline-offset: 0.2em;
     --underline-offset-current: 0.35em;
+    --keyword-underline: 0.11em;
+    --keyword-underline-offset: 0.16em;
     /* em-based, so both view-transition snapshots scale together. */
     --title-rule: 0.0625em;
     --title-rule-gap: 0.125em;
@@ -261,7 +263,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Headings and bold keywords in the strongest colour, for skimmers. */
   h1, h2, h3, h4 {
     color: var(--text-strong);
     font-weight: var(--weight-strong);
@@ -476,7 +477,6 @@
     max-inline-size: var(--measure);
   }
 
-  /* Full-size links from 360px; compact gaps until 48rem keep the row whole. */
   @media (min-width: 22.5rem) {
     .site-nav__list a { font-size: inherit; padding-inline: var(--space-1); }
   }
@@ -487,7 +487,7 @@
 }
 
 @layer components {
-  /* Buttons: primary, secondary (tertiary is a text link); colour-only states. */
+  /* Buttons: colour-only states; tertiary is a text link. */
   .button {
     display: inline-flex;
     align-items: center;
@@ -511,7 +511,6 @@
     background: var(--accent);
     color: var(--accent-contrast);
   }
-  /* A surface-fill hover would be invisible, so the outline changes. */
   .button--secondary {
     border-color: var(--border-strong);
     background: transparent;
@@ -553,15 +552,30 @@
   [data-state="copied"] .copy-icon--done { display: inline; }
 
   /* Email links: copy buttons with JS, mailto links without. */
+  .email-copy,
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target);
+  }
   .email-copy {
     flex-wrap: wrap;
     padding: 0;
     border: 0;
     background: none;
+    color: var(--link);
     font: inherit;
     text-align: start;
     cursor: pointer;
   }
+  .email-copy__text {
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-width);
+    text-underline-offset: var(--underline-offset);
+    overflow-wrap: anywhere;
+  }
+  .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
   /* With JS, a visible "Copy" label outlined like a control. */
   .email-copy__action { display: none; }
   .js .email-copy__action {
@@ -589,10 +603,6 @@
 
   /* Contact links: monochrome icon and label; after .email-copy's reset. */
   .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-block-size: var(--target);
     color: var(--text);
     font-weight: var(--weight-strong);
     text-decoration: none;
@@ -723,7 +733,7 @@
   }
   .note { color: var(--text-muted); }
 
-  /* Cards: flat, no shadow; after .quote and .note so a card wins. */
+  /* After .quote and .note, so a card wins. */
   .card {
     position: relative;
     padding: var(--space-4);
@@ -734,7 +744,6 @@
   @media (min-width: 48rem) {
     .card { padding: var(--space-5) var(--space-6); }
   }
-  /* A card of rows: the rows carry the padding and the hairlines. */
   .card--list {
     padding: 0;
     list-style: none;
@@ -845,8 +854,8 @@
 
   /* ---------- Home: hero ---------- */
   /* The hero runs tight so a phone's first screen reaches the first door. */
-  .hero { padding-block-start: var(--space-3); }
-  .hero + .section { padding-block-start: var(--space-6); }
+  .hero { padding-block-start: var(--space-5); }
+  .hero + .section { padding-block-start: var(--space-7); }
   @media (min-width: 48rem) {
     .hero { padding-block-start: var(--space-6); }
     .hero + .section { padding-block-start: var(--space-8); }
@@ -888,23 +897,20 @@
   }
   .hero__proof {
     max-inline-size: var(--measure-standfirst);
-    margin-block-start: var(--space-4);
+    margin-block-start: var(--space-5);
   }
-  .hero__personal {
-    max-inline-size: var(--measure-standfirst);
-    margin-block-start: var(--space-3);
-  }
-  .hero .button-row {
-    gap: var(--space-2);
-    margin-block-start: var(--space-3);
-  }
+  .hero .button-row { margin-block-start: var(--space-4); }
+  .hero__email { margin-block-start: var(--space-3); }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
-    .hero__proof { margin-block-start: var(--space-5); }
-    .hero .button-row {
-      gap: var(--space-3);
-      margin-block-start: var(--space-6);
-    }
+    .hero .button-row { margin-block-start: var(--space-6); }
+  }
+  /* Hero keywords: mint, thick and low, so not a link. */
+  .hero__keyword {
+    text-decoration-line: underline;
+    text-decoration-color: var(--rule-accent);
+    text-decoration-thickness: var(--keyword-underline);
+    text-underline-offset: var(--keyword-underline-offset);
   }
 
   /* ---------- Home: sections ---------- */
@@ -965,7 +971,6 @@
     font-weight: var(--weight-strong);
     font-variant-numeric: tabular-nums;
   }
-  /* A quiet cue, not a link; it takes the link colour with the card. */
   .door__cue {
     font-size: var(--step--1);
     color: var(--cue, var(--text-muted));
@@ -1129,7 +1134,6 @@
 
   /* ---------- Deep dives ---------- */
   .case-study { padding-block-end: var(--section-space); }
-  /* On phones the head runs tight, so the overview shares the first screen. */
   .case-study__head { padding-block-start: var(--space-6); }
   .case-study__title { font-size: var(--step-3); }
   .case-study__claim {
@@ -1150,7 +1154,6 @@
     gap: var(--space-3) var(--space-6);
     margin-block-start: var(--space-4);
   }
-  /* Tighter tag rows keep the overview in a phone's first screen. */
   .case-study__overview .tags { row-gap: var(--space-1); }
   .case-study__overview dt { font-size: var(--step--1); color: var(--text-muted); }
   .case-study__overview > div {
@@ -1502,6 +1505,7 @@
     .toc { display: none !important; }
     a,
     .email-copy { color: inherit; text-decoration: none; }
+    .email-copy__text { text-decoration: none; }
     .cv__contact .contact-link { font-weight: var(--weight-regular); }
     .cv__head,
     .cv__head > *,
