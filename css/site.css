@@ -1114,7 +1114,7 @@
   }
 
   /* ---------- Home: contact ---------- */
-  /* Richy's point of view, so body text, not a muted caption. */
+  /* The intro leads into the email options, so it is body text. */
   .contact .section__lede { color: var(--text); }
   .contact .email-options,
   .contact__links { margin-block-start: var(--space-4); }
