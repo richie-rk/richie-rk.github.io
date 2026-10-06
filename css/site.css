@@ -943,7 +943,7 @@
   }
   /* Smaller names keep at least the rule width. */
   .door--featured .project__title { font-size: var(--step-3); }
-  .door:not(.door--featured) .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
+  :is(.door:not(.door--featured), .also) .project__name { border-block-end-width: max(var(--rule-width), var(--title-rule)); }
 
   .door__layout {
     display: grid;
@@ -1045,7 +1045,7 @@
   }
 
   /* ---------- Home: also shipped (ADR 0007) ---------- */
-  .also { margin-block-start: var(--space-4); }
+  .also__fold { margin-block-start: var(--space-3); }
   .also__summary {
     display: flex;
     align-items: center;
@@ -1093,9 +1093,6 @@
   .ledger > article {
     display: grid;
     gap: var(--space-4);
-  }
-  @media (min-width: 48rem) {
-    .also { margin-block-start: var(--space-5); }
   }
   .ledger__title { font-size: var(--step-0); }
   .ledger__title--lead { font-size: var(--step-2); }
