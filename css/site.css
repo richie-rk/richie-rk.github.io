@@ -564,18 +564,10 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--link);
     font: inherit;
     text-align: start;
     cursor: pointer;
   }
-  .email-copy__text {
-    text-decoration-line: underline;
-    text-decoration-thickness: var(--border-width);
-    text-underline-offset: var(--underline-offset);
-    overflow-wrap: anywhere;
-  }
-  .email-copy:hover .email-copy__text { text-decoration-thickness: var(--rule-width); }
   /* With JS, a visible "Copy" label outlined like a control. */
   .email-copy__action { display: none; }
   .js .email-copy__action {
@@ -900,7 +892,6 @@
     margin-block-start: var(--space-5);
   }
   .hero .button-row { margin-block-start: var(--space-4); }
-  .hero__email { margin-block-start: var(--space-3); }
   @media (min-width: 48rem) {
     .hero__claim { font-size: var(--step-4); }
     .hero .button-row { margin-block-start: var(--space-6); }
@@ -1505,7 +1496,6 @@
     .toc { display: none !important; }
     a,
     .email-copy { color: inherit; text-decoration: none; }
-    .email-copy__text { text-decoration: none; }
     .cv__contact .contact-link { font-weight: var(--weight-regular); }
     .cv__head,
     .cv__head > *,
