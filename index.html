@@ -185,37 +185,46 @@
 
 <section id="also-shipped" class="section container" aria-labelledby="also-shipped-title">
   <h2 id="also-shipped-title" class="section__label">Also shipped</h2>
-  <div class="ledger card card--list">
-    <article aria-labelledby="automations-title">
-      <header class="ledger__head">
-        <h3 id="automations-title" class="ledger__title ledger__title--lead">13 production automations</h3>
-      </header>
-      <div class="ledger__body">
-        <p>Compliance and investor operations for PRMI across 9 investors: ECOA adverse action, TRID, HMDA, MERS sync, final documents, HFA exceptions, Blend credit management, warehouse collateral and suspense resolution.</p>
-        <p>Three use OCR to read credit data from PDF reports.</p>
-        <p class="proof">Every run records its input and each field’s value before and after the change, and reports mask loan numbers.</p>
-        <dl class="spec">
-          <div><dt>Role</dt><dd>Sole engineer, from requirements through UAT and documentation</dd></div>
-          <div class="spec__stack"><dt>Stack</dt><dd>Python, Power Automate, SQL Server, Tesseract, Azure Document Intelligence</dd></div>
-        </dl>
-      </div>
-    </article>
+  <div class="also card">
+    <details class="also__fold">
+      <summary class="also__summary">More systems in production, from mortgage compliance to IoT.</summary>
+      <div class="ledger">
+        <article aria-labelledby="automations-title">
+          <header class="ledger__head">
+            <h3 id="automations-title" class="ledger__title ledger__title--lead">13 production automations</h3>
+          </header>
+          <div class="ledger__body">
+            <p>Compliance and investor operations for PRMI across 9 investors: ECOA adverse action, TRID, HMDA, MERS sync, final documents, HFA exceptions, Blend credit management, warehouse collateral and suspense resolution.</p>
+            <p>Three use OCR to read credit data from PDF reports.</p>
+            <p class="proof">Every run records its input and each field’s value before and after the change, and reports mask loan numbers.</p>
+            <dl class="spec">
+              <div><dt>Role</dt><dd>Sole engineer, from requirements through UAT and documentation</dd></div>
+              <div class="spec__stack"><dt>Stack</dt><dd>Python, Power Automate, SQL Server, Tesseract, Azure Document Intelligence</dd></div>
+            </dl>
+          </div>
+        </article>
 
-    <article aria-labelledby="hydroq-title">
-      <header class="ledger__head">
-        <h3 id="hydroq-title" class="ledger__title">HydroQ API</h3>
-        <p class="ledger__meta">Antz AI, for client TechSpan Engineering (IoT remote monitoring)</p>
-      </header>
-      <div class="ledger__body">
-        <p>REST API for a multi-tenant remote water-quality monitoring platform. Replaced <span class="nowrap">2-4 hours</span> of manual onboarding setup per site with API-driven workflows.</p>
-        <dl class="spec">
-          <div><dt>Role</dt><dd>Designed the FastAPI interface for the database CRUD operations</dd></div>
-          <div class="spec__stack"><dt>Stack</dt><dd>FastAPI, SQLAlchemy, Pydantic, PostgreSQL, MSSQL, pytest</dd></div>
-        </dl>
-      </div>
-    </article>
+        <article aria-labelledby="hydroq-title">
+          <header class="ledger__head">
+            <h3 id="hydroq-title" class="ledger__title">HydroQ API</h3>
+            <p class="ledger__meta">Antz AI, for client TechSpan Engineering (IoT remote monitoring)</p>
+          </header>
+          <div class="ledger__body">
+            <p>REST API for a multi-tenant remote water-quality monitoring platform. Replaced <span class="nowrap">2-4 hours</span> of manual onboarding setup per site with API-driven workflows.</p>
+            <dl class="spec">
+              <div><dt>Role</dt><dd>Designed the FastAPI interface for the database CRUD operations</dd></div>
+              <div class="spec__stack"><dt>Stack</dt><dd>FastAPI, SQLAlchemy, Pydantic, PostgreSQL, MSSQL, pytest</dd></div>
+            </dl>
+          </div>
+        </article>
 
-    <p class="ledger__note"><a href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener noreferrer">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a>, my open-source full-stack RAG app on Azure.</p>
+        <p class="ledger__note"><a href="https://github.com/richie-rk/rag-app-azure" target="_blank" rel="noopener noreferrer">rag-app-azure<span class="visually-hidden"> (opens in a new tab)</span></a>, my open-source full-stack RAG app on Azure.</p>
+      </div>
+    </details>
+    <ul class="also__highlights" role="list">
+      <li>13 compliance and automation systems across 9 mortgage investors, as sole engineer.</li>
+      <li>HydroQ: a FastAPI service that replaced <span class="nowrap">2-4 hours</span> of manual onboarding per site.</li>
+    </ul>
   </div>
 </section>
 

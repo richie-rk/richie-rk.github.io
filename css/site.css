@@ -1,8 +1,7 @@
 /* Richy Koshy portfolio: the one shared stylesheet. Governed by DESIGN_RULES.md. */
 @layer tokens, base, layout, components, utilities;
 
-/* Fonts: one variable Plex Sans for 400 and 600, Latin subset; arrows and the
-   check mark fall back per glyph. */
+/* Plex Sans (variable) for 400 and 600, Latin subset. */
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("../fonts/plex-sans.woff2") format("woff2");
@@ -59,7 +58,7 @@
   descent-override: 28.36%;
   line-gap-override: 0%;
 }
-/* Android has neither Arial nor Liberation, so Roboto gets its own tuned family. */
+/* Android: Roboto, tuned on its own. */
 @font-face {
   font-family: "Plex Sans Fallback Android";
   src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular");
@@ -80,7 +79,7 @@
   descent-override: 26.66%;
   line-gap-override: 0%;
 }
-/* Every mono candidate advances 0.6em like Plex Mono: one override set fits all. */
+/* Mono candidates all advance 0.6em, so one override set fits. */
 @font-face {
   font-family: "Plex Mono Fallback";
   src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("Cousine"), local("Droid Sans Mono"), local("DroidSansMono"), local("Roboto Mono");
@@ -92,8 +91,7 @@
   line-gap-override: 0%;
 }
 
-/* Signature moment: cross-document view transitions, only without reduced
-   motion. */
+/* Cross-document view transitions, only without reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
@@ -106,8 +104,6 @@
     color-scheme: dark;
     --bg: #0B0E1C;
     --surface: #141A2E;
-    /* Dark text: white for headings and keywords; body off-white with a faint
-       teal cast (APCA Lc 90); muted 0.12 darker in that hue. */
     --text: #DDE7E4;                /* 15.20:1 on bg, 13.66:1 on surface; APCA Lc 90 */
     --text-strong: #FFFFFF;         /* headings and bold keywords only */
     --text-muted: #AEC3BE;          /* 10.38:1 on bg, 9.33:1 on surface; APCA Lc 67 */
@@ -118,8 +114,7 @@
     --accent-pressed: #A3EAD5;      /* a step past hover in the same hue */
     --accent-contrast: #04241A;     /* 9.06:1 on accent */
     --rule-accent: #5FD4B0;         /* non-text accents only: the title rule */
-    /* Links take the accent's lighter tint: Lc 78, where #5FD4B0 is Lc 68,
-       under the 75 floor. */
+    /* Links: the accent's lighter tint (Lc 78; #5FD4B0 is Lc 68). */
     --link: #83E3C6;                /* 12.59:1 on bg, 11.31:1 on surface */
     --focus: #5FD4B0;
     --shadow-colour: rgb(4 6 14 / 0.55);
@@ -181,8 +176,7 @@
     --focus-offset: 3px;
     --underline-offset: 0.2em;
     --underline-offset-current: 0.35em;
-    /* The signature title rule, em-based so both view-transition snapshots
-       scale together. */
+    /* em-based, so both view-transition snapshots scale together. */
     --title-rule: 0.0625em;
     --title-rule-gap: 0.125em;
     --icon-size: 1.25rem;
@@ -267,8 +261,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Headings and bold keywords take the strongest colour, so skimmers can
-     follow them. */
+  /* Headings and bold keywords in the strongest colour, for skimmers. */
   h1, h2, h3, h4 {
     color: var(--text-strong);
     font-weight: var(--weight-strong);
@@ -352,7 +345,7 @@
   }
 
   .section { padding-block: var(--section-space); }
-  /* Adjacent sections share one gap rather than doubling their padding. */
+  /* Adjacent sections share one gap. */
   .section + .section { padding-block-start: 0; }
 
   .prose {
@@ -380,8 +373,7 @@
   }
   .skip-link:focus { transform: none; }
 
-  /* Header: sticky and identical on every page, so it holds still in view
-     transitions. */
+  /* Sticky and identical on every page, so it holds still in view transitions. */
   .site-header {
     position: sticky;
     inset-block-start: 0;
@@ -435,7 +427,7 @@
   }
   .site-nav__list a:hover { color: var(--text); }
 
-  /* Header marks with the teal hover glow Richy asked for (§11), from 30rem. */
+  /* Header marks with Richy's teal hover glow, from 30rem. */
   .site-header__social {
     display: none;
     gap: var(--space-1);
@@ -519,8 +511,7 @@
     background: var(--accent);
     color: var(--accent-contrast);
   }
-  /* A surface-fill hover would be invisible (1.1:1), so the outline takes the
-     text colour. */
+  /* A surface-fill hover would be invisible, so the outline changes. */
   .button--secondary {
     border-color: var(--border-strong);
     background: transparent;
@@ -571,7 +562,7 @@
     text-align: start;
     cursor: pointer;
   }
-  /* With JS, a visible "Copy" label, outlined like a control, not a tag. */
+  /* With JS, a visible "Copy" label outlined like a control. */
   .email-copy__action { display: none; }
   .js .email-copy__action {
     display: inline-grid;
@@ -622,8 +613,7 @@
     .email-options__web { display: flex; }
   }
 
-  /* Theme toggle: shows the theme a click switches to. .js is set before first
-     paint, so nothing shifts. */
+  /* Theme toggle: shows the theme a click switches to. */
   .theme-toggle { display: none; }
   @supports (color: light-dark(#000, #fff)) {
     .js .theme-toggle { display: inline-grid; }
@@ -685,7 +675,7 @@
     min-block-size: var(--target);
   }
 
-  /* Spec list: switches layout on its own width, as its slots vary. */
+  /* Spec list: switches layout on its own width. */
   .spec {
     display: grid;
     gap: var(--space-3);
@@ -694,7 +684,6 @@
   .spec > div { display: grid; gap: var(--space-1); }
   .spec dt { font-size: var(--step--1); color: var(--text-muted); }
   .spec dd { color: var(--text); font-variant-numeric: tabular-nums; }
-  /* DESIGN_RULES §4: stack labels are small, muted and text-only. */
   .spec__stack dd { font-size: var(--step--1); color: var(--text-muted); }
   @container (min-width: 30rem) {
     .spec > div {
@@ -704,7 +693,6 @@
     }
   }
 
-  /* Quotes: a neutral rule at the start. */
   .quote {
     max-inline-size: var(--measure);
     padding-inline-start: var(--space-5);
@@ -733,11 +721,9 @@
     line-height: var(--leading-snug);
     color: var(--text-strong);
   }
-  /* Asides: muted text in a card. */
   .note { color: var(--text-muted); }
 
-  /* Cards (Richy's request, 2 October 2026; a §11 exception): flat, no shadow.
-     Declared after .quote and .note so a card wins. */
+  /* Cards: flat, no shadow; after .quote and .note so a card wins. */
   .card {
     position: relative;
     padding: var(--space-4);
@@ -759,8 +745,7 @@
     .card--list > * { padding: var(--space-4) var(--space-6); }
   }
 
-  /* One link per tappable card, stretched over it by ::after; the focus ring
-     and hover edge are drawn on that overlay. */
+  /* One link per card, stretched by ::after; focus ring and hover edge draw on it. */
   .card__link::after {
     content: "";
     position: absolute;
@@ -785,7 +770,7 @@
     .door__thumb * { transition: border-color var(--duration-hover), color var(--duration-hover), stroke var(--duration-hover), fill var(--duration-hover); }
   }
 
-  /* Tags: outlined, no fill or hover, so never mistaken for buttons. */
+  /* Tags: outlined, never mistaken for buttons. */
   .tags {
     display: flex;
     flex-wrap: wrap;
@@ -804,7 +789,7 @@
     line-height: var(--leading-snug);
   }
   .tags--muted > li { color: var(--text-muted); }
-  /* CV skill logos (Richy, 4 October 2026): text colour; width from the viewBox. */
+  /* CV skill logos: text colour; width from the viewBox. */
   .skills svg {
     block-size: var(--logo-size);
     overflow: visible;
@@ -812,13 +797,11 @@
     fill: currentColor;
   }
 
-  /* Figures: wide content scrolls inside its own region. */
   .figure {
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface);
   }
-  /* Slim side padding on phones gives the stacked diagrams more width. */
   .figure__scroll { overflow-x: auto; padding: var(--space-4) var(--space-2); }
   /* Captions keep the measure; the end padding takes the rest. */
   @media (min-width: 48rem) {
@@ -848,8 +831,7 @@
   .diagram__label,
   .diagram__note { fill: var(--text-muted); }
   .diagram__lane { fill: var(--text-muted); font-weight: var(--weight-strong); }
-  /* Diagrams drawn twice: the stacked twin shows until the wide one fits, at
-     59rem even beside a classic scrollbar. */
+  /* The stacked twin shows until the wide one fits, even beside a scrollbar. */
   .diagram--stacked {
     inline-size: auto;
     min-inline-size: 0;
@@ -951,7 +933,7 @@
     }
     .door--featured { grid-column: 1 / -1; }
   }
-  /* The miniature sits beside the text once half the card keeps its titles legible. */
+  /* Miniature beside the text once half the card keeps its titles legible. */
   .door { container-type: inline-size; }
   @container (min-width: 49rem) {
     .door__layout {
@@ -1025,8 +1007,7 @@
     .door__thumb text { display: none; }
   }
 
-  /* The signature: the accent rule under a project name, carried by the view
-     transition. */
+  /* The signature title rule, carried by the view transition. */
   .project__name,
   .case-study__name {
     display: inline-block;
@@ -1044,7 +1025,6 @@
   .project__outcome { max-inline-size: var(--measure-outcome); }
   .next-card__claim { text-wrap: balance; }
 
-  /* Testimonial card: quote in heading colour, marks in the accent. */
   .doors + .quote {
     max-inline-size: none;
     margin-block-start: var(--space-4);
@@ -1068,15 +1048,58 @@
     .quote.card blockquote { font-size: var(--step-2); }
   }
 
-  /* ---------- Home: also shipped ---------- */
-  .ledger { margin-block-start: var(--space-4); }
+  /* ---------- Home: also shipped (ADR 0007) ---------- */
+  .also { margin-block-start: var(--space-4); }
+  .also__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-block-size: var(--target);
+    color: var(--text-muted);
+    list-style: none;
+    cursor: pointer;
+  }
+  .also__summary::-webkit-details-marker { display: none; }
+  /* A chevron in place of the triangle, pointing up while open. */
+  .also__summary::after {
+    content: "";
+    flex: none;
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    border-inline-end: var(--rule-width) solid currentColor;
+    border-block-end: var(--rule-width) solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+  }
+  .also__fold[open] > .also__summary::after { transform: translateY(25%) rotate(-135deg); }
+  @media (hover: hover) {
+    .also__summary:hover { color: var(--link); }
+  }
+  .also__summary:focus-visible { color: var(--link); }
+  @media (prefers-reduced-motion: no-preference) {
+    .also__summary,
+    .also__summary::after { transition: color var(--duration-hover), transform var(--duration-hover) var(--ease-out); }
+  }
+  .also__highlights {
+    display: grid;
+    gap: var(--space-2);
+    margin-block-start: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  /* Open, the rows say the same in full. */
+  .also__fold[open] + .also__highlights { display: none; }
+  .ledger > * {
+    padding-block: var(--space-5);
+    border-block-start: var(--border-width) solid var(--border);
+  }
+  .ledger > :last-child { padding-block-end: 0; }
   .ledger > article {
     display: grid;
     gap: var(--space-4);
   }
   @media (min-width: 48rem) {
-    .ledger { margin-block-start: var(--space-5); }
-    .ledger > * { padding-block: var(--space-5); }
+    .also { margin-block-start: var(--space-5); }
   }
   .ledger__title { font-size: var(--step-0); }
   .ledger__title--lead { font-size: var(--step-2); }
@@ -1136,7 +1159,6 @@
     column-gap: var(--space-3);
     align-items: baseline;
   }
-  /* Role, Team and Impact share a row; Stack runs full width under them. */
   @media (min-width: 48rem) {
     .case-study__overview {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1183,8 +1205,7 @@
   }
   .case-study__section { margin-block-start: var(--space-7); }
 
-  /* Before and after panels, side by side from 64rem; the after panel has the
-     accent edge. */
+  /* Before and after panels, side by side from 64rem. */
   .compare {
     display: grid;
     gap: var(--space-4);
@@ -1202,7 +1223,7 @@
     }
   }
 
-  /* A real sequence, so numbered (§11): accent numerals in rings on a rail. */
+  /* A real sequence, so numbered. */
   .steps {
     display: grid;
     gap: var(--space-4);
@@ -1269,7 +1290,7 @@
     }
   }
 
-  /* Results: one row per figure; a subgrid sizes the number column. */
+  /* A subgrid sizes the number column. */
   .stats {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
@@ -1288,8 +1309,7 @@
     line-height: var(--leading-tight);
   }
 
-  /* The next deep dive as one block link whose name morphs into that page's
-     title. */
+  /* The next deep dive; its name morphs into that page's title. */
   .case-study__end {
     display: grid;
     gap: var(--space-4);
@@ -1318,7 +1338,6 @@
     font-weight: var(--weight-strong);
     line-height: var(--leading-heading);
   }
-  /* Rows padded and ruled by the list card. */
   .decisions > div {
     display: grid;
     gap: var(--space-1);
