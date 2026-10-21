@@ -1,6 +1,6 @@
 # Measurements
 
-Commit b5f122c, measured 2026-10-06 by `python tools/measure.py` in headless Chromium 140.0.7339.16.
+Commit 9a2ce16, measured 2026-10-21 by `python tools/measure.py` in headless Chromium 140.0.7339.16.
 
 | Page | Viewport | Scheme | Words in main | Height (px) | Blocks over 6 lines | Muted share | First-screen elements | Horizontal overflow |
 | --- | --- | --- | ---: | ---: | --- | ---: | --- | --- |
@@ -22,8 +22,8 @@ Commit b5f122c, measured 2026-10-06 by `python tools/measure.py` in headless Chr
 | encompass-automation | 1440x900 | light | 822 | 4,946 | 0 of 38 (longest 4) | 0.13 | header, name, claim, summary, at-a-glance | none |
 | cv | 390x844 | dark | 784 | 6,663 | 0 of 109 (longest 6) | 0.06 | header, name, role, contact | none |
 | cv | 390x844 | light | 784 | 6,663 | 0 of 109 (longest 6) | 0.06 | header, name, role, contact | none |
-| cv | 1440x900 | dark | 784 | 5,262 | 0 of 109 (longest 4) | 0.06 | header, name, role, contact | none |
-| cv | 1440x900 | light | 784 | 5,262 | 0 of 109 (longest 4) | 0.06 | header, name, role, contact | none |
+| cv | 1440x900 | dark | 784 | 4,701 | 0 of 109 (longest 3) | 0.06 | header, name, role, contact | none |
+| cv | 1440x900 | light | 784 | 4,701 | 0 of 109 (longest 3) | 0.06 | header, name, role, contact | none |
 | letter | 390x844 | dark | 122 | 2,536 | 0 of 4 (longest 6) | 0.24 | header, heading | none |
 | letter | 390x844 | light | 122 | 2,536 | 0 of 4 (longest 6) | 0.24 | header, heading | none |
 | letter | 1440x900 | dark | 122 | 3,509 | 0 of 4 (longest 4) | 0.24 | header, heading | none |
