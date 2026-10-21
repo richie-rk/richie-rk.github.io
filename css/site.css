@@ -1395,6 +1395,15 @@
     font-weight: var(--weight-strong);
   }
   .skills dd { margin-block-start: var(--space-3); }
+  /* Desktop CV only (Richy, 2026-10-21): 80ch lines, 19px body text. */
+  @media (min-width: 64rem) {
+    .cv {
+      --measure: 80ch;
+      --step-0: 1.1875rem;
+      font-size: var(--step-0);
+    }
+    .cv p { max-inline-size: var(--measure); }
+  }
 
   /* ---------- Testimonial letter ---------- */
   .letter-page__head { max-inline-size: var(--measure); }
